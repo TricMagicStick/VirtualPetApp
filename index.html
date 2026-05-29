@@ -11,7 +11,6 @@
             --bg: #0a0f1e;
             --card: #161b2e;
             --border: #252b45;
-            --accent: #22c55e;
         }
         
         * { box-sizing: border-box; }
@@ -26,16 +25,15 @@
         .app {
             max-width: 380px;
             margin: 0 auto;
-            padding: 10px 12px;
-            padding-top: max(10px, env(safe-area-inset-top));
-            padding-bottom: max(10px, env(safe-area-inset-bottom));
+            padding: 12px 14px;
+            padding-top: max(12px, env(safe-area-inset-top));
         }
         .header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 8px;
-            padding: 0 2px;
+            margin-bottom: 12px;
+            padding: 0 4px;
         }
         .title {
             font-family: 'Press Start 2P', system-ui;
@@ -49,7 +47,6 @@
             font-size: 9px;
             color: #64748b;
             margin-left: 6px;
-            align-self: flex-end;
         }
         .reset-btn {
             background: #3f1f1f;
@@ -64,12 +61,12 @@
             gap: 4px;
             cursor: pointer;
         }
-        .pet-container {
+        .pet-card {
             background: #161b2e;
             border: 2px solid #252b45;
             border-radius: 20px;
-            padding: 14px;
-            margin-bottom: 10px;
+            padding: 16px 14px;
+            margin-bottom: 14px;
             box-shadow: 0 6px 20px -4px rgb(0 0 0 / 0.3);
             text-align: center;
         }
@@ -78,95 +75,80 @@
             border-radius: 12px;
             background: #252b45;
         }
-        .mood { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; margin-bottom: 1px; }
-        .age { font-size: 9px; color: #64748b; }
-        .tab-bar {
-            display: flex;
-            background: #161b2e;
-            border: 1.5px solid #252b45;
-            border-radius: 999px;
-            padding: 3px;
-            margin-bottom: 12px;
-            box-shadow: 0 3px 10px -2px rgb(0 0 0 / 0.2);
+        .pet-info {
+            margin-top: 10px;
         }
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 8px 0;
-            font-size: 11px;
-            font-weight: 700;
-            border-radius: 999px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .tab.active {
-            background: #22c55e;
-            color: #0a0f1e;
-            box-shadow: 0 2px 6px rgb(34 197 94 / 0.4);
-        }
-        .view { display: none; }
-        .view.active { display: block; }
+        .mood { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; }
+        .age { font-size: 10px; color: #64748b; margin-top: 2px; }
         .section-header {
-            font-size: 9px;
+            font-size: 10px;
             font-weight: 700;
             color: #64748b;
             letter-spacing: 1px;
-            margin: 0 0 6px 4px;
+            margin: 0 0 8px 4px;
         }
-        .stats-compact {
+        .stats {
             background: #161b2e;
             border: 1.5px solid #252b45;
-            border-radius: 14px;
-            padding: 10px 12px;
+            border-radius: 16px;
+            padding: 12px 14px;
+            margin-bottom: 16px;
         }
-        .stat-row {
+        .stat {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 7px;
+            gap: 10px;
+            margin-bottom: 9px;
         }
-        .stat-row:last-child { margin-bottom: 0; }
-        .stat-icon { font-size: 17px; width: 22px; }
-        .stat-info { flex: 1; }
+        .stat:last-child { margin-bottom: 0; }
+        .stat-icon { font-size: 18px; width: 24px; }
+        .stat-main { flex: 1; }
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3px;
+        }
         .stat-name { font-size: 13px; font-weight: 600; }
-        .stat-val { font-family: ui-monospace, monospace; font-size: 12px; font-weight: 700; color: #cbd5e1; }
-        .progress { height: 5px; background: #252b45; border-radius: 999px; overflow: hidden; margin-top: 3px; }
+        .stat-val { font-family: ui-monospace, monospace; font-size: 12px; font-weight: 700; }
+        .progress { height: 6px; background: #252b45; border-radius: 999px; overflow: hidden; margin-top: 2px; }
         .progress-bar { height: 100%; transition: width 0.3s ease; }
         .hunger .progress-bar { background: linear-gradient(#f59e0b, #fb923c); }
         .happiness .progress-bar { background: linear-gradient(#ec4899, #f43f5e); }
         .cleanliness .progress-bar { background: linear-gradient(#06b6d4, #22d3ee); }
         .energy .progress-bar { background: linear-gradient(#eab308, #facc15); }
-        .actions-grid {
+        .actions {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 9px;
+            gap: 10px;
         }
         .action-btn {
             background: #161b2e;
             border: 1.5px solid #252b45;
             border-radius: 14px;
-            padding: 14px 8px;
+            padding: 14px 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
         .action-btn:active { transform: scale(0.96); background: #1f253d; }
-        .action-icon { font-size: 24px; }
-        .action-label { font-weight: 700; font-size: 13px; }
-        .action-sub { font-size: 9px; color: #64748b; }
-        .status-bar {
+        .action-icon { font-size: 26px; }
+        .action-label { font-weight: 700; font-size: 14px; }
+        .action-sub { font-size: 10px; color: #64748b; }
+        .status {
+            margin-top: 14px;
             background: #161b2e;
             border: 1.5px solid #252b45;
             border-radius: 12px;
-            padding: 10px 12px;
+            padding: 11px 13px;
             display: flex;
             gap: 9px;
             align-items: flex-start;
         }
-        .status-text { font-size: 12.5px; line-height: 1.4; flex: 1; }
+        .status-text { font-size: 13px; line-height: 1.4; flex: 1; }
         .critical { color: #f87171; font-weight: 600; }
     </style>
 </head>
@@ -174,9 +156,9 @@
     <div class="app">
         <!-- Header -->
         <div class="header">
-            <div style="display: flex; align-items: flex-end;">
+            <div style="display:flex; align-items:flex-end;">
                 <h1 class="title">VIRTUAL PET</h1>
-                <span class="version">v1.3</span>
+                <span class="version">v1.4</span>
             </div>
             <button onclick="resetPet()" class="reset-btn">
                 <span>↻</span>
@@ -184,57 +166,53 @@
             </button>
         </div>
 
-        <!-- Pet with Animation -->
-        <div class="pet-container">
+        <!-- Pet -->
+        <div class="pet-card">
             <canvas id="petCanvas" width="140" height="140"></canvas>
-            <div id="petMood" class="mood" style="color:#22c55e; margin-top: 8px;">VERY HAPPY</div>
-            <div class="age">Age: <span id="ageValue">0</span> days • <span id="petNameDisplay">Pixel</span></div>
+            <div class="pet-info">
+                <div id="petMood" class="mood" style="color:#22c55e;">VERY HAPPY</div>
+                <div class="age">Age: <span id="ageValue">0</span> days • <span id="petNameDisplay">Pixel</span></div>
+            </div>
         </div>
 
-        <!-- Tab Bar -->
-        <div class="tab-bar">
-            <div onclick="switchView('status')" id="tab-status" class="tab active">STATUS</div>
-            <div onclick="switchView('care')" id="tab-care" class="tab">CARE</div>
-        </div>
-
-        <!-- STATUS VIEW -->
-        <div id="view-status" class="view active">
+        <!-- Needs -->
+        <div>
             <div class="section-header">NEEDS</div>
-            <div class="stats-compact">
-                <div class="stat-row hunger">
+            <div class="stats">
+                <div class="stat hunger">
                     <div class="stat-icon">🍎</div>
-                    <div class="stat-info">
-                        <div style="display:flex;justify-content:space-between;align-items:center">
+                    <div class="stat-main">
+                        <div class="stat-row">
                             <div class="stat-name">Hunger</div>
                             <div id="hungerValue" class="stat-val">80</div>
                         </div>
                         <div class="progress"><div id="hungerBar" class="progress-bar" style="width:80%"></div></div>
                     </div>
                 </div>
-                <div class="stat-row happiness">
+                <div class="stat happiness">
                     <div class="stat-icon">❤️</div>
-                    <div class="stat-info">
-                        <div style="display:flex;justify-content:space-between;align-items:center">
+                    <div class="stat-main">
+                        <div class="stat-row">
                             <div class="stat-name">Happiness</div>
                             <div id="happinessValue" class="stat-val">75</div>
                         </div>
                         <div class="progress"><div id="happinessBar" class="progress-bar" style="width:75%"></div></div>
                     </div>
                 </div>
-                <div class="stat-row cleanliness">
+                <div class="stat cleanliness">
                     <div class="stat-icon">🧼</div>
-                    <div class="stat-info">
-                        <div style="display:flex;justify-content:space-between;align-items:center">
+                    <div class="stat-main">
+                        <div class="stat-row">
                             <div class="stat-name">Cleanliness</div>
                             <div id="cleanValue" class="stat-val">85</div>
                         </div>
                         <div class="progress"><div id="cleanBar" class="progress-bar" style="width:85%"></div></div>
                     </div>
                 </div>
-                <div class="stat-row energy">
+                <div class="stat energy">
                     <div class="stat-icon">⚡</div>
-                    <div class="stat-info">
-                        <div style="display:flex;justify-content:space-between;align-items:center">
+                    <div class="stat-main">
+                        <div class="stat-row">
                             <div class="stat-name">Energy</div>
                             <div id="energyValue" class="stat-val">90</div>
                         </div>
@@ -242,44 +220,47 @@
                     </div>
                 </div>
             </div>
-
-            <div style="margin-top:10px">
-                <div class="section-header">STATUS</div>
-                <div class="status-bar">
-                    <div style="font-size:16px">💬</div>
-                    <div id="statusMessage" class="status-text">Your pet is happy and well cared for.</div>
-                </div>
-            </div>
         </div>
 
-        <!-- CARE VIEW -->
-        <div id="view-care" class="view">
+        <!-- Actions -->
+        <div>
             <div class="section-header">ACTIONS</div>
-            <div class="actions-grid">
+            <div class="actions">
                 <button onclick="feedPet()" class="action-btn">
                     <div class="action-icon">🍎</div>
-                    <div class="action-label">Feed</div>
-                    <div class="action-sub">+ Hunger</div>
+                    <div>
+                        <div class="action-label">Feed</div>
+                        <div class="action-sub">+ Hunger</div>
+                    </div>
                 </button>
                 <button onclick="playWithPet()" class="action-btn">
                     <div class="action-icon">🎮</div>
-                    <div class="action-label">Play</div>
-                    <div class="action-sub">+ Happiness</div>
+                    <div>
+                        <div class="action-label">Play</div>
+                        <div class="action-sub">+ Happiness</div>
+                    </div>
                 </button>
                 <button onclick="cleanPet()" class="action-btn">
                     <div class="action-icon">🧼</div>
-                    <div class="action-label">Clean</div>
-                    <div class="action-sub">+ Cleanliness</div>
+                    <div>
+                        <div class="action-label">Clean</div>
+                        <div class="action-sub">+ Cleanliness</div>
+                    </div>
                 </button>
                 <button onclick="restPet()" class="action-btn">
                     <div class="action-icon">🛏️</div>
-                    <div class="action-label">Rest</div>
-                    <div class="action-sub">+ Energy</div>
+                    <div>
+                        <div class="action-label">Rest</div>
+                        <div class="action-sub">+ Energy</div>
+                    </div>
                 </button>
             </div>
-            <div style="margin-top:10px; font-size:10px; color:#64748b; text-align:center; padding:0 10px;">
-                Tap an action to care for your pet.
-            </div>
+        </div>
+
+        <!-- Status -->
+        <div class="status">
+            <div style="font-size:16px; margin-top:1px;">💬</div>
+            <div id="statusMessage" class="status-text">Your pet is happy and well cared for.</div>
         </div>
     </div>
 
@@ -287,7 +268,6 @@
         let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
         let messages = [];
         let decayInterval = null;
-        let currentView = 'status';
         let animFrame = 0;
 
         const canvas = document.getElementById('petCanvas');
@@ -300,29 +280,23 @@
             const cx = 70;
             const cy = 72 + breathOffset;
 
-            // Shadow
             ctx.fillStyle = 'rgba(0,0,0,0.25)';
             ctx.beginPath();
             ctx.ellipse(cx, cy + 58, 38, 12, 0, 0, Math.PI * 2);
             ctx.fill();
 
-            // Body
             ctx.fillStyle = '#e85d04';
             ctx.fillRect(cx - 26, cy + 8, 52, 46);
 
-            // Belly
             ctx.fillStyle = '#faa307';
             ctx.fillRect(cx - 18, cy + 20, 36, 28);
 
-            // Head
             ctx.fillStyle = '#e85d04';
             ctx.fillRect(cx - 28, cy - 28, 56, 40);
 
-            // Snout
             ctx.fillStyle = '#faa307';
             ctx.fillRect(cx - 16, cy + 4, 32, 16);
 
-            // Eyes
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(cx - 18, cy - 18, 11, 11);
             ctx.fillRect(cx + 7, cy - 18, 11, 11);
@@ -331,7 +305,6 @@
             ctx.fillRect(cx - 14, cy - 14, 5, 5);
             ctx.fillRect(cx + 11, cy - 14, 5, 5);
 
-            // Eyebrows
             ctx.strokeStyle = '#111111';
             ctx.lineWidth = 2;
             if (mood === 'happy') {
@@ -352,35 +325,29 @@
                 ctx.stroke();
             }
 
-            // Horns
             ctx.fillStyle = '#9d0208';
             ctx.fillRect(cx - 26, cy - 36, 8, 12);
             ctx.fillRect(cx + 18, cy - 36, 8, 12);
 
-            // Head flame (flickers more noticeably)
             const flameHeight = 13 + flameFlicker;
             ctx.fillStyle = '#ffba08';
             ctx.fillRect(cx - 6, cy - 42, 12, flameHeight);
             ctx.fillStyle = '#e85d04';
             ctx.fillRect(cx - 3, cy - 38, 6, flameHeight - 3);
 
-            // Tail
             ctx.fillStyle = '#e85d04';
             ctx.fillRect(cx - 42, cy + 28, 20, 12);
 
-            // Tail flame (flickers)
             const tailFlameH = 13 + flameFlicker * 0.9;
             ctx.fillStyle = '#ffba08';
             ctx.fillRect(cx - 48, cy + 26, 14, tailFlameH);
             ctx.fillStyle = '#e85d04';
             ctx.fillRect(cx - 45, cy + 29, 8, tailFlameH - 3);
 
-            // Wings
             ctx.fillStyle = '#9d0208';
             ctx.fillRect(cx - 38, cy + 10, 12, 16);
             ctx.fillRect(cx + 26, cy + 10, 12, 16);
 
-            // Feet
             ctx.fillStyle = '#9d0208';
             ctx.fillRect(cx - 20, cy + 52, 10, 8);
             ctx.fillRect(cx + 10, cy + 52, 10, 8);
@@ -388,18 +355,13 @@
 
         function animate() {
             animFrame += 0.12;
-
-            // More noticeable breathing
             const breath = Math.sin(animFrame * 1.1) * 2.2;
-
-            // Stronger flame flicker
             const flameFlicker = Math.sin(animFrame * 4.5) * 2.8 + (Math.random() - 0.5) * 1.2;
 
             const avg = (pet.hunger + pet.happiness + pet.cleanliness + pet.energy) / 4;
             let mood = (avg >= 50) ? 'happy' : 'sad';
 
             drawPet(mood, breath, flameFlicker);
-
             requestAnimationFrame(animate);
         }
 
@@ -543,17 +505,6 @@
             decayInterval = setInterval(decayStats, 6500);
         }
 
-        function switchView(view) {
-            document.getElementById('view-status').classList.remove('active');
-            document.getElementById('view-care').classList.remove('active');
-            document.getElementById('tab-status').classList.remove('active');
-            document.getElementById('tab-care').classList.remove('active');
-
-            document.getElementById('view-' + view).classList.add('active');
-            document.getElementById('tab-' + view).classList.add('active');
-            currentView = view;
-        }
-
         function resetPet() {
             if (!confirm('Reset your pet?')) return;
             pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -573,8 +524,6 @@
             if (messages.length === 0) msgEl.textContent = `Welcome! Take good care of ${pet.name}.`;
             else msgEl.textContent = messages[0] || 'Welcome back!';
             startDecay();
-
-            // Start animation
             requestAnimationFrame(animate);
         }
 
