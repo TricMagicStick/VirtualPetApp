@@ -137,7 +137,7 @@
         <div class="header">
             <div style="display:flex; align-items:flex-end;">
                 <h1 class="title">VIRTUAL PET</h1>
-                <span class="version">v2.4</span>
+                <span class="version">v2.5</span>
             </div>
             <button onclick="resetPet()" class="reset-btn">
                 <span>↻</span>
@@ -220,7 +220,7 @@
         const canvas = document.getElementById('petCanvas');
         const ctx = canvas.getContext('2d', { alpha: true });
 
-        // STAGE 0: FLICK (Baby) - Round cute blob, big head, tiny body
+        // STAGE 0: FLICK (Baby)
         function drawFlick(mood, breathOffset, flameFlicker) {
             const cx = 110;
             const cy = 125 + breathOffset;
@@ -305,7 +305,7 @@
             ctx.fillRect(cx + 8, cy + 48, 10, 7);
         }
 
-        // STAGE 1: CHARLING (Child) - Body elongates, small wings + flame mane appear
+        // STAGE 1: CHARLING (Child)
         function drawCharling(mood, breathOffset, flameFlicker) {
             const cx = 110;
             const cy = 115 + breathOffset;
@@ -315,7 +315,6 @@
             ctx.ellipse(cx, cy + 75, 46, 13, 0, 0, Math.PI * 2);
             ctx.fill();
 
-            // Body starting to elongate
             ctx.fillStyle = '#e85d04';
             ctx.beginPath();
             ctx.ellipse(cx, cy + 18, 40, 38, 0, 0, Math.PI * 2);
@@ -368,12 +367,10 @@
             ctx.fillRect(cx - 26, cy - 46, 8, 11);
             ctx.fillRect(cx + 18, cy - 46, 8, 11);
 
-            // Small wings appear
             ctx.fillStyle = '#9d0208';
             ctx.fillRect(cx - 44, cy + 6, 13, 18);
             ctx.fillRect(cx + 31, cy + 6, 13, 18);
 
-            // Flame mane starts
             const flameH = 15 + flameFlicker * 0.6;
             ctx.fillStyle = '#ffba08';
             ctx.fillRect(cx - 7, cy - 52, 14, flameH);
@@ -393,7 +390,7 @@
             ctx.fillRect(cx + 9, cy + 52, 11, 8);
         }
 
-        // STAGE 2: DRAKEMBER (Adult) - Proper dragon shape, full wings, neck visible
+        // STAGE 2: DRAKEMBER (Adult)
         function drawDrakEmber(mood, breathOffset, flameFlicker) {
             const cx = 110;
             const cy = 108 + breathOffset;
@@ -403,7 +400,6 @@
             ctx.ellipse(cx, cy + 85, 52, 14, 0, 0, Math.PI * 2);
             ctx.fill();
 
-            // Elongated dragon body
             ctx.fillStyle = '#e85d04';
             ctx.beginPath();
             ctx.ellipse(cx, cy + 10, 48, 46, 0, 0, Math.PI * 2);
@@ -414,7 +410,6 @@
             ctx.ellipse(cx, cy + 18, 30, 28, 0, 0, Math.PI * 2);
             ctx.fill();
 
-            // Clear neck + head
             ctx.fillStyle = '#e85d04';
             ctx.beginPath();
             ctx.ellipse(cx, cy - 22, 44, 40, 0, 0, Math.PI * 2);
@@ -457,7 +452,6 @@
             ctx.fillRect(cx - 24, cy - 48, 9, 13);
             ctx.fillRect(cx + 15, cy - 48, 9, 13);
 
-            // Full wings
             ctx.fillStyle = '#9d0208';
             ctx.fillRect(cx - 52, cy - 10, 20, 32);
             ctx.fillRect(cx + 32, cy - 10, 20, 32);
@@ -481,7 +475,7 @@
             ctx.fillRect(cx + 10, cy + 54, 12, 10);
         }
 
-        // STAGE 3: INFERNYX (Ultimate) - Tall imposing silhouette, armor, massive wings
+        // STAGE 3: INFERNYX (Ultimate)
         function drawInfernyx(mood, breathOffset, flameFlicker) {
             const cx = 110;
             const cy = 100 + breathOffset;
@@ -491,7 +485,6 @@
             ctx.ellipse(cx, cy + 92, 58, 15, 0, 0, Math.PI * 2);
             ctx.fill();
 
-            // Taller, more vertical powerful body
             ctx.fillStyle = '#e85d04';
             ctx.beginPath();
             ctx.ellipse(cx, cy + 4, 50, 50, 0, 0, Math.PI * 2);
@@ -502,7 +495,6 @@
             ctx.ellipse(cx, cy + 14, 32, 30, 0, 0, Math.PI * 2);
             ctx.fill();
 
-            // Strong head presence
             ctx.fillStyle = '#e85d04';
             ctx.beginPath();
             ctx.ellipse(cx, cy - 26, 48, 42, 0, 0, Math.PI * 2);
@@ -541,12 +533,10 @@
                 ctx.stroke();
             }
 
-            // Larger horns
             ctx.fillStyle = '#9d0208';
             ctx.fillRect(cx - 26, cy - 54, 11, 15);
             ctx.fillRect(cx + 15, cy - 54, 11, 15);
 
-            // Massive dramatic wings (major silhouette change)
             ctx.fillStyle = '#9d0208';
             ctx.fillRect(cx - 62, cy - 24, 26, 42);
             ctx.fillRect(cx + 36, cy - 24, 26, 42);
@@ -571,6 +561,9 @@
         }
 
         function drawPet(mood, breathOffset, flameFlicker) {
+            // Always clear first to prevent stacking
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
             if (currentStage === 0) drawFlick(mood, breathOffset, flameFlicker);
             else if (currentStage === 1) drawCharling(mood, breathOffset, flameFlicker);
             else if (currentStage === 2) drawDrakEmber(mood, breathOffset, flameFlicker);
