@@ -45,6 +45,12 @@
             letter-spacing: 0.5px;
             margin: 0;
         }
+        .version {
+            font-size: 9px;
+            color: #64748b;
+            margin-left: 6px;
+            align-self: flex-end;
+        }
         .reset-btn {
             background: #3f1f1f;
             color: #fda4af;
@@ -168,7 +174,10 @@
     <div class="app">
         <!-- Header -->
         <div class="header">
-            <h1 class="title">VIRTUAL PET</h1>
+            <div style="display: flex; align-items: flex-end;">
+                <h1 class="title">VIRTUAL PET</h1>
+                <span class="version">v1.3</span>
+            </div>
             <button onclick="resetPet()" class="reset-btn">
                 <span>↻</span>
                 <span style="font-size:9px">RESET</span>
@@ -348,23 +357,23 @@
             ctx.fillRect(cx - 26, cy - 36, 8, 12);
             ctx.fillRect(cx + 18, cy - 36, 8, 12);
 
-            // Head flame (flickers)
-            const flameHeight = 14 + flameFlicker;
+            // Head flame (flickers more noticeably)
+            const flameHeight = 13 + flameFlicker;
             ctx.fillStyle = '#ffba08';
             ctx.fillRect(cx - 6, cy - 42, 12, flameHeight);
             ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 3, cy - 38, 6, flameHeight - 4);
+            ctx.fillRect(cx - 3, cy - 38, 6, flameHeight - 3);
 
             // Tail
             ctx.fillStyle = '#e85d04';
             ctx.fillRect(cx - 42, cy + 28, 20, 12);
 
             // Tail flame (flickers)
-            const tailFlameH = 14 + flameFlicker * 0.8;
+            const tailFlameH = 13 + flameFlicker * 0.9;
             ctx.fillStyle = '#ffba08';
             ctx.fillRect(cx - 48, cy + 26, 14, tailFlameH);
             ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 45, cy + 29, 8, tailFlameH - 4);
+            ctx.fillRect(cx - 45, cy + 29, 8, tailFlameH - 3);
 
             // Wings
             ctx.fillStyle = '#9d0208';
@@ -377,18 +386,14 @@
             ctx.fillRect(cx + 10, cy + 52, 10, 8);
         }
 
-        let lastTime = 0;
-        function animate(timestamp = 0) {
-            const delta = timestamp - lastTime;
-            lastTime = timestamp;
+        function animate() {
+            animFrame += 0.12;
 
-            animFrame += 0.08;
+            // More noticeable breathing
+            const breath = Math.sin(animFrame * 1.1) * 2.2;
 
-            // Breathing (slow sine wave)
-            const breath = Math.sin(animFrame * 0.8) * 1.5;
-
-            // Flame flicker (random-ish)
-            const flameFlicker = Math.sin(animFrame * 3) * 2 + (Math.random() - 0.5) * 1.5;
+            // Stronger flame flicker
+            const flameFlicker = Math.sin(animFrame * 4.5) * 2.8 + (Math.random() - 0.5) * 1.2;
 
             const avg = (pet.hunger + pet.happiness + pet.cleanliness + pet.energy) / 4;
             let mood = (avg >= 50) ? 'happy' : 'sad';
@@ -399,7 +404,6 @@
         }
 
         function updatePetVisual() {
-            // This is now handled by the animation loop
             const avg = (pet.hunger + pet.happiness + pet.cleanliness + pet.energy) / 4;
             let moodText = 'VERY HAPPY';
             let moodColor = '#22c55e';
@@ -570,7 +574,7 @@
             else msgEl.textContent = messages[0] || 'Welcome back!';
             startDecay();
 
-            // Start animation loop
+            // Start animation
             requestAnimationFrame(animate);
         }
 
