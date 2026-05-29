@@ -153,7 +153,7 @@
         <div class="header">
             <div style="display:flex; align-items:flex-end;">
                 <h1 class="title">VIRTUAL PET</h1>
-                <span class="version">v3.4</span>
+                <span class="version">v3.5</span>
             </div>
             <button onclick="resetPet()" class="reset-btn">
                 <span>↻</span>
@@ -338,7 +338,7 @@
             }, 180);
         }
 
-        // EMBER LINE - Full implementation
+        // EMBER LINE - Full
         function drawFlick(mood, breathOffset, flameFlicker) {
             const cx = 110;
             const cy = 130 + breathOffset;
@@ -423,7 +423,259 @@
             petCtx.fillRect(cx + 6, cy + 48, 8, 5);
         }
 
-        // WHISK LINE - Full implementation
+        function drawCharling(mood, breathOffset, flameFlicker) {
+            const cx = 110;
+            const cy = 116 + breathOffset;
+
+            petCtx.fillStyle = 'rgba(0,0,0,0.25)';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 74, 44, 12, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 18, 36, 34, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#faa307';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 24, 22, 20, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy - 14, 40, 36, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#faa307';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 6, 18, 13, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#ffffff';
+            petCtx.fillRect(cx - 18, cy - 22, 11, 11);
+            petCtx.fillRect(cx + 7, cy - 22, 11, 11);
+
+            petCtx.fillStyle = '#111111';
+            petCtx.fillRect(cx - 14, cy - 18, 5, 5);
+            petCtx.fillRect(cx + 11, cy - 18, 5, 5);
+
+            petCtx.strokeStyle = '#111111';
+            petCtx.lineWidth = 2.5;
+            if (mood === 'happy') {
+                petCtx.beginPath();
+                petCtx.arc(cx - 12, cy - 30, 4, Math.PI, 0);
+                petCtx.stroke();
+                petCtx.beginPath();
+                petCtx.arc(cx + 12, cy - 30, 4, Math.PI, 0);
+                petCtx.stroke();
+            } else {
+                petCtx.beginPath();
+                petCtx.moveTo(cx - 18, cy - 28);
+                petCtx.lineTo(cx - 8, cy - 24);
+                petCtx.stroke();
+                petCtx.beginPath();
+                petCtx.moveTo(cx + 8, cy - 24);
+                petCtx.lineTo(cx + 18, cy - 28);
+                petCtx.stroke();
+            }
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 24, cy - 42, 7, 10);
+            petCtx.fillRect(cx + 17, cy - 42, 7, 10);
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 40, cy + 8, 11, 14);
+            petCtx.fillRect(cx + 29, cy + 8, 11, 14);
+
+            const flameH = 13 + flameFlicker * 0.5;
+            petCtx.fillStyle = '#ffba08';
+            petCtx.fillRect(cx - 5, cy - 46, 10, flameH);
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 2, cy - 42, 5, flameH - 3);
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 46, cy + 34, 16, 11);
+
+            petCtx.fillStyle = '#ffba08';
+            petCtx.fillRect(cx - 50, cy + 32, 10, 9);
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 47, cy + 34, 5, 5);
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 16, cy + 50, 9, 7);
+            petCtx.fillRect(cx + 7, cy + 50, 9, 7);
+        }
+
+        function drawDrakEmber(mood, breathOffset, flameFlicker) {
+            const cx = 110;
+            const cy = 108 + breathOffset;
+
+            petCtx.fillStyle = 'rgba(0,0,0,0.3)';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 82, 50, 12, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 10, 44, 42, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#faa307';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 18, 26, 24, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy - 18, 40, 36, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#faa307';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 4, 18, 14, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#ffffff';
+            petCtx.fillRect(cx - 16, cy - 22, 11, 11);
+            petCtx.fillRect(cx + 5, cy - 22, 11, 11);
+
+            petCtx.fillStyle = '#111111';
+            petCtx.fillRect(cx - 12, cy - 18, 5, 5);
+            petCtx.fillRect(cx + 9, cy - 18, 5, 5);
+
+            petCtx.strokeStyle = '#111111';
+            petCtx.lineWidth = 2.5;
+            if (mood === 'happy') {
+                petCtx.beginPath();
+                petCtx.arc(cx - 10, cy - 30, 4, Math.PI, 0);
+                petCtx.stroke();
+                petCtx.beginPath();
+                petCtx.arc(cx + 10, cy - 30, 4, Math.PI, 0);
+                petCtx.stroke();
+            } else {
+                petCtx.beginPath();
+                petCtx.moveTo(cx - 16, cy - 28);
+                petCtx.lineTo(cx - 6, cy - 24);
+                petCtx.stroke();
+                petCtx.beginPath();
+                petCtx.moveTo(cx + 6, cy - 24);
+                petCtx.lineTo(cx + 16, cy - 28);
+                petCtx.stroke();
+            }
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 22, cy - 44, 8, 11);
+            petCtx.fillRect(cx + 14, cy - 44, 8, 11);
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 48, cy - 6, 16, 26);
+            petCtx.fillRect(cx + 32, cy - 6, 16, 26);
+
+            const flameH = 15 + flameFlicker * 0.6;
+            petCtx.fillStyle = '#ffba08';
+            petCtx.fillRect(cx - 6, cy - 50, 12, flameH);
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 3, cy - 46, 6, flameH - 4);
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 52, cy + 36, 22, 14);
+
+            petCtx.fillStyle = '#ffba08';
+            petCtx.fillRect(cx - 58, cy + 34, 13, 12);
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 54, cy + 36, 7, 8);
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 18, cy + 52, 10, 8);
+            petCtx.fillRect(cx + 8, cy + 52, 10, 8);
+        }
+
+        function drawInfernyx(mood, breathOffset, flameFlicker) {
+            const cx = 110;
+            const cy = 100 + breathOffset;
+
+            petCtx.fillStyle = 'rgba(0,0,0,0.35)';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 92, 54, 13, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 4, 46, 46, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#faa307';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 14, 28, 26, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy - 22, 44, 38, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#faa307';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy - 2, 20, 15, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#ffffff';
+            petCtx.fillRect(cx - 16, cy - 22, 12, 12);
+            petCtx.fillRect(cx + 4, cy - 22, 12, 12);
+
+            petCtx.fillStyle = '#111111';
+            petCtx.fillRect(cx - 12, cy - 18, 5, 5);
+            petCtx.fillRect(cx + 9, cy - 18, 5, 5);
+
+            petCtx.strokeStyle = '#111111';
+            petCtx.lineWidth = 2.5;
+            if (mood === 'happy') {
+                petCtx.beginPath();
+                petCtx.arc(cx - 10, cy - 30, 4, Math.PI, 0);
+                petCtx.stroke();
+                petCtx.beginPath();
+                petCtx.arc(cx + 10, cy - 30, 4, Math.PI, 0);
+                petCtx.stroke();
+            } else {
+                petCtx.beginPath();
+                petCtx.moveTo(cx - 16, cy - 28);
+                petCtx.lineTo(cx - 6, cy - 24);
+                petCtx.stroke();
+                petCtx.beginPath();
+                petCtx.moveTo(cx + 6, cy - 24);
+                petCtx.lineTo(cx + 16, cy - 28);
+                petCtx.stroke();
+            }
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 24, cy - 48, 9, 13);
+            petCtx.fillRect(cx + 15, cy - 48, 9, 13);
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 54, cy - 18, 20, 36);
+            petCtx.fillRect(cx + 34, cy - 18, 20, 36);
+
+            const flameH = 18 + flameFlicker * 0.8;
+            petCtx.fillStyle = '#ffba08';
+            petCtx.fillRect(cx - 8, cy - 56, 16, flameH);
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 5, cy - 52, 10, flameH - 5);
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 56, cy + 32, 26, 17);
+
+            petCtx.fillStyle = '#ffba08';
+            petCtx.fillRect(cx - 62, cy + 30, 16, 15);
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 58, cy + 32, 9, 11);
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 20, cy + 54, 12, 10);
+            petCtx.fillRect(cx + 8, cy + 54, 12, 10);
+        }
+
+        // WHISK LINE - Full
         function drawPuff(mood, breathOffset, flameFlicker) {
             const cx = 110;
             const cy = 128 + breathOffset;
@@ -738,6 +990,9 @@
                 else if (currentStage === 3) drawNimbrix(mood, breathOffset, flameFlicker);
             } else {
                 if (currentStage === 0) drawFlick(mood, breathOffset, flameFlicker);
+                else if (currentStage === 1) drawCharling(mood, breathOffset, flameFlicker);
+                else if (currentStage === 2) drawDrakEmber(mood, breathOffset, flameFlicker);
+                else if (currentStage === 3) drawInfernyx(mood, breathOffset, flameFlicker);
             }
         }
 
