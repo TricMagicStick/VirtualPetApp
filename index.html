@@ -137,7 +137,7 @@
         <div class="header">
             <div style="display:flex; align-items:flex-end;">
                 <h1 class="title">VIRTUAL PET</h1>
-                <span class="version">v1.8</span>
+                <span class="version">v1.9</span>
             </div>
             <button onclick="resetPet()" class="reset-btn">
                 <span>↻</span>
@@ -203,7 +203,7 @@
     </div>
 
     <script>
-        // Game State
+        // === GAME STATE ===
         let pet = {
             name: "Pixel",
             hunger: 80,
@@ -219,7 +219,7 @@
         const canvas = document.getElementById('petCanvas');
         const ctx = canvas.getContext('2d', { alpha: true });
 
-        // Draw the pet (Ember - Flick style)
+        // === DRAW PET (Ember - Flick) ===
         function drawPet(mood, breathOffset = 0, flameFlicker = 0) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.imageSmoothingEnabled = false;
@@ -258,7 +258,7 @@
             ctx.fillRect(cx - 23, cy - 23, 7, 7);
             ctx.fillRect(cx + 17, cy - 23, 7, 7);
 
-            // Eyebrows / expression
+            // Eyebrows
             ctx.strokeStyle = '#111111';
             ctx.lineWidth = 3;
             if (mood === 'happy') {
@@ -284,7 +284,7 @@
             ctx.fillRect(cx - 42, cy - 58, 12, 20);
             ctx.fillRect(cx + 30, cy - 58, 12, 20);
 
-            // Head flame (flickers)
+            // Head flame
             const flameHeight = 20 + flameFlicker;
             ctx.fillStyle = '#ffba08';
             ctx.fillRect(cx - 10, cy - 68, 20, flameHeight);
@@ -295,7 +295,7 @@
             ctx.fillStyle = '#e85d04';
             ctx.fillRect(cx - 66, cy + 48, 28, 18);
 
-            // Tail flame (flickers)
+            // Tail flame
             const tailFlameH = 20 + flameFlicker * 0.9;
             ctx.fillStyle = '#ffba08';
             ctx.fillRect(cx - 75, cy + 46, 22, tailFlameH);
@@ -313,10 +313,9 @@
             ctx.fillRect(cx + 14, cy + 84, 16, 12);
         }
 
-        // Animation loop
+        // === ANIMATION ===
         function animate() {
             animFrame += 0.12;
-
             const breath = Math.sin(animFrame * 1.1) * 2.8;
             const flameFlicker = Math.sin(animFrame * 4.5) * 3.2 + (Math.random() - 0.5) * 1.4;
 
@@ -347,20 +346,19 @@
             }
 
             const moodEl = document.getElementById('petMood');
-            moodEl.textContent = moodText;
-            moodEl.style.color = moodColor;
+            if (moodEl) {
+                moodEl.textContent = moodText;
+                moodEl.style.color = moodColor;
+            }
         }
 
         function savePet() {
             localStorage.setItem('virtualPet', JSON.stringify(pet));
-            localStorage.setItem('virtualPetMessages', JSON.stringify(messages));
         }
 
         function loadPet() {
             const saved = localStorage.getItem('virtualPet');
             if (saved) pet = { ...pet, ...JSON.parse(saved) };
-            const savedMsg = localStorage.getItem('virtualPetMessages');
-            if (savedMsg) messages = JSON.parse(savedMsg);
         }
 
         function updateUI() {
@@ -374,61 +372,42 @@
             updatePetVisual();
         }
 
-        function addMessage(text) {
-            messages.unshift(text);
-            if (messages.length > 4) messages.pop();
-            const el = document.getElementById('statusMessage');
-            el.textContent = text;
-            savePet();
-        }
-
+        // === ACTIONS ===
         function feedPet() {
-            if (pet.hunger >= 95) { addMessage(`${pet.name} is already full!`); return; }
+            if (pet.hunger >= 95) return;
             pet.hunger = Math.min(100, pet.hunger + 22);
             pet.happiness = Math.min(100, pet.happiness + 5);
             pet.energy = Math.max(0, pet.energy - 3);
-            addMessage(`You fed ${pet.name}.`);
-            updateUI(); savePet(); checkLow();
+            updateUI();
+            savePet();
         }
 
         function playWithPet() {
-            if (pet.energy < 15) { addMessage(`${pet.name} is too tired.`); return; }
+            if (pet.energy < 15) return;
             pet.happiness = Math.min(100, pet.happiness + 25);
             pet.hunger = Math.max(0, pet.hunger - 8);
             pet.energy = Math.max(0, pet.energy - 18);
             pet.cleanliness = Math.max(0, pet.cleanliness - 5);
-            addMessage(`You played with ${pet.name}!`);
-            updateUI(); savePet(); checkLow();
+            updateUI();
+            savePet();
         }
 
         function cleanPet() {
-            if (pet.cleanliness >= 95) { addMessage(`${pet.name} is already clean.`); return; }
+            if (pet.cleanliness >= 95) return;
             pet.cleanliness = Math.min(100, pet.cleanliness + 28);
             pet.happiness = Math.min(100, pet.happiness + 8);
             pet.energy = Math.max(0, pet.energy - 5);
-            addMessage(`You cleaned ${pet.name}.`);
-            updateUI(); savePet(); checkLow();
+            updateUI();
+            savePet();
         }
 
         function restPet() {
-            if (pet.energy >= 95) { addMessage(`${pet.name} isn't tired.`); return; }
+            if (pet.energy >= 95) return;
             pet.energy = Math.min(100, pet.energy + 32);
             pet.hunger = Math.max(0, pet.hunger - 5);
             pet.happiness = Math.min(100, pet.happiness + 4);
-            addMessage(`${pet.name} rested.`);
-            updateUI(); savePet(); checkLow();
-        }
-
-        function checkLow() {
-            const low = [];
-            if (pet.hunger <= 15) low.push('hungry');
-            if (pet.happiness <= 15) low.push('unhappy');
-            if (pet.cleanliness <= 15) low.push('dirty');
-            if (pet.energy <= 15) low.push('exhausted');
-            if (low.length) {
-                const el = document.getElementById('statusMessage');
-                el.textContent = `${pet.name} is ${low.join(' and ')}!`;
-            }
+            updateUI();
+            savePet();
         }
 
         function decayStats() {
@@ -439,7 +418,8 @@
             pet.energy = Math.max(0, pet.energy - r * 0.65);
             if (Math.random() < 0.05) pet.happiness = Math.max(0, pet.happiness - 3);
             if (Math.random() < 0.08) pet.age += 0.08;
-            updateUI(); savePet(); checkLow();
+            updateUI();
+            savePet();
         }
 
         function startDecay() {
@@ -450,11 +430,8 @@
         function resetPet() {
             if (!confirm('Reset your pet?')) return;
             pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
-            messages = [];
             localStorage.removeItem('virtualPet');
-            localStorage.removeItem('virtualPetMessages');
             updateUI();
-            document.getElementById('statusMessage').textContent = 'Fresh start!';
         }
 
         function init() {
@@ -462,18 +439,11 @@
             document.getElementById('petNameDisplay').textContent = pet.name;
             updateUI();
 
-            const msgEl = document.getElementById('statusMessage');
-            if (messages.length === 0) {
-                msgEl.textContent = `Welcome! Take good care of ${pet.name}.`;
-            } else {
-                msgEl.textContent = messages[0] || 'Welcome back!';
-            }
-
             startDecay();
 
-            // Draw immediately so pet appears right away
+            // Draw pet immediately
             drawPet('happy');
-            // Start animation loop
+            // Start animation
             requestAnimationFrame(animate);
         }
 
