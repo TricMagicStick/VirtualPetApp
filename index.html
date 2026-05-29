@@ -153,7 +153,7 @@
         <div class="header">
             <div style="display:flex; align-items:flex-end;">
                 <h1 class="title">VIRTUAL PET</h1>
-                <span class="version">v2.8</span>
+                <span class="version">v2.9</span>
             </div>
             <button onclick="resetPet()" class="reset-btn">
                 <span>↻</span>
@@ -222,7 +222,7 @@
                     </button>
                 </div>
 
-                <!-- Temp stage buttons -->
+                <!-- Stage buttons -->
                 <div style="margin-top: 10px; display: flex; gap: 6px; justify-content: center;">
                     <button onclick="setStage(0)" style="font-size:10px; padding:4px 8px;">Baby</button>
                     <button onclick="setStage(1)" style="font-size:10px; padding:4px 8px;">Child</button>
@@ -256,31 +256,26 @@
             const cx = 100;
             const cy = 100;
 
-            // Shadow
             eggCtx.fillStyle = 'rgba(0,0,0,0.3)';
             eggCtx.beginPath();
             eggCtx.ellipse(cx, cy + 55, 55, 18, 0, 0, Math.PI * 2);
             eggCtx.fill();
 
-            // Egg body (cream/white)
             eggCtx.fillStyle = '#fefce8';
             eggCtx.beginPath();
             eggCtx.ellipse(cx, cy, 48, 62, 0, 0, Math.PI * 2);
             eggCtx.fill();
 
-            // Egg shading
             eggCtx.fillStyle = '#e7e5d9';
             eggCtx.beginPath();
             eggCtx.ellipse(cx + 12, cy, 36, 58, 0, 0, Math.PI * 2);
             eggCtx.fill();
 
-            // Egg highlight
             eggCtx.fillStyle = '#fefce8';
             eggCtx.beginPath();
             eggCtx.ellipse(cx - 18, cy - 20, 18, 24, 0, 0, Math.PI * 2);
             eggCtx.fill();
 
-            // Crack lines (progressive)
             eggCtx.strokeStyle = '#854d0e';
             eggCtx.lineWidth = 2;
 
@@ -322,7 +317,6 @@
                 if (crack >= 5) {
                     clearInterval(interval);
 
-                    // Final break + baby emerges
                     setTimeout(() => {
                         hasHatched = true;
                         currentStage = 0;
@@ -341,11 +335,345 @@
             }, 180);
         }
 
-        // Pet drawing functions (same as before)
-        function drawFlick(mood, breathOffset, flameFlicker) { /* ... full code from v2.7 ... */ }
-        function drawCharling(mood, breathOffset, flameFlicker) { /* ... */ }
-        function drawDrakEmber(mood, breathOffset, flameFlicker) { /* ... */ }
-        function drawInfernyx(mood, breathOffset, flameFlicker) { /* ... */ }
+        // STAGE 0: FLICK (Baby)
+        function drawFlick(mood, breathOffset, flameFlicker) {
+            const cx = 110;
+            const cy = 125 + breathOffset;
+
+            petCtx.fillStyle = 'rgba(0,0,0,0.2)';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 68, 40, 12, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 22, 32, 30, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#faa307';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 26, 20, 18, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy - 22, 52, 46, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#faa307';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy - 2, 18, 14, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#ffffff';
+            petCtx.fillRect(cx - 24, cy - 30, 16, 16);
+            petCtx.fillRect(cx + 8, cy - 30, 16, 16);
+
+            petCtx.fillStyle = '#111111';
+            petCtx.fillRect(cx - 20, cy - 26, 8, 8);
+            petCtx.fillRect(cx + 12, cy - 26, 8, 8);
+
+            petCtx.fillStyle = '#ffffff';
+            petCtx.fillRect(cx - 18, cy - 28, 3, 3);
+            petCtx.fillRect(cx + 14, cy - 28, 3, 3);
+
+            petCtx.strokeStyle = '#111111';
+            petCtx.lineWidth = 2;
+            if (mood === 'happy') {
+                petCtx.beginPath();
+                petCtx.arc(cx - 16, cy - 36, 5, Math.PI, 0);
+                petCtx.stroke();
+                petCtx.beginPath();
+                petCtx.arc(cx + 16, cy - 36, 5, Math.PI, 0);
+                petCtx.stroke();
+            } else {
+                petCtx.beginPath();
+                petCtx.moveTo(cx - 24, cy - 34);
+                petCtx.lineTo(cx - 12, cy - 30);
+                petCtx.stroke();
+                petCtx.beginPath();
+                petCtx.moveTo(cx + 12, cy - 30);
+                petCtx.lineTo(cx + 24, cy - 34);
+                petCtx.stroke();
+            }
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 30, cy - 52, 7, 9);
+            petCtx.fillRect(cx + 23, cy - 52, 7, 9);
+
+            const flameH = 11 + flameFlicker * 0.5;
+            petCtx.fillStyle = '#ffba08';
+            petCtx.fillRect(cx - 5, cy - 56, 10, flameH);
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 2, cy - 52, 5, flameH - 3);
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 48, cy + 28, 14, 10);
+
+            petCtx.fillStyle = '#ffba08';
+            petCtx.fillRect(cx - 52, cy + 26, 10, 9);
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 49, cy + 28, 5, 5);
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 18, cy + 48, 10, 7);
+            petCtx.fillRect(cx + 8, cy + 48, 10, 7);
+        }
+
+        // STAGE 1: CHARLING (Child)
+        function drawCharling(mood, breathOffset, flameFlicker) {
+            const cx = 110;
+            const cy = 115 + breathOffset;
+
+            petCtx.fillStyle = 'rgba(0,0,0,0.25)';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 75, 46, 13, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 18, 40, 38, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#faa307';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 24, 26, 24, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy - 16, 46, 40, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#faa307';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 4, 20, 15, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#ffffff';
+            petCtx.fillRect(cx - 20, cy - 24, 13, 13);
+            petCtx.fillRect(cx + 7, cy - 24, 13, 13);
+
+            petCtx.fillStyle = '#111111';
+            petCtx.fillRect(cx - 16, cy - 20, 6, 6);
+            petCtx.fillRect(cx + 11, cy - 20, 6, 6);
+
+            petCtx.strokeStyle = '#111111';
+            petCtx.lineWidth = 2.5;
+            if (mood === 'happy') {
+                petCtx.beginPath();
+                petCtx.arc(cx - 14, cy - 32, 5, Math.PI, 0);
+                petCtx.stroke();
+                petCtx.beginPath();
+                petCtx.arc(cx + 14, cy - 32, 5, Math.PI, 0);
+                petCtx.stroke();
+            } else {
+                petCtx.beginPath();
+                petCtx.moveTo(cx - 20, cy - 30);
+                petCtx.lineTo(cx - 10, cy - 26);
+                petCtx.stroke();
+                petCtx.beginPath();
+                petCtx.moveTo(cx + 10, cy - 26);
+                petCtx.lineTo(cx + 20, cy - 30);
+                petCtx.stroke();
+            }
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 26, cy - 46, 8, 11);
+            petCtx.fillRect(cx + 18, cy - 46, 8, 11);
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 44, cy + 6, 13, 18);
+            petCtx.fillRect(cx + 31, cy + 6, 13, 18);
+
+            const flameH = 15 + flameFlicker * 0.6;
+            petCtx.fillStyle = '#ffba08';
+            petCtx.fillRect(cx - 7, cy - 52, 14, flameH);
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 4, cy - 48, 8, flameH - 4);
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 52, cy + 30, 20, 13);
+
+            petCtx.fillStyle = '#ffba08';
+            petCtx.fillRect(cx - 57, cy + 28, 13, 11);
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 54, cy + 30, 7, 7);
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 20, cy + 52, 11, 8);
+            petCtx.fillRect(cx + 9, cy + 52, 11, 8);
+        }
+
+        // STAGE 2: DRAKEMBER (Adult)
+        function drawDrakEmber(mood, breathOffset, flameFlicker) {
+            const cx = 110;
+            const cy = 108 + breathOffset;
+
+            petCtx.fillStyle = 'rgba(0,0,0,0.3)';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 85, 52, 14, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 10, 48, 46, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#faa307';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 18, 30, 28, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy - 22, 44, 40, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#faa307';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 2, 22, 16, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#ffffff';
+            petCtx.fillRect(cx - 18, cy - 24, 12, 12);
+            petCtx.fillRect(cx + 6, cy - 24, 12, 12);
+
+            petCtx.fillStyle = '#111111';
+            petCtx.fillRect(cx - 14, cy - 20, 5, 5);
+            petCtx.fillRect(cx + 10, cy - 20, 5, 5);
+
+            petCtx.strokeStyle = '#111111';
+            petCtx.lineWidth = 2.5;
+            if (mood === 'happy') {
+                petCtx.beginPath();
+                petCtx.arc(cx - 12, cy - 32, 5, Math.PI, 0);
+                petCtx.stroke();
+                petCtx.beginPath();
+                petCtx.arc(cx + 12, cy - 32, 5, Math.PI, 0);
+                petCtx.stroke();
+            } else {
+                petCtx.beginPath();
+                petCtx.moveTo(cx - 18, cy - 30);
+                petCtx.lineTo(cx - 8, cy - 26);
+                petCtx.stroke();
+                petCtx.beginPath();
+                petCtx.moveTo(cx + 8, cy - 26);
+                petCtx.lineTo(cx + 18, cy - 30);
+                petCtx.stroke();
+            }
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 24, cy - 48, 9, 13);
+            petCtx.fillRect(cx + 15, cy - 48, 9, 13);
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 52, cy - 10, 20, 32);
+            petCtx.fillRect(cx + 32, cy - 10, 20, 32);
+
+            const flameH = 17 + flameFlicker * 0.7;
+            petCtx.fillStyle = '#ffba08';
+            petCtx.fillRect(cx - 8, cy - 54, 16, flameH);
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 5, cy - 50, 10, flameH - 5);
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 58, cy + 32, 26, 16);
+
+            petCtx.fillStyle = '#ffba08';
+            petCtx.fillRect(cx - 64, cy + 30, 16, 14);
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 60, cy + 32, 9, 10);
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 22, cy + 54, 12, 10);
+            petCtx.fillRect(cx + 10, cy + 54, 12, 10);
+        }
+
+        // STAGE 3: INFERNYX (Ultimate)
+        function drawInfernyx(mood, breathOffset, flameFlicker) {
+            const cx = 110;
+            const cy = 100 + breathOffset;
+
+            petCtx.fillStyle = 'rgba(0,0,0,0.35)';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 92, 58, 15, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 4, 50, 50, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#faa307';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy + 14, 32, 30, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy - 26, 48, 42, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#faa307';
+            petCtx.beginPath();
+            petCtx.ellipse(cx, cy - 2, 24, 17, 0, 0, Math.PI * 2);
+            petCtx.fill();
+
+            petCtx.fillStyle = '#ffffff';
+            petCtx.fillRect(cx - 18, cy - 26, 13, 13);
+            petCtx.fillRect(cx + 5, cy - 26, 13, 13);
+
+            petCtx.fillStyle = '#111111';
+            petCtx.fillRect(cx - 14, cy - 22, 6, 6);
+            petCtx.fillRect(cx + 9, cy - 22, 6, 6);
+
+            petCtx.strokeStyle = '#111111';
+            petCtx.lineWidth = 2.5;
+            if (mood === 'happy') {
+                petCtx.beginPath();
+                petCtx.arc(cx - 12, cy - 34, 5, Math.PI, 0);
+                petCtx.stroke();
+                petCtx.beginPath();
+                petCtx.arc(cx + 12, cy - 34, 5, Math.PI, 0);
+                petCtx.stroke();
+            } else {
+                petCtx.beginPath();
+                petCtx.moveTo(cx - 18, cy - 32);
+                petCtx.lineTo(cx - 6, cy - 28);
+                petCtx.stroke();
+                petCtx.beginPath();
+                petCtx.moveTo(cx + 6, cy - 28);
+                petCtx.lineTo(cx + 18, cy - 32);
+                petCtx.stroke();
+            }
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 26, cy - 54, 11, 15);
+            petCtx.fillRect(cx + 15, cy - 54, 11, 15);
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 62, cy - 24, 26, 42);
+            petCtx.fillRect(cx + 36, cy - 24, 26, 42);
+
+            const flameH = 22 + flameFlicker * 1.0;
+            petCtx.fillStyle = '#ffba08';
+            petCtx.fillRect(cx - 10, cy - 62, 20, flameH);
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 7, cy - 58, 14, flameH - 7);
+
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 62, cy + 28, 30, 20);
+
+            petCtx.fillStyle = '#ffba08';
+            petCtx.fillRect(cx - 68, cy + 26, 20, 18);
+            petCtx.fillStyle = '#e85d04';
+            petCtx.fillRect(cx - 64, cy + 28, 12, 14);
+
+            petCtx.fillStyle = '#9d0208';
+            petCtx.fillRect(cx - 24, cy + 52, 15, 12);
+            petCtx.fillRect(cx + 9, cy + 52, 15, 12);
+        }
 
         function drawPet(mood, breathOffset, flameFlicker) {
             petCtx.clearRect(0, 0, petCanvas.width, petCanvas.height);
@@ -488,19 +816,15 @@
             loadPet();
 
             if (!hasHatched) {
-                // Show egg screen
                 document.getElementById('egg-screen').style.display = 'block';
                 document.getElementById('pet-screen').style.display = 'none';
 
-                // Draw initial egg
                 drawEgg(0);
 
-                // Tap to hatch
                 eggCanvas.onclick = () => {
                     if (!eggAnimating) hatchAnimation();
                 };
             } else {
-                // Already hatched
                 document.getElementById('egg-screen').style.display = 'none';
                 document.getElementById('pet-screen').style.display = 'block';
 
