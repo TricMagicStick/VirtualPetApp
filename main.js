@@ -1,6 +1,6 @@
 // ============================================
-// VIRTUAL PET v4.10 - Aggressive Whisk Ultimate
-// Much more dramatic final form with strong cloud integration
+// VIRTUAL PET v4.11 - Ultra Aggressive Whisk Ultimate
+// Cloud-dominant final form - cat emerging from majestic cloud entity
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -387,8 +387,8 @@ function drawInfernyx(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
-// WHISK LINE (Floating Cat on Nimbus) - Aggressive v4.10
-// Dramatic Ultimate with strong cloud integration and new silhouette
+// WHISK LINE (Floating Cat on Nimbus) - Ultra Aggressive v4.11
+// Cloud-dominant Ultimate - cat emerging from majestic cloud entity
 // ============================================
 
 // STAGE 0: PUFF (Baby)
@@ -448,7 +448,6 @@ function drawPuff(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
-    // Ears
     petCtx.fillStyle = '#475569';
     petCtx.beginPath();
     petCtx.moveTo(cx - 18, cy - 28);
@@ -621,98 +620,104 @@ function drawWhisk(mood, breathOffset, flameFlicker) {
     petCtx.fill();
 }
 
-// STAGE 3: NIMBRIX (Ultimate) - Aggressive dramatic final form
+// STAGE 3: NIMBRIX (Ultimate) - Ultra aggressive cloud-dominant final form
 function drawNimbrix(mood, breathOffset, flameFlicker) {
     const cx = 110;
-    const cy = 98 + breathOffset;
+    const cy = 96 + breathOffset;
 
-    // Large dramatic cloud shadow
-    petCtx.fillStyle = 'rgba(0,0,0,0.4)';
+    // Very large dramatic cloud shadow
+    petCtx.fillStyle = 'rgba(0,0,0,0.45)';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy + 82, 62, 14, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx, cy + 86, 68, 15, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Large integrated cloud body (major silhouette change)
+    // Massive cloud body - the main silhouette (cat emerges from this)
     petCtx.fillStyle = '#e0f2fe';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy + 62, 54, 22, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx, cy + 58, 58, 28, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Head with strong neck presence
+    // Secondary cloud layer for depth
+    petCtx.fillStyle = '#bae6fd';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 52, 48, 20, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Smaller cat head emerging from the cloud (integrated, not sitting on top)
     petCtx.fillStyle = '#475569';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy - 12, 36, 32, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx, cy - 8, 32, 28, 0, 0, Math.PI * 2);
     petCtx.fill();
 
     petCtx.fillStyle = '#94a3b8';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy + 2, 16, 13, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx, cy + 6, 15, 12, 0, 0, Math.PI * 2);
     petCtx.fill();
 
     // Eyes
     petCtx.fillStyle = '#ffffff';
-    petCtx.fillRect(cx - 13, cy - 16, 10, 10);
-    petCtx.fillRect(cx + 3, cy - 16, 10, 10);
+    petCtx.fillRect(cx - 12, cy - 14, 9, 9);
+    petCtx.fillRect(cx + 3, cy - 14, 9, 9);
 
     petCtx.fillStyle = '#0f172a';
-    petCtx.fillRect(cx - 9, cy - 12, 5, 5);
-    petCtx.fillRect(cx + 7, cy - 12, 5, 5);
+    petCtx.fillRect(cx - 8, cy - 10, 4, 4);
+    petCtx.fillRect(cx + 7, cy - 10, 4, 4);
 
     petCtx.fillStyle = '#ffffff';
-    petCtx.fillRect(cx - 7, cy - 14, 2, 2);
-    petCtx.fillRect(cx + 9, cy - 14, 2, 2);
+    petCtx.fillRect(cx - 6, cy - 12, 2, 2);
+    petCtx.fillRect(cx + 9, cy - 12, 2, 2);
 
     // Eyebrows
     petCtx.strokeStyle = '#0f172a';
     petCtx.lineWidth = 1.5;
     if (mood === 'happy') {
         petCtx.beginPath();
-        petCtx.arc(cx - 8, cy - 24, 3, Math.PI, 0);
+        petCtx.arc(cx - 7, cy - 22, 3, Math.PI, 0);
         petCtx.stroke();
         petCtx.beginPath();
-        petCtx.arc(cx + 8, cy - 24, 3, Math.PI, 0);
+        petCtx.arc(cx + 7, cy - 22, 3, Math.PI, 0);
         petCtx.stroke();
     } else {
         petCtx.beginPath();
-        petCtx.moveTo(cx - 13, cy - 22);
-        petCtx.lineTo(cx - 4, cy - 19);
+        petCtx.moveTo(cx - 12, cy - 20);
+        petCtx.lineTo(cx - 3, cy - 17);
         petCtx.stroke();
         petCtx.beginPath();
-        petCtx.moveTo(cx + 4, cy - 19);
-        petCtx.lineTo(cx + 13, cy - 22);
+        petCtx.moveTo(cx + 3, cy - 17);
+        petCtx.lineTo(cx + 12, cy - 20);
         petCtx.stroke();
     }
 
-    // Large prominent ears
+    // Large ears emerging from cloud
     petCtx.fillStyle = '#334155';
     petCtx.beginPath();
-    petCtx.moveTo(cx - 15, cy - 30);
-    petCtx.lineTo(cx - 24, cy - 44);
-    petCtx.lineTo(cx - 6, cy - 34);
+    petCtx.moveTo(cx - 14, cy - 26);
+    petCtx.lineTo(cx - 22, cy - 38);
+    petCtx.lineTo(cx - 6, cy - 30);
     petCtx.fill();
 
     petCtx.beginPath();
-    petCtx.moveTo(cx + 15, cy - 30);
-    petCtx.lineTo(cx + 24, cy - 44);
-    petCtx.lineTo(cx + 6, cy - 34);
+    petCtx.moveTo(cx + 14, cy - 26);
+    petCtx.lineTo(cx + 22, cy - 38);
+    petCtx.lineTo(cx + 6, cy - 30);
     petCtx.fill();
 
-    // Very dramatic flowing cloud elements (major new silhouette feature)
-    petCtx.fillStyle = '#bae6fd';
+    // Extremely dramatic flowing cloud extensions (major silhouette feature)
+    petCtx.fillStyle = '#e0f2fe';
     petCtx.beginPath();
-    petCtx.ellipse(cx - 26, cy + 68, 18, 8, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx - 30, cy + 62, 20, 9, 0, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.ellipse(cx + 28, cy + 70, 16, 7, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 32, cy + 64, 18, 8, 0, 0, Math.PI * 2);
     petCtx.fill();
 
     // Extra flowing cloud wisps
-    petCtx.fillStyle = '#e0f2fe';
+    petCtx.fillStyle = '#bae6fd';
     petCtx.beginPath();
-    petCtx.ellipse(cx - 32, cy + 58, 10, 5, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx - 38, cy + 52, 12, 6, 0, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.ellipse(cx + 34, cy + 60, 9, 4, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 40, cy + 54, 11, 5, 0, 0, Math.PI * 2);
     petCtx.fill();
 }
 
