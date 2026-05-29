@@ -1,9 +1,9 @@
 // ============================================
-// VIRTUAL PET v4.4 - Sprig Added
+// VIRTUAL PET v4.5 - Improved Sprig Flower
 // ============================================
 // index.html  -> Clean loader
 // style.css   -> All styling
-// main.js     -> Core logic + 3 characters (Ember, Whisk, Sprig)
+// main.js     -> Core logic + 3 characters
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -99,7 +99,6 @@ function hatchAnimation() {
                 hasHatched = true;
                 currentStage = 0;
 
-                // Randomly choose between Flick, Puff, or Bud (Sprig)
                 const rand = Math.random();
                 let randomPet;
                 if (rand < 0.33) randomPet = 'flick';
@@ -769,39 +768,33 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
-// SPRIG LINE (Plant/Nature) - Strong Evolution Progression
+// SPRIG LINE (Plant/Nature) - Strong Evolution + Better Flower
 // ============================================
 
-// STAGE 0: BUD (Baby) - Mostly cute head + tiny sprout
 function drawBud(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 130 + breathOffset;
 
-    // Tiny shadow
     petCtx.fillStyle = 'rgba(0,0,0,0.2)';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 58, 32, 9, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Tiny sprout body
     petCtx.fillStyle = '#4ade80';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 32, 20, 18, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Big cute head (dominant feature)
     petCtx.fillStyle = '#4ade80';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 14, 44, 40, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Snout area
     petCtx.fillStyle = '#86efac';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 6, 14, 11, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Big eyes
     petCtx.fillStyle = '#ffffff';
     petCtx.fillRect(cx - 18, cy - 22, 11, 11);
     petCtx.fillRect(cx + 7, cy - 22, 11, 11);
@@ -814,7 +807,6 @@ function drawBud(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 12, cy - 20, 2, 2);
     petCtx.fillRect(cx + 13, cy - 20, 2, 2);
 
-    // Happy eyebrows
     petCtx.strokeStyle = '#166534';
     petCtx.lineWidth = 2;
     if (mood === 'happy') {
@@ -835,37 +827,31 @@ function drawBud(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
-    // Tiny sprout on head
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 3, cy - 48, 6, 10);
     petCtx.fillStyle = '#4ade80';
     petCtx.fillRect(cx - 5, cy - 42, 3, 4);
     petCtx.fillRect(cx + 2, cy - 42, 3, 4);
 
-    // Tiny root nubs
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 14, cy + 46, 6, 5);
     petCtx.fillRect(cx + 8, cy + 46, 6, 5);
 }
 
-// STAGE 1: SPROUT (Child) - Stem + first leaves appear
 function drawSprout(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 120 + breathOffset;
 
-    // Shadow
     petCtx.fillStyle = 'rgba(0,0,0,0.25)';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 68, 38, 10, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Stem/body developing
     petCtx.fillStyle = '#4ade80';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 22, 26, 30, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Head still prominent
     petCtx.fillStyle = '#4ade80';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 12, 40, 36, 0, 0, Math.PI * 2);
@@ -876,7 +862,6 @@ function drawSprout(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 6, 16, 12, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Eyes
     petCtx.fillStyle = '#ffffff';
     petCtx.fillRect(cx - 16, cy - 20, 10, 10);
     petCtx.fillRect(cx + 6, cy - 20, 10, 10);
@@ -885,7 +870,6 @@ function drawSprout(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 12, cy - 16, 4, 4);
     petCtx.fillRect(cx + 10, cy - 16, 4, 4);
 
-    // Eyebrows
     petCtx.strokeStyle = '#166534';
     petCtx.lineWidth = 2;
     if (mood === 'happy') {
@@ -906,7 +890,6 @@ function drawSprout(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
-    // First leaves appear (new feature!)
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 28, cy + 4, 12, 8);
     petCtx.fillRect(cx + 16, cy + 4, 12, 8);
@@ -915,29 +898,24 @@ function drawSprout(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 26, cy + 6, 8, 5);
     petCtx.fillRect(cx + 18, cy + 6, 8, 5);
 
-    // Small stem detail
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 4, cy - 42, 8, 12);
 }
 
-// STAGE 2: SPRIG (Adult) - Vines + defined body
 function drawSprig(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 112 + breathOffset;
 
-    // Shadow
     petCtx.fillStyle = 'rgba(0,0,0,0.3)';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 74, 44, 11, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Defined body
     petCtx.fillStyle = '#4ade80';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 14, 34, 36, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Head
     petCtx.fillStyle = '#4ade80';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 14, 38, 34, 0, 0, Math.PI * 2);
@@ -948,7 +926,6 @@ function drawSprig(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 4, 18, 13, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Eyes
     petCtx.fillStyle = '#ffffff';
     petCtx.fillRect(cx - 15, cy - 20, 10, 10);
     petCtx.fillRect(cx + 5, cy - 20, 10, 10);
@@ -957,7 +934,6 @@ function drawSprig(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 11, cy - 16, 4, 4);
     petCtx.fillRect(cx + 9, cy - 16, 4, 4);
 
-    // Eyebrows
     petCtx.strokeStyle = '#166534';
     petCtx.lineWidth = 2;
     if (mood === 'happy') {
@@ -978,22 +954,18 @@ function drawSprig(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
-    // Vines appear (major new feature!)
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 32, cy + 8, 14, 18);
     petCtx.fillRect(cx + 18, cy + 8, 14, 18);
 
-    // More leaves
     petCtx.fillStyle = '#4ade80';
     petCtx.fillRect(cx - 30, cy + 10, 10, 7);
     petCtx.fillRect(cx + 20, cy + 10, 10, 7);
 
-    // Stem detail on head
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 5, cy - 44, 10, 14);
 }
 
-// STAGE 3: VERDANT (Ultimate) - Dramatic final form with flowing vines + bloom
 function drawVerdant(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 102 + breathOffset;
@@ -1004,7 +976,7 @@ function drawVerdant(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 82, 50, 12, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Taller, more imposing body
+    // Taller imposing body
     petCtx.fillStyle = '#4ade80';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 8, 38, 42, 0, 0, Math.PI * 2);
@@ -1051,28 +1023,52 @@ function drawVerdant(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
-    // Flowing vines (major new feature!)
+    // Flowing vines (major feature)
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 38, cy - 4, 18, 28);
     petCtx.fillRect(cx + 20, cy - 4, 18, 28);
 
-    // Flower bloom on head (new feature!)
-    petCtx.fillStyle = '#f472b6';
-    petCtx.beginPath();
-    petCtx.ellipse(cx, cy - 48, 14, 10, 0, 0, Math.PI * 2);
-    petCtx.fill();
+    // IMPROVED FLOWER BLOOM - Proper multi-petal flower using arcs
+    // Center of flower
+    const flowerX = cx;
+    const flowerY = cy - 50;
 
+    // Outer petals (6 petals using arcs for organic shape)
+    petCtx.fillStyle = '#f472b6';
+    for (let i = 0; i < 6; i++) {
+        const angle = (i * Math.PI * 2) / 6;
+        const px = flowerX + Math.cos(angle) * 8;
+        const py = flowerY + Math.sin(angle) * 6;
+
+        petCtx.beginPath();
+        petCtx.ellipse(px, py, 7, 5, angle, 0, Math.PI * 2);
+        petCtx.fill();
+    }
+
+    // Inner petals (lighter pink)
+    petCtx.fillStyle = '#f9a8d4';
+    for (let i = 0; i < 6; i++) {
+        const angle = (i * Math.PI * 2) / 6 + 0.5;
+        const px = flowerX + Math.cos(angle) * 5;
+        const py = flowerY + Math.sin(angle) * 4;
+
+        petCtx.beginPath();
+        petCtx.ellipse(px, py, 4, 3, angle, 0, Math.PI * 2);
+        petCtx.fill();
+    }
+
+    // Flower center
     petCtx.fillStyle = '#ec4899';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy - 48, 8, 6, 0, 0, Math.PI * 2);
+    petCtx.arc(flowerX, flowerY, 4, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Bark-like armor details (new feature!)
+    // Bark-like armor details
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 20, cy + 28, 8, 10);
     petCtx.fillRect(cx + 12, cy + 28, 8, 10);
 
-    // More leaves and vines
+    // Extra leaves
     petCtx.fillStyle = '#4ade80';
     petCtx.fillRect(cx - 36, cy + 2, 12, 8);
     petCtx.fillRect(cx + 24, cy + 2, 12, 8);
