@@ -175,7 +175,7 @@
             </button>
         </div>
 
-        <!-- Pet (Improved Canvas) -->
+        <!-- Pet with Animation -->
         <div class="pet-container">
             <canvas id="petCanvas" width="140" height="140"></canvas>
             <div id="petMood" class="mood" style="color:#22c55e; margin-top: 8px;">VERY HAPPY</div>
@@ -279,28 +279,29 @@
         let messages = [];
         let decayInterval = null;
         let currentView = 'status';
+        let animFrame = 0;
 
         const canvas = document.getElementById('petCanvas');
         const ctx = canvas.getContext('2d', { alpha: true });
 
-        function drawPet(mood) {
+        function drawPet(mood, breathOffset = 0, flameFlicker = 0) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.imageSmoothingEnabled = false;
 
             const cx = 70;
-            const cy = 72;
+            const cy = 72 + breathOffset;
 
-            // Shadow / base
+            // Shadow
             ctx.fillStyle = 'rgba(0,0,0,0.25)';
             ctx.beginPath();
             ctx.ellipse(cx, cy + 58, 38, 12, 0, 0, Math.PI * 2);
             ctx.fill();
 
-            // Body (main orange)
+            // Body
             ctx.fillStyle = '#e85d04';
             ctx.fillRect(cx - 26, cy + 8, 52, 46);
 
-            // Belly (lighter)
+            // Belly
             ctx.fillStyle = '#faa307';
             ctx.fillRect(cx - 18, cy + 20, 36, 28);
 
@@ -312,17 +313,16 @@
             ctx.fillStyle = '#faa307';
             ctx.fillRect(cx - 16, cy + 4, 32, 16);
 
-            // Eyes (white)
+            // Eyes
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(cx - 18, cy - 18, 11, 11);
             ctx.fillRect(cx + 7, cy - 18, 11, 11);
 
-            // Pupils
             ctx.fillStyle = '#111111';
             ctx.fillRect(cx - 14, cy - 14, 5, 5);
             ctx.fillRect(cx + 11, cy - 14, 5, 5);
 
-            // Eyebrows / expression
+            // Eyebrows
             ctx.strokeStyle = '#111111';
             ctx.lineWidth = 2;
             if (mood === 'happy') {
@@ -348,23 +348,25 @@
             ctx.fillRect(cx - 26, cy - 36, 8, 12);
             ctx.fillRect(cx + 18, cy - 36, 8, 12);
 
-            // Flame on head
+            // Head flame (flickers)
+            const flameHeight = 14 + flameFlicker;
             ctx.fillStyle = '#ffba08';
-            ctx.fillRect(cx - 6, cy - 42, 12, 16);
+            ctx.fillRect(cx - 6, cy - 42, 12, flameHeight);
             ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 3, cy - 38, 6, 10);
+            ctx.fillRect(cx - 3, cy - 38, 6, flameHeight - 4);
 
             // Tail
             ctx.fillStyle = '#e85d04';
             ctx.fillRect(cx - 42, cy + 28, 20, 12);
 
-            // Tail flame
+            // Tail flame (flickers)
+            const tailFlameH = 14 + flameFlicker * 0.8;
             ctx.fillStyle = '#ffba08';
-            ctx.fillRect(cx - 48, cy + 26, 14, 16);
+            ctx.fillRect(cx - 48, cy + 26, 14, tailFlameH);
             ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 45, cy + 29, 8, 10);
+            ctx.fillRect(cx - 45, cy + 29, 8, tailFlameH - 4);
 
-            // Small wings
+            // Wings
             ctx.fillStyle = '#9d0208';
             ctx.fillRect(cx - 38, cy + 10, 12, 16);
             ctx.fillRect(cx + 26, cy + 10, 12, 16);
@@ -375,31 +377,46 @@
             ctx.fillRect(cx + 10, cy + 52, 10, 8);
         }
 
-        function updatePetVisual() {
+        let lastTime = 0;
+        function animate(timestamp = 0) {
+            const delta = timestamp - lastTime;
+            lastTime = timestamp;
+
+            animFrame += 0.08;
+
+            // Breathing (slow sine wave)
+            const breath = Math.sin(animFrame * 0.8) * 1.5;
+
+            // Flame flicker (random-ish)
+            const flameFlicker = Math.sin(animFrame * 3) * 2 + (Math.random() - 0.5) * 1.5;
+
             const avg = (pet.hunger + pet.happiness + pet.cleanliness + pet.energy) / 4;
-            let mood = 'happy';
+            let mood = (avg >= 50) ? 'happy' : 'sad';
+
+            drawPet(mood, breath, flameFlicker);
+
+            requestAnimationFrame(animate);
+        }
+
+        function updatePetVisual() {
+            // This is now handled by the animation loop
+            const avg = (pet.hunger + pet.happiness + pet.cleanliness + pet.energy) / 4;
             let moodText = 'VERY HAPPY';
             let moodColor = '#22c55e';
 
             if (avg >= 80) {
-                mood = 'happy';
                 moodText = 'VERY HAPPY';
                 moodColor = '#22c55e';
             } else if (avg >= 60) {
-                mood = 'happy';
                 moodText = 'HAPPY';
                 moodColor = '#22c55e';
             } else if (avg >= 40) {
-                mood = 'sad';
                 moodText = 'NEEDS CARE';
                 moodColor = '#f59e0b';
             } else {
-                mood = 'sad';
                 moodText = 'STRUGGLING';
                 moodColor = '#ef4444';
             }
-
-            drawPet(mood);
 
             const moodEl = document.getElementById('petMood');
             moodEl.textContent = moodText;
@@ -552,7 +569,9 @@
             if (messages.length === 0) msgEl.textContent = `Welcome! Take good care of ${pet.name}.`;
             else msgEl.textContent = messages[0] || 'Welcome back!';
             startDecay();
-            drawPet('happy');
+
+            // Start animation loop
+            requestAnimationFrame(animate);
         }
 
         window.onload = init;
