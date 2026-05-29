@@ -2,335 +2,330 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Pet • Offline</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Virtual Pet</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
         
         :root {
-            --bg: #0f172a;
-            --card: #1e2937;
-            --accent: #10b981;
-            --accent-dark: #059669;
+            --bg: #0a0f1e;
+            --card: #161b2e;
+            --card-border: #252b45;
+            --accent: #22c55e;
         }
         
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
         
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1135 100%);
+            background: var(--bg);
             color: #e2e8f0;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             min-height: 100vh;
-            line-height: 1.5;
+            -webkit-tap-highlight-color: transparent;
         }
         
-        .pixel-font {
-            font-family: 'Press Start 2P', system-ui;
-            letter-spacing: 1px;
-        }
-        
-        .container {
-            max-width: 420px;
+        .app {
+            max-width: 380px;
             margin: 0 auto;
-            padding: 24px 16px;
+            padding: 12px 14px 20px;
+            padding-top: max(12px, env(safe-area-inset-top));
         }
         
         .header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            padding: 0 4px;
         }
         
         .title {
-            font-size: 28px;
+            font-family: 'Press Start 2P', system-ui;
+            font-size: 22px;
             font-weight: 700;
-            color: #10b981;
+            color: #22c55e;
+            letter-spacing: 1px;
             margin: 0;
             line-height: 1;
         }
         
-        .subtitle {
-            font-size: 12px;
-            color: #64748b;
-            margin-top: 2px;
+        .reset-btn {
+            background: #3f1f1f;
+            color: #fda4af;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
         }
         
-        .card {
-            background: #1e2937;
-            border-radius: 20px;
-            border: 1px solid #334155;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        .name-section {
+            margin-bottom: 12px;
+            padding: 0 4px;
+        }
+        
+        .name-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: #64748b;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+            padding-left: 2px;
+        }
+        
+        .name-input {
+            width: 100%;
+            background: #161b2e;
+            border: 1.5px solid #252b45;
+            border-radius: 14px;
+            padding: 9px 14px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            outline: none;
+        }
+        
+        .name-input:focus {
+            border-color: #22c55e;
+        }
+        
+        .pet-card {
+            background: #161b2e;
+            border: 1.5px solid #252b45;
+            border-radius: 22px;
+            padding: 18px 16px 16px;
+            margin-bottom: 14px;
+            box-shadow: 0 8px 25px -5px rgb(0 0 0 / 0.3);
+            text-align: center;
         }
         
         .pet-visual {
-            width: 160px;
-            height: 160px;
-            background: #334155;
+            width: 138px;
+            height: 138px;
+            background: #252b45;
             border-radius: 9999px;
-            border: 6px solid #064e3b;
+            border: 7px solid #166534;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 16px;
+            margin: 0 auto 12px;
             position: relative;
+            box-shadow: inset 0 4px 12px rgb(0 0 0 / 0.4);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .pet-visual.happy {
-            animation: petBounce 1.2s infinite ease-in-out;
-        }
-        
-        .pet-visual.sad {
-            animation: petShake 0.6s infinite ease-in-out;
-        }
+        .pet-visual.happy { animation: bounce 1.1s infinite ease-in-out; }
+        .pet-visual.sad { animation: shake 0.55s infinite ease-in-out; }
         
         .pet-emoji {
-            font-size: 110px;
+            font-size: 92px;
             line-height: 1;
-            transition: all 0.4s ease;
-            user-select: none;
+            transition: transform 0.3s ease;
         }
         
         .pet-face-details {
             position: absolute;
-            top: 38%;
+            top: 40%;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 38px;
+            gap: 32px;
         }
         
         .pet-face-details div {
-            width: 11px;
-            height: 11px;
-            background: white;
+            width: 9px;
+            height: 9px;
+            background: #fff;
             border-radius: 50%;
-            box-shadow: 0 0 0 3px #1e2937;
-            opacity: 0.85;
+            box-shadow: 0 0 0 2.5px #252b45;
         }
         
-        @keyframes petBounce {
+        @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
+            50% { transform: translateY(-10px); }
         }
         
-        @keyframes petShake {
+        @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-6px); }
-            75% { transform: translateX(6px); }
+            25%, 75% { transform: translateX(-5px); }
         }
         
-        .mood-text {
-            font-size: 13px;
-            font-weight: 600;
+        .mood {
+            font-size: 12px;
+            font-weight: 700;
             letter-spacing: 1.5px;
-            text-align: center;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
         
-        .age-text {
-            font-size: 11px;
+        .age {
+            font-size: 10px;
             color: #64748b;
-            text-align: center;
         }
         
-        .section-title {
-            font-size: 11px;
-            font-weight: 600;
+        .section-header {
+            font-size: 10px;
+            font-weight: 700;
             color: #64748b;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
-            padding-left: 4px;
+            letter-spacing: 1px;
+            margin: 0 0 8px 6px;
+        }
+        
+        .stats-card {
+            background: #161b2e;
+            border: 1.5px solid #252b45;
+            border-radius: 18px;
+            padding: 14px 14px 6px;
+            margin-bottom: 14px;
+            box-shadow: 0 6px 20px -4px rgb(0 0 0 / 0.25);
+        }
+        
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 11px;
+        }
+        
+        .stat:last-child { margin-bottom: 0; }
+        
+        .stat-icon {
+            width: 26px;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        
+        .stat-main {
+            flex: 1;
         }
         
         .stat-row {
-            margin-bottom: 16px;
-        }
-        
-        .stat-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
-            padding: 0 4px;
+            margin-bottom: 4px;
         }
         
-        .stat-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
+        .stat-name {
+            font-weight: 600;
+            font-size: 14px;
         }
         
         .stat-value {
             font-family: ui-monospace, monospace;
             font-size: 13px;
-            font-weight: 600;
-            min-width: 32px;
-            text-align: right;
+            font-weight: 700;
+            color: #cbd5e1;
         }
         
-        .progress-bg {
-            height: 10px;
-            background: #334155;
-            border-radius: 9999px;
+        .progress {
+            height: 7px;
+            background: #252b45;
+            border-radius: 999px;
             overflow: hidden;
         }
         
-        .progress-fill {
+        .progress-bar {
             height: 100%;
-            border-radius: 9999px;
-            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 999px;
+            transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .hunger .progress-fill { background: linear-gradient(to right, #fb923c, #f59e0b); }
-        .happiness .progress-fill { background: linear-gradient(to right, #f472b6, #e11d48); }
-        .cleanliness .progress-fill { background: linear-gradient(to right, #22d3ee, #14b8a6); }
-        .energy .progress-fill { background: linear-gradient(to right, #facc15, #eab308); }
+        .hunger .progress-bar { background: linear-gradient(to right, #f59e0b, #fb923c); }
+        .happiness .progress-bar { background: linear-gradient(to right, #ec4899, #f43f5e); }
+        .cleanliness .progress-bar { background: linear-gradient(to right, #06b6d4, #22d3ee); }
+        .energy .progress-bar { background: linear-gradient(to right, #eab308, #facc15); }
         
-        .actions-grid {
+        .actions {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 10px;
+            margin-bottom: 14px;
         }
         
-        .action-btn {
-            background: #1e2937;
-            border: 1px solid #334155;
+        .action {
+            background: #161b2e;
+            border: 1.5px solid #252b45;
             border-radius: 16px;
-            padding: 16px 12px;
+            padding: 14px 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             cursor: pointer;
             transition: all 0.2s ease;
-            text-align: center;
+            box-shadow: 0 4px 12px -2px rgb(0 0 0 / 0.2);
         }
         
-        .action-btn:hover {
-            border-color: #475569;
-            transform: translateY(-1px);
-        }
-        
-        .action-btn:active {
-            transform: scale(0.97);
+        .action:active {
+            transform: scale(0.96);
+            background: #1f253d;
         }
         
         .action-icon {
-            font-size: 28px;
-            margin-bottom: 2px;
+            font-size: 26px;
         }
         
         .action-label {
-            font-weight: 600;
+            font-weight: 700;
             font-size: 14px;
         }
         
         .action-sub {
             font-size: 10px;
             color: #64748b;
+            font-weight: 500;
         }
         
-        .status-card {
-            background: #1e2937;
-            border: 1px solid #334155;
-            border-radius: 16px;
-            padding: 16px;
+        .status {
+            background: #161b2e;
+            border: 1.5px solid #252b45;
+            border-radius: 14px;
+            padding: 12px 14px;
             display: flex;
-            gap: 12px;
+            gap: 10px;
             align-items: flex-start;
+            box-shadow: 0 4px 15px -3px rgb(0 0 0 / 0.2);
+        }
+        
+        .status-icon {
+            font-size: 18px;
+            margin-top: 1px;
         }
         
         .status-text {
-            font-size: 14px;
-            line-height: 1.5;
+            font-size: 13.5px;
+            line-height: 1.45;
             flex: 1;
         }
         
-        .message {
-            color: #10b981;
-        }
-        
-        .message.critical {
-            color: #f87171;
-            font-weight: 500;
-        }
-        
-        .reset-btn {
-            background: #450a0a;
-            color: #fda4af;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 8px;
-            font-size: 11px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .reset-btn:hover {
-            background: #7f1d1d;
-        }
-        
-        .tip {
-            font-size: 11px;
-            color: #64748b;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 0 4px;
-        }
-        
-        .name-input {
-            width: 100%;
-            background: #1e2937;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 10px 14px;
-            font-size: 17px;
-            font-weight: 500;
-            color: white;
-            outline: none;
-        }
-        
-        .name-input:focus {
-            border-color: #10b981;
-        }
+        .critical { color: #f87171; font-weight: 600; }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="app">
         <!-- Header -->
         <div class="header">
-            <div>
-                <h1 class="title pixel-font">VIRTUAL PET</h1>
-                <div class="subtitle">Offline • v1.0</div>
-            </div>
+            <h1 class="title">VIRTUAL PET</h1>
             <button onclick="resetPet()" class="reset-btn">
                 <span>↻</span>
-                <span>Reset</span>
+                <span style="font-size:10px; font-weight:700;">RESET</span>
             </button>
         </div>
 
-        <!-- Pet Name -->
-        <div style="margin-bottom: 16px;">
-            <div style="font-size: 11px; color: #64748b; margin-bottom: 6px; padding-left: 4px;">YOUR PET'S NAME</div>
-            <input id="petName" type="text" value="Pixel" 
-                   class="name-input"
-                   oninput="updatePetName()">
+        <!-- Name -->
+        <div class="name-section">
+            <div class="name-label">YOUR PET'S NAME</div>
+            <input id="petName" type="text" value="Pixel" class="name-input" oninput="updatePetName()">
         </div>
 
-        <!-- Pet Visual -->
-        <div class="card" style="text-align: center; padding-top: 24px; padding-bottom: 24px;">
+        <!-- Pet -->
+        <div class="pet-card">
             <div id="petVisual" class="pet-visual">
                 <div id="petEmoji" class="pet-emoji">🐱</div>
                 <div class="pet-face-details">
@@ -338,69 +333,55 @@
                     <div></div>
                 </div>
             </div>
-            
-            <div id="petMood" class="mood-text" style="color: #10b981;">HAPPY</div>
-            <div class="age-text">Age: <span id="ageValue">0</span> days</div>
+            <div id="petMood" class="mood" style="color:#22c55e">VERY HAPPY</div>
+            <div class="age">Age: <span id="ageValue">0</span> days</div>
         </div>
 
         <!-- Stats -->
         <div>
-            <div class="section-title">NEEDS</div>
-            
-            <div class="card" style="padding: 20px 18px;">
-                <!-- Hunger -->
-                <div class="stat-row hunger">
-                    <div class="stat-header">
-                        <div class="stat-label">
-                            <span style="font-size: 18px;">🍎</span>
-                            <span>Hunger</span>
+            <div class="section-header">NEEDS</div>
+            <div class="stats-card">
+                <div class="stat hunger">
+                    <div class="stat-icon">🍎</div>
+                    <div class="stat-main">
+                        <div class="stat-row">
+                            <div class="stat-name">Hunger</div>
+                            <div id="hungerValue" class="stat-value">80</div>
                         </div>
-                        <span id="hungerValue" class="stat-value">80</span>
-                    </div>
-                    <div class="progress-bg">
-                        <div id="hungerBar" class="progress-fill" style="width: 80%"></div>
+                        <div class="progress"><div id="hungerBar" class="progress-bar" style="width:80%"></div></div>
                     </div>
                 </div>
                 
-                <!-- Happiness -->
-                <div class="stat-row happiness">
-                    <div class="stat-header">
-                        <div class="stat-label">
-                            <span style="font-size: 18px;">❤️</span>
-                            <span>Happiness</span>
+                <div class="stat happiness">
+                    <div class="stat-icon">❤️</div>
+                    <div class="stat-main">
+                        <div class="stat-row">
+                            <div class="stat-name">Happiness</div>
+                            <div id="happinessValue" class="stat-value">75</div>
                         </div>
-                        <span id="happinessValue" class="stat-value">75</span>
-                    </div>
-                    <div class="progress-bg">
-                        <div id="happinessBar" class="progress-fill" style="width: 75%"></div>
+                        <div class="progress"><div id="happinessBar" class="progress-bar" style="width:75%"></div></div>
                     </div>
                 </div>
                 
-                <!-- Cleanliness -->
-                <div class="stat-row cleanliness">
-                    <div class="stat-header">
-                        <div class="stat-label">
-                            <span style="font-size: 18px;">🧼</span>
-                            <span>Cleanliness</span>
+                <div class="stat cleanliness">
+                    <div class="stat-icon">🧼</div>
+                    <div class="stat-main">
+                        <div class="stat-row">
+                            <div class="stat-name">Cleanliness</div>
+                            <div id="cleanValue" class="stat-value">85</div>
                         </div>
-                        <span id="cleanValue" class="stat-value">85</span>
-                    </div>
-                    <div class="progress-bg">
-                        <div id="cleanBar" class="progress-fill" style="width: 85%"></div>
+                        <div class="progress"><div id="cleanBar" class="progress-bar" style="width:85%"></div></div>
                     </div>
                 </div>
                 
-                <!-- Energy -->
-                <div class="stat-row energy">
-                    <div class="stat-header">
-                        <div class="stat-label">
-                            <span style="font-size: 18px;">⚡</span>
-                            <span>Energy</span>
+                <div class="stat energy">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-main">
+                        <div class="stat-row">
+                            <div class="stat-name">Energy</div>
+                            <div id="energyValue" class="stat-value">90</div>
                         </div>
-                        <span id="energyValue" class="stat-value">90</span>
-                    </div>
-                    <div class="progress-bg">
-                        <div id="energyBar" class="progress-fill" style="width: 90%"></div>
+                        <div class="progress"><div id="energyBar" class="progress-bar" style="width:90%"></div></div>
                     </div>
                 </div>
             </div>
@@ -408,69 +389,52 @@
 
         <!-- Actions -->
         <div>
-            <div class="section-title">ACTIONS</div>
-            
-            <div class="actions-grid">
-                <button onclick="feedPet()" class="action-btn">
+            <div class="section-header">ACTIONS</div>
+            <div class="actions">
+                <button onclick="feedPet()" class="action">
                     <div class="action-icon">🍎</div>
-                    <div>
-                        <div class="action-label">Feed</div>
-                        <div class="action-sub">+ Hunger</div>
-                    </div>
+                    <div class="action-label">Feed</div>
+                    <div class="action-sub">+ Hunger</div>
                 </button>
                 
-                <button onclick="playWithPet()" class="action-btn">
+                <button onclick="playWithPet()" class="action">
                     <div class="action-icon">🎮</div>
-                    <div>
-                        <div class="action-label">Play</div>
-                        <div class="action-sub">+ Happiness</div>
-                    </div>
+                    <div class="action-label">Play</div>
+                    <div class="action-sub">+ Happiness</div>
                 </button>
                 
-                <button onclick="cleanPet()" class="action-btn">
+                <button onclick="cleanPet()" class="action">
                     <div class="action-icon">🧼</div>
-                    <div>
-                        <div class="action-label">Clean</div>
-                        <div class="action-sub">+ Cleanliness</div>
-                    </div>
+                    <div class="action-label">Clean</div>
+                    <div class="action-sub">+ Cleanliness</div>
                 </button>
                 
-                <button onclick="restPet()" class="action-btn">
+                <button onclick="restPet()" class="action">
                     <div class="action-icon">🛏️</div>
-                    <div>
-                        <div class="action-label">Rest</div>
-                        <div class="action-sub">+ Energy</div>
-                    </div>
+                    <div class="action-label">Rest</div>
+                    <div class="action-sub">+ Energy</div>
                 </button>
             </div>
         </div>
 
         <!-- Status -->
-        <div class="status-card">
-            <div style="font-size: 20px; margin-top: 2px;">💬</div>
-            <div id="statusMessage" class="status-text message">
+        <div class="status">
+            <div class="status-icon">💬</div>
+            <div id="statusMessage" class="status-text">
                 Your pet is doing great! Keep caring for it.
             </div>
-        </div>
-
-        <div class="tip">
-            <span>ⓘ</span>
-            <span>Stats decrease over time. Take good care of your pet!</span>
         </div>
     </div>
 
     <script>
-        // Game State
         let pet = {
             name: "Pixel",
             hunger: 80,
             happiness: 75,
             cleanliness: 85,
             energy: 90,
-            age: 0,
-            lastUpdate: Date.now()
+            age: 0
         };
-        
         let messages = [];
         let decayInterval = null;
         
@@ -481,254 +445,163 @@
         
         function loadPet() {
             const saved = localStorage.getItem('virtualPet');
-            if (saved) {
-                const loaded = JSON.parse(saved);
-                pet = { ...pet, ...loaded };
-            }
-            
-            const savedMessages = localStorage.getItem('virtualPetMessages');
-            if (savedMessages) {
-                messages = JSON.parse(savedMessages);
-            }
-            
+            if (saved) pet = { ...pet, ...JSON.parse(saved) };
+            const savedMsg = localStorage.getItem('virtualPetMessages');
+            if (savedMsg) messages = JSON.parse(savedMsg);
             document.getElementById('petName').value = pet.name;
         }
         
         function updatePetName() {
-            const input = document.getElementById('petName');
-            pet.name = input.value.trim() || "Pixel";
+            pet.name = document.getElementById('petName').value.trim() || "Pixel";
             savePet();
             updateUI();
         }
         
         function updateUI() {
-            // Numeric values
             document.getElementById('hungerValue').textContent = Math.round(pet.hunger);
             document.getElementById('happinessValue').textContent = Math.round(pet.happiness);
             document.getElementById('cleanValue').textContent = Math.round(pet.cleanliness);
             document.getElementById('energyValue').textContent = Math.round(pet.energy);
             document.getElementById('ageValue').textContent = Math.floor(pet.age);
             
-            // Progress bars
-            document.getElementById('hungerBar').style.width = `${pet.hunger}%`;
-            document.getElementById('happinessBar').style.width = `${pet.happiness}%`;
-            document.getElementById('cleanBar').style.width = `${pet.cleanliness}%`;
-            document.getElementById('energyBar').style.width = `${pet.energy}%`;
+            document.getElementById('hungerBar').style.width = pet.hunger + '%';
+            document.getElementById('happinessBar').style.width = pet.happiness + '%';
+            document.getElementById('cleanBar').style.width = pet.cleanliness + '%';
+            document.getElementById('energyBar').style.width = pet.energy + '%';
             
-            // Pet mood & animation
             const visual = document.getElementById('petVisual');
-            const emojiEl = document.getElementById('petEmoji');
+            const emoji = document.getElementById('petEmoji');
             const moodEl = document.getElementById('petMood');
             
+            visual.classList.remove('happy', 'sad');
             const avg = (pet.hunger + pet.happiness + pet.cleanliness + pet.energy) / 4;
             
-            let emoji = '🐱';
-            let moodText = 'CONTENT';
-            let moodColor = '#64748b';
-            
-            visual.classList.remove('happy', 'sad');
+            let emojiChar = '🐱', moodText = 'CONTENT', moodColor = '#64748b';
             
             if (avg >= 80) {
-                emoji = '😺';
-                moodText = 'VERY HAPPY';
-                moodColor = '#10b981';
-                visual.classList.add('happy');
+                emojiChar = '😺'; moodText = 'VERY HAPPY'; moodColor = '#22c55e'; visual.classList.add('happy');
             } else if (avg >= 60) {
-                emoji = '🐱';
-                moodText = 'HAPPY';
-                moodColor = '#10b981';
+                emojiChar = '🐱'; moodText = 'HAPPY'; moodColor = '#22c55e';
             } else if (avg >= 40) {
-                emoji = '😿';
-                moodText = 'NEEDS CARE';
-                moodColor = '#f59e0b';
-                visual.classList.add('sad');
+                emojiChar = '😿'; moodText = 'NEEDS CARE'; moodColor = '#f59e0b'; visual.classList.add('sad');
             } else {
-                emoji = '😾';
-                moodText = 'STRUGGLING';
-                moodColor = '#ef4444';
-                visual.classList.add('sad');
+                emojiChar = '😾'; moodText = 'STRUGGLING'; moodColor = '#ef4444'; visual.classList.add('sad');
             }
             
-            emojiEl.textContent = emoji;
+            emoji.textContent = emojiChar;
             moodEl.textContent = moodText;
             moodEl.style.color = moodColor;
             
-            updateStatusMessage(avg);
+            updateStatus(avg);
         }
         
-        function updateStatusMessage(avg) {
-            const msgEl = document.getElementById('statusMessage');
-            msgEl.classList.remove('critical');
+        function updateStatus(avg) {
+            const el = document.getElementById('statusMessage');
+            el.classList.remove('critical');
             
-            if (avg >= 85) {
-                msgEl.textContent = `${pet.name} is thriving! You're doing great.`;
-            } else if (avg >= 70) {
-                msgEl.textContent = `${pet.name} is happy and well cared for.`;
-            } else if (avg >= 50) {
-                msgEl.textContent = `${pet.name} could use some attention.`;
-            } else if (avg >= 30) {
-                msgEl.textContent = `${pet.name} is feeling neglected. Do something!`;
-                msgEl.classList.add('critical');
-            } else {
-                msgEl.textContent = `${pet.name} is really struggling... help!`;
-                msgEl.classList.add('critical');
-            }
+            if (avg >= 85) el.textContent = `${pet.name} is thriving! You're doing great.`;
+            else if (avg >= 70) el.textContent = `${pet.name} is happy and well cared for.`;
+            else if (avg >= 50) el.textContent = `${pet.name} could use some attention.`;
+            else if (avg >= 30) { el.textContent = `${pet.name} is feeling neglected.`; el.classList.add('critical'); }
+            else { el.textContent = `${pet.name} is really struggling...`; el.classList.add('critical'); }
         }
         
         function addMessage(text) {
             messages.unshift(text);
-            if (messages.length > 5) messages.pop();
-            
-            const msgEl = document.getElementById('statusMessage');
-            msgEl.textContent = text;
-            msgEl.classList.remove('critical');
-            
+            if (messages.length > 4) messages.pop();
+            const el = document.getElementById('statusMessage');
+            el.textContent = text;
+            el.classList.remove('critical');
             savePet();
         }
         
         function feedPet() {
-            if (pet.hunger >= 95) {
-                addMessage(`${pet.name} is already full!`);
-                return;
-            }
+            if (pet.hunger >= 95) { addMessage(`${pet.name} is already full!`); return; }
             pet.hunger = Math.min(100, pet.hunger + 22);
             pet.happiness = Math.min(100, pet.happiness + 5);
             pet.energy = Math.max(0, pet.energy - 3);
-            
-            addMessage(`You fed ${pet.name}. Delicious!`);
-            updateUI();
-            savePet();
-            checkCritical();
+            addMessage(`You fed ${pet.name}. Yummy!`);
+            updateUI(); savePet(); checkLow();
         }
         
         function playWithPet() {
-            if (pet.energy < 15) {
-                addMessage(`${pet.name} is too tired to play.`);
-                return;
-            }
+            if (pet.energy < 15) { addMessage(`${pet.name} is too tired to play.`); return; }
             pet.happiness = Math.min(100, pet.happiness + 25);
             pet.hunger = Math.max(0, pet.hunger - 8);
             pet.energy = Math.max(0, pet.energy - 18);
             pet.cleanliness = Math.max(0, pet.cleanliness - 5);
-            
-            addMessage(`You played with ${pet.name}! So much fun.`);
-            updateUI();
-            savePet();
-            checkCritical();
+            addMessage(`You played with ${pet.name}! Fun!`);
+            updateUI(); savePet(); checkLow();
         }
         
         function cleanPet() {
-            if (pet.cleanliness >= 95) {
-                addMessage(`${pet.name} is already clean.`);
-                return;
-            }
+            if (pet.cleanliness >= 95) { addMessage(`${pet.name} is already clean.`); return; }
             pet.cleanliness = Math.min(100, pet.cleanliness + 28);
             pet.happiness = Math.min(100, pet.happiness + 8);
             pet.energy = Math.max(0, pet.energy - 5);
-            
-            addMessage(`You cleaned ${pet.name}. Fresh and happy!`);
-            updateUI();
-            savePet();
-            checkCritical();
+            addMessage(`You cleaned ${pet.name}. Fresh!`);
+            updateUI(); savePet(); checkLow();
         }
         
         function restPet() {
-            if (pet.energy >= 95) {
-                addMessage(`${pet.name} isn't tired.`);
-                return;
-            }
+            if (pet.energy >= 95) { addMessage(`${pet.name} isn't tired.`); return; }
             pet.energy = Math.min(100, pet.energy + 30);
             pet.hunger = Math.max(0, pet.hunger - 5);
             pet.happiness = Math.min(100, pet.happiness + 4);
-            
-            addMessage(`${pet.name} had a good rest. Refreshed!`);
-            updateUI();
-            savePet();
-            checkCritical();
+            addMessage(`${pet.name} had a nice rest.`);
+            updateUI(); savePet(); checkLow();
         }
         
-        function checkCritical() {
-            const lowStats = [];
-            if (pet.hunger <= 15) lowStats.push('hungry');
-            if (pet.happiness <= 15) lowStats.push('unhappy');
-            if (pet.cleanliness <= 15) lowStats.push('dirty');
-            if (pet.energy <= 15) lowStats.push('exhausted');
-            
-            if (lowStats.length > 0) {
-                const msgEl = document.getElementById('statusMessage');
-                msgEl.textContent = `${pet.name} is ${lowStats.join(' and ')}!`;
-                msgEl.classList.add('critical');
+        function checkLow() {
+            const low = [];
+            if (pet.hunger <= 15) low.push('hungry');
+            if (pet.happiness <= 15) low.push('unhappy');
+            if (pet.cleanliness <= 15) low.push('dirty');
+            if (pet.energy <= 15) low.push('exhausted');
+            if (low.length) {
+                const el = document.getElementById('statusMessage');
+                el.textContent = `${pet.name} is ${low.join(' and ')}!`;
+                el.classList.add('critical');
             }
         }
         
         function decayStats() {
-            const rate = 1.15;
-            
-            pet.hunger = Math.max(0, pet.hunger - rate * 0.85);
-            pet.happiness = Math.max(0, pet.happiness - rate * 0.75);
-            pet.cleanliness = Math.max(0, pet.cleanliness - rate * 0.55);
-            pet.energy = Math.max(0, pet.energy - rate * 0.65);
-            
-            // Occasional random dip
-            if (Math.random() < 0.07) {
-                pet.happiness = Math.max(0, pet.happiness - 4);
-            }
-            
-            // Slow aging
-            if (Math.random() < 0.12) {
-                pet.age += 0.12;
-            }
-            
-            updateUI();
-            savePet();
-            checkCritical();
+            const r = 1.1;
+            pet.hunger = Math.max(0, pet.hunger - r * 0.9);
+            pet.happiness = Math.max(0, pet.happiness - r * 0.8);
+            pet.cleanliness = Math.max(0, pet.cleanliness - r * 0.6);
+            pet.energy = Math.max(0, pet.energy - r * 0.7);
+            if (Math.random() < 0.06) pet.happiness = Math.max(0, pet.happiness - 3);
+            if (Math.random() < 0.1) pet.age += 0.1;
+            updateUI(); savePet(); checkLow();
         }
         
         function startDecay() {
             if (decayInterval) clearInterval(decayInterval);
-            decayInterval = setInterval(decayStats, 7500);
+            decayInterval = setInterval(decayStats, 7000);
         }
         
         function resetPet() {
-            if (!confirm('Reset your pet back to default stats?')) return;
-            
-            pet = {
-                name: "Pixel",
-                hunger: 80,
-                happiness: 75,
-                cleanliness: 85,
-                energy: 90,
-                age: 0,
-                lastUpdate: Date.now()
-            };
+            if (!confirm('Reset your pet?')) return;
+            pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
             messages = [];
-            
             document.getElementById('petName').value = pet.name;
             localStorage.removeItem('virtualPet');
             localStorage.removeItem('virtualPetMessages');
-            
             updateUI();
-            const msgEl = document.getElementById('statusMessage');
-            msgEl.textContent = 'Pet reset. Fresh start!';
-            msgEl.classList.remove('critical');
+            document.getElementById('statusMessage').textContent = 'Fresh start!';
         }
         
-        function initGame() {
+        function init() {
             loadPet();
             updateUI();
-            
-            const msgEl = document.getElementById('statusMessage');
-            
-            if (messages.length === 0) {
-                msgEl.textContent = `Welcome! Take good care of ${pet.name}.`;
-            } else {
-                msgEl.textContent = messages[0] || `Welcome back to ${pet.name}!`;
-            }
-            
+            const msg = document.getElementById('statusMessage');
+            if (messages.length === 0) msg.textContent = `Welcome! Take good care of ${pet.name}.`;
+            else msg.textContent = messages[0] || 'Welcome back!';
             startDecay();
         }
         
-        window.onload = initGame;
+        window.onload = init;
     </script>
 </body>
 </html>
