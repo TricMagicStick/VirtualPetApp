@@ -1,6 +1,6 @@
 // ============================================
-// VIRTUAL PET v4.13 - EXAGGERATED changes
-// Huge ears/eyes on baby + Long tails every stage + Fluffier clouds + More cat-like faces
+// VIRTUAL PET v4.14 - Aggressive Sprig Overhaul
+// Pumped up progression + exaggerated plant features
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -387,11 +387,9 @@ function drawInfernyx(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
-// WHISK LINE (Floating Cat on Nimbus) - v4.13 EXAGGERATED
-// Huge baby ears/eyes + Long tails every stage + Fluffier clouds + More cat-like faces
+// WHISK LINE (Floating Cat on Nimbus)
 // ============================================
 
-// STAGE 0: PUFF (Baby) - MASSIVE ears + bigger eyes + long tail
 function drawPuff(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 130 + breathOffset;
@@ -401,7 +399,6 @@ function drawPuff(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 56, 38, 10, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Fluffy cloud
     petCtx.fillStyle = '#e0f2fe';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 48, 32, 12, 0, 0, Math.PI * 2);
@@ -415,7 +412,6 @@ function drawPuff(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx + 10, cy + 46, 10, 5, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Head
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 8, 36, 32, 0, 0, Math.PI * 2);
@@ -426,7 +422,6 @@ function drawPuff(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 6, 12, 9, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // BIGGER eyes for baby
     petCtx.fillStyle = '#ffffff';
     petCtx.fillRect(cx - 16, cy - 18, 11, 11);
     petCtx.fillRect(cx + 5, cy - 18, 11, 11);
@@ -439,7 +434,6 @@ function drawPuff(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 10, cy - 16, 2, 2);
     petCtx.fillRect(cx + 11, cy - 16, 2, 2);
 
-    // Happy eyebrows
     petCtx.strokeStyle = '#0f172a';
     petCtx.lineWidth = 1.5;
     if (mood === 'happy') {
@@ -460,7 +454,6 @@ function drawPuff(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
-    // MASSIVE huge ears for baby
     petCtx.fillStyle = '#475569';
     petCtx.beginPath();
     petCtx.moveTo(cx - 22, cy - 32);
@@ -474,13 +467,11 @@ function drawPuff(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 12, cy - 38);
     petCtx.fill();
 
-    // Long cat tail (baby - still long but smaller than adult)
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
     petCtx.ellipse(cx + 28, cy + 40, 14, 6, -0.5, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Tiny cloud nimbus
     petCtx.fillStyle = '#bae6fd';
     petCtx.beginPath();
     petCtx.ellipse(cx - 10, cy + 54, 8, 4, 0, 0, Math.PI * 2);
@@ -490,7 +481,6 @@ function drawPuff(mood, breathOffset, flameFlicker) {
     petCtx.fill();
 }
 
-// STAGE 1: WHISP (Child) - Long tail + more cat-like face starting
 function drawWhisp(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 118 + breathOffset;
@@ -518,7 +508,6 @@ function drawWhisp(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy - 6, 34, 30, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // More cat-like snout starting
     petCtx.fillStyle = '#94a3b8';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 6, 14, 11, 0, 0, Math.PI * 2);
@@ -565,7 +554,6 @@ function drawWhisp(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 10, cy - 30);
     petCtx.fill();
 
-    // Long tail (child)
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
     petCtx.ellipse(cx + 30, cy + 44, 18, 7, -0.4, 0, Math.PI * 2);
@@ -580,7 +568,6 @@ function drawWhisp(mood, breathOffset, flameFlicker) {
     petCtx.fill();
 }
 
-// STAGE 2: WHISK (Adult) - Long flowing tail + more cat-like face
 function drawWhisk(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 108 + breathOffset;
@@ -608,7 +595,6 @@ function drawWhisk(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy - 8, 32, 28, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // More cat-like snout
     petCtx.fillStyle = '#94a3b8';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 4, 15, 12, 0, 0, Math.PI * 2);
@@ -655,7 +641,6 @@ function drawWhisk(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 8, cy - 32);
     petCtx.fill();
 
-    // Long flowing tail (adult)
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
     petCtx.ellipse(cx + 34, cy + 48, 22, 8, -0.35, 0, Math.PI * 2);
@@ -670,7 +655,6 @@ function drawWhisk(mood, breathOffset, flameFlicker) {
     petCtx.fill();
 }
 
-// STAGE 3: NIMBRIX (Ultimate) - Long dramatic tail + angry + fluffy clouds
 function drawNimbrix(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 96 + breathOffset;
@@ -712,7 +696,6 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 7, cy - 14, 2, 2);
     petCtx.fillRect(cx + 9, cy - 14, 2, 2);
 
-    // ANGRY eyebrows
     petCtx.strokeStyle = '#0f172a';
     petCtx.lineWidth = 2;
     petCtx.beginPath();
@@ -738,7 +721,6 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 6, cy - 32);
     petCtx.fill();
 
-    // Long dramatic cloud tail (ultimate)
     petCtx.fillStyle = '#e0f2fe';
     petCtx.beginPath();
     petCtx.ellipse(cx + 38, cy + 52, 26, 9, -0.3, 0, Math.PI * 2);
@@ -749,7 +731,6 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx + 48, cy + 48, 16, 7, -0.2, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Fluffier cloud extensions
     petCtx.fillStyle = '#e0f2fe';
     petCtx.beginPath();
     petCtx.ellipse(cx - 32, cy + 60, 22, 10, 0, 0, Math.PI * 2);
@@ -768,9 +749,11 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
-// SPRIG LINE (Plant/Nature)
+// SPRIG LINE (Plant/Nature) - v4.14 Aggressive Overhaul
+// Much stronger progression + exaggerated plant features
 // ============================================
 
+// STAGE 0: BUD (Baby) - Small cute sprout with tiny leaves
 function drawBud(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 132 + breathOffset;
@@ -780,11 +763,13 @@ function drawBud(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 56, 34, 9, 0, 0, Math.PI * 2);
     petCtx.fill();
 
+    // Small round body
     petCtx.fillStyle = '#4ade80';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 34, 18, 16, 0, 0, Math.PI * 2);
     petCtx.fill();
 
+    // Head
     petCtx.fillStyle = '#4ade80';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 12, 46, 42, 0, 0, Math.PI * 2);
@@ -795,6 +780,7 @@ function drawBud(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 8, 13, 10, 0, 0, Math.PI * 2);
     petCtx.fill();
 
+    // Eyes
     petCtx.fillStyle = '#ffffff';
     petCtx.fillRect(cx - 19, cy - 20, 12, 11);
     petCtx.fillRect(cx + 7, cy - 20, 12, 11);
@@ -827,17 +813,20 @@ function drawBud(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
+    // Tiny sprout on head
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 3, cy - 46, 6, 9);
     petCtx.fillStyle = '#4ade80';
     petCtx.fillRect(cx - 5, cy - 40, 3, 4);
     petCtx.fillRect(cx + 2, cy - 40, 3, 4);
 
+    // Tiny side leaves
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 12, cy + 46, 5, 4);
     petCtx.fillRect(cx + 7, cy + 46, 5, 4);
 }
 
+// STAGE 1: SPROUT (Child) - More defined with small vines
 function drawSprout(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 118 + breathOffset;
@@ -890,6 +879,7 @@ function drawSprout(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
+    // Small side leaves
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 26, cy + 6, 11, 7);
     petCtx.fillRect(cx + 15, cy + 6, 11, 7);
@@ -898,10 +888,12 @@ function drawSprout(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 24, cy + 8, 7, 4);
     petCtx.fillRect(cx + 17, cy + 8, 7, 4);
 
+    // Small sprout on head
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 3, cy - 40, 6, 10);
 }
 
+// STAGE 2: SPRIG (Adult) - Clearer plant structure with vines
 function drawSprig(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 110 + breathOffset;
@@ -954,6 +946,7 @@ function drawSprig(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
+    // Larger side leaves
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 30, cy + 8, 13, 20);
     petCtx.fillRect(cx + 17, cy + 8, 13, 20);
@@ -962,10 +955,12 @@ function drawSprig(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 28, cy + 10, 9, 6);
     petCtx.fillRect(cx + 19, cy + 10, 9, 6);
 
+    // Sprout on head
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 4, cy - 42, 8, 12);
 }
 
+// STAGE 3: VERDANT (Ultimate) - Dramatic bloom + strong vine presence
 function drawVerdant(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 100 + breathOffset;
@@ -1018,10 +1013,12 @@ function drawVerdant(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
+    // Large dramatic side leaves
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 36, cy - 2, 17, 26);
     petCtx.fillRect(cx + 19, cy - 2, 17, 26);
 
+    // Big blooming flower on head (dramatic ultimate feature)
     const flowerX = cx;
     const flowerY = cy - 48;
 
