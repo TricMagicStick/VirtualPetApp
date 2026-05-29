@@ -1,6 +1,5 @@
 // ============================================
-// VIRTUAL PET v4.14 - Aggressive Sprig Overhaul
-// Pumped up progression + exaggerated plant features
+// VIRTUAL PET v4.15 - WUMBO flower on Ultimate Sprig
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -749,11 +748,9 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
-// SPRIG LINE (Plant/Nature) - v4.14 Aggressive Overhaul
-// Much stronger progression + exaggerated plant features
+// SPRIG LINE (Plant/Nature) - v4.15 WUMBO flower
 // ============================================
 
-// STAGE 0: BUD (Baby) - Small cute sprout with tiny leaves
 function drawBud(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 132 + breathOffset;
@@ -763,13 +760,11 @@ function drawBud(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 56, 34, 9, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Small round body
     petCtx.fillStyle = '#4ade80';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 34, 18, 16, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Head
     petCtx.fillStyle = '#4ade80';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 12, 46, 42, 0, 0, Math.PI * 2);
@@ -780,7 +775,6 @@ function drawBud(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 8, 13, 10, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Eyes
     petCtx.fillStyle = '#ffffff';
     petCtx.fillRect(cx - 19, cy - 20, 12, 11);
     petCtx.fillRect(cx + 7, cy - 20, 12, 11);
@@ -813,20 +807,17 @@ function drawBud(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
-    // Tiny sprout on head
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 3, cy - 46, 6, 9);
     petCtx.fillStyle = '#4ade80';
     petCtx.fillRect(cx - 5, cy - 40, 3, 4);
     petCtx.fillRect(cx + 2, cy - 40, 3, 4);
 
-    // Tiny side leaves
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 12, cy + 46, 5, 4);
     petCtx.fillRect(cx + 7, cy + 46, 5, 4);
 }
 
-// STAGE 1: SPROUT (Child) - More defined with small vines
 function drawSprout(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 118 + breathOffset;
@@ -879,7 +870,6 @@ function drawSprout(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
-    // Small side leaves
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 26, cy + 6, 11, 7);
     petCtx.fillRect(cx + 15, cy + 6, 11, 7);
@@ -888,12 +878,10 @@ function drawSprout(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 24, cy + 8, 7, 4);
     petCtx.fillRect(cx + 17, cy + 8, 7, 4);
 
-    // Small sprout on head
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 3, cy - 40, 6, 10);
 }
 
-// STAGE 2: SPRIG (Adult) - Clearer plant structure with vines
 function drawSprig(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 110 + breathOffset;
@@ -946,7 +934,6 @@ function drawSprig(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
-    // Larger side leaves
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 30, cy + 8, 13, 20);
     petCtx.fillRect(cx + 17, cy + 8, 13, 20);
@@ -955,12 +942,10 @@ function drawSprig(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 28, cy + 10, 9, 6);
     petCtx.fillRect(cx + 19, cy + 10, 9, 6);
 
-    // Sprout on head
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 4, cy - 42, 8, 12);
 }
 
-// STAGE 3: VERDANT (Ultimate) - Dramatic bloom + strong vine presence
 function drawVerdant(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 100 + breathOffset;
@@ -1013,40 +998,42 @@ function drawVerdant(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
-    // Large dramatic side leaves
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 36, cy - 2, 17, 26);
     petCtx.fillRect(cx + 19, cy - 2, 17, 26);
 
-    // Big blooming flower on head (dramatic ultimate feature)
+    // WUMBO flower - massively exaggerated
     const flowerX = cx;
-    const flowerY = cy - 48;
+    const flowerY = cy - 52;
 
+    // Large outer petals
     petCtx.fillStyle = '#f472b6';
-    for (let i = 0; i < 6; i++) {
-        const angle = (i * Math.PI * 2) / 6;
+    for (let i = 0; i < 8; i++) {
+        const angle = (i * Math.PI * 2) / 8;
+        const px = flowerX + Math.cos(angle) * 14;
+        const py = flowerY + Math.sin(angle) * 10;
+
+        petCtx.beginPath();
+        petCtx.ellipse(px, py, 10, 7, angle, 0, Math.PI * 2);
+        petCtx.fill();
+    }
+
+    // Inner petals
+    petCtx.fillStyle = '#f9a8d4';
+    for (let i = 0; i < 8; i++) {
+        const angle = (i * Math.PI * 2) / 8 + 0.4;
         const px = flowerX + Math.cos(angle) * 8;
         const py = flowerY + Math.sin(angle) * 6;
 
         petCtx.beginPath();
-        petCtx.ellipse(px, py, 7, 5, angle, 0, Math.PI * 2);
+        petCtx.ellipse(px, py, 6, 4, angle, 0, Math.PI * 2);
         petCtx.fill();
     }
 
-    petCtx.fillStyle = '#f9a8d4';
-    for (let i = 0; i < 6; i++) {
-        const angle = (i * Math.PI * 2) / 6 + 0.5;
-        const px = flowerX + Math.cos(angle) * 5;
-        const py = flowerY + Math.sin(angle) * 4;
-
-        petCtx.beginPath();
-        petCtx.ellipse(px, py, 4, 3, angle, 0, Math.PI * 2);
-        petCtx.fill();
-    }
-
+    // Center
     petCtx.fillStyle = '#ec4899';
     petCtx.beginPath();
-    petCtx.arc(flowerX, flowerY, 4, 0, Math.PI * 2);
+    petCtx.arc(flowerX, flowerY, 6, 0, Math.PI * 2);
     petCtx.fill();
 
     petCtx.fillStyle = '#166534';
