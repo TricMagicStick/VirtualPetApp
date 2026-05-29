@@ -23,15 +23,15 @@
         .app {
             max-width: 420px;
             margin: 0 auto;
-            padding: 12px 10px;
-            padding-top: max(12px, env(safe-area-inset-top));
+            padding: 14px 12px;
+            padding-top: max(14px, env(safe-area-inset-top));
         }
         .header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 10px;
-            padding: 0 8px;
+            padding: 0 6px;
         }
         .title {
             font-family: 'Press Start 2P', system-ui;
@@ -50,7 +50,7 @@
             background: #3f1f1f;
             color: #fda4af;
             border: none;
-            padding: 4px 10px;
+            padding: 5px 11px;
             border-radius: 999px;
             font-size: 9px;
             font-weight: 700;
@@ -137,7 +137,7 @@
         <div class="header">
             <div style="display:flex; align-items:flex-end;">
                 <h1 class="title">VIRTUAL PET</h1>
-                <span class="version">v1.7</span>
+                <span class="version">v1.8</span>
             </div>
             <button onclick="resetPet()" class="reset-btn">
                 <span>↻</span>
@@ -203,7 +203,15 @@
     </div>
 
     <script>
-        let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
+        // Game State
+        let pet = {
+            name: "Pixel",
+            hunger: 80,
+            happiness: 75,
+            cleanliness: 85,
+            energy: 90,
+            age: 0
+        };
         let messages = [];
         let decayInterval = null;
         let animFrame = 0;
@@ -211,6 +219,7 @@
         const canvas = document.getElementById('petCanvas');
         const ctx = canvas.getContext('2d', { alpha: true });
 
+        // Draw the pet (Ember - Flick style)
         function drawPet(mood, breathOffset = 0, flameFlicker = 0) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.imageSmoothingEnabled = false;
@@ -218,23 +227,29 @@
             const cx = 110;
             const cy = 115 + breathOffset;
 
+            // Shadow
             ctx.fillStyle = 'rgba(0,0,0,0.3)';
             ctx.beginPath();
             ctx.ellipse(cx, cy + 85, 58, 18, 0, 0, Math.PI * 2);
             ctx.fill();
 
+            // Body
             ctx.fillStyle = '#e85d04';
             ctx.fillRect(cx - 42, cy + 14, 84, 72);
 
+            // Belly
             ctx.fillStyle = '#faa307';
             ctx.fillRect(cx - 28, cy + 34, 56, 44);
 
+            // Head
             ctx.fillStyle = '#e85d04';
             ctx.fillRect(cx - 44, cy - 44, 88, 64);
 
+            // Snout
             ctx.fillStyle = '#faa307';
             ctx.fillRect(cx - 26, cy + 10, 52, 24);
 
+            // Eyes
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(cx - 28, cy - 28, 16, 16);
             ctx.fillRect(cx + 12, cy - 28, 16, 16);
@@ -243,6 +258,7 @@
             ctx.fillRect(cx - 23, cy - 23, 7, 7);
             ctx.fillRect(cx + 17, cy - 23, 7, 7);
 
+            // Eyebrows / expression
             ctx.strokeStyle = '#111111';
             ctx.lineWidth = 3;
             if (mood === 'happy') {
@@ -263,36 +279,44 @@
                 ctx.stroke();
             }
 
+            // Horns
             ctx.fillStyle = '#9d0208';
             ctx.fillRect(cx - 42, cy - 58, 12, 20);
             ctx.fillRect(cx + 30, cy - 58, 12, 20);
 
+            // Head flame (flickers)
             const flameHeight = 20 + flameFlicker;
             ctx.fillStyle = '#ffba08';
             ctx.fillRect(cx - 10, cy - 68, 20, flameHeight);
             ctx.fillStyle = '#e85d04';
             ctx.fillRect(cx - 6, cy - 62, 12, flameHeight - 6);
 
+            // Tail
             ctx.fillStyle = '#e85d04';
             ctx.fillRect(cx - 66, cy + 48, 28, 18);
 
+            // Tail flame (flickers)
             const tailFlameH = 20 + flameFlicker * 0.9;
             ctx.fillStyle = '#ffba08';
             ctx.fillRect(cx - 75, cy + 46, 22, tailFlameH);
             ctx.fillStyle = '#e85d04';
             ctx.fillRect(cx - 70, cy + 50, 13, tailFlameH - 6);
 
+            // Wings
             ctx.fillStyle = '#9d0208';
             ctx.fillRect(cx - 60, cy + 20, 18, 24);
             ctx.fillRect(cx + 42, cy + 20, 18, 24);
 
+            // Feet
             ctx.fillStyle = '#9d0208';
             ctx.fillRect(cx - 30, cy + 84, 16, 12);
             ctx.fillRect(cx + 14, cy + 84, 16, 12);
         }
 
+        // Animation loop
         function animate() {
             animFrame += 0.12;
+
             const breath = Math.sin(animFrame * 1.1) * 2.8;
             const flameFlicker = Math.sin(animFrame * 4.5) * 3.2 + (Math.random() - 0.5) * 1.4;
 
@@ -437,13 +461,19 @@
             loadPet();
             document.getElementById('petNameDisplay').textContent = pet.name;
             updateUI();
+
             const msgEl = document.getElementById('statusMessage');
-            if (messages.length === 0) msgEl.textContent = `Welcome! Take good care of ${pet.name}.`;
-            else msgEl.textContent = messages[0] || 'Welcome back!';
+            if (messages.length === 0) {
+                msgEl.textContent = `Welcome! Take good care of ${pet.name}.`;
+            } else {
+                msgEl.textContent = messages[0] || 'Welcome back!';
+            }
+
             startDecay();
 
-            // Draw immediately + start animation
+            // Draw immediately so pet appears right away
             drawPet('happy');
+            // Start animation loop
             requestAnimationFrame(animate);
         }
 
