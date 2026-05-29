@@ -137,7 +137,7 @@
         <div class="header">
             <div style="display:flex; align-items:flex-end;">
                 <h1 class="title">VIRTUAL PET</h1>
-                <span class="version">v2.2</span>
+                <span class="version">v2.3</span>
             </div>
             <button onclick="resetPet()" class="reset-btn">
                 <span>↻</span>
@@ -199,7 +199,7 @@
                 </button>
             </div>
 
-            <!-- Temp stage switcher for testing -->
+            <!-- Stage switcher -->
             <div style="margin-top: 10px; display: flex; gap: 6px; justify-content: center;">
                 <button onclick="setStage(0)" style="font-size:10px; padding:4px 8px;">Baby</button>
                 <button onclick="setStage(1)" style="font-size:10px; padding:4px 8px;">Child</button>
@@ -215,12 +215,12 @@
         let messages = [];
         let decayInterval = null;
         let animFrame = 0;
-        let currentStage = 0; // 0=Baby, 1=Child, 2=Adult, 3=Ultimate
+        let currentStage = 0;
 
         const canvas = document.getElementById('petCanvas');
         const ctx = canvas.getContext('2d', { alpha: true });
 
-        // === STAGE 0: FLICK (Baby) - Big head, tiny round body ===
+        // STAGE 0: FLICK (Baby) - Big head, tiny round body
         function drawFlick(mood, breathOffset, flameFlicker) {
             const cx = 110;
             const cy = 125 + breathOffset;
@@ -305,7 +305,7 @@
             ctx.fillRect(cx + 8, cy + 48, 10, 7);
         }
 
-        // === STAGE 1: CHARLING (Child) - Growing body, small wings + flame mane ===
+        // STAGE 1: CHARLING (Child) - Growing body + small wings
         function drawCharling(mood, breathOffset, flameFlicker) {
             const cx = 110;
             const cy = 118 + breathOffset;
@@ -367,7 +367,6 @@
             ctx.fillRect(cx - 28, cy - 48, 8, 11);
             ctx.fillRect(cx + 20, cy - 48, 8, 11);
 
-            // Small developing wings
             ctx.fillStyle = '#9d0208';
             ctx.fillRect(cx - 42, cy + 8, 12, 16);
             ctx.fillRect(cx + 30, cy + 8, 12, 16);
@@ -391,177 +390,181 @@
             ctx.fillRect(cx + 9, cy + 52, 11, 8);
         }
 
-        // === STAGE 2: DRAKEMBER (Adult) - Balanced, proper wings ===
+        // STAGE 2: DRAKEMBER (Adult) - Clear dragon silhouette, proper wings
         function drawDrakEmber(mood, breathOffset, flameFlicker) {
             const cx = 110;
-            const cy = 115 + breathOffset;
+            const cy = 110 + breathOffset;
 
             ctx.fillStyle = 'rgba(0,0,0,0.3)';
             ctx.beginPath();
-            ctx.ellipse(cx, cy + 78, 50, 14, 0, 0, Math.PI * 2);
+            ctx.ellipse(cx, cy + 82, 52, 14, 0, 0, Math.PI * 2);
             ctx.fill();
 
+            // More elongated body
             ctx.fillStyle = '#e85d04';
             ctx.beginPath();
-            ctx.ellipse(cx, cy + 18, 44, 42, 0, 0, Math.PI * 2);
+            ctx.ellipse(cx, cy + 12, 46, 44, 0, 0, Math.PI * 2);
             ctx.fill();
 
             ctx.fillStyle = '#faa307';
             ctx.beginPath();
-            ctx.ellipse(cx, cy + 26, 28, 26, 0, 0, Math.PI * 2);
+            ctx.ellipse(cx, cy + 20, 28, 26, 0, 0, Math.PI * 2);
             ctx.fill();
 
+            // Clear neck + head
             ctx.fillStyle = '#e85d04';
             ctx.beginPath();
-            ctx.ellipse(cx, cy - 16, 46, 40, 0, 0, Math.PI * 2);
+            ctx.ellipse(cx, cy - 20, 42, 38, 0, 0, Math.PI * 2);
             ctx.fill();
 
             ctx.fillStyle = '#faa307';
             ctx.beginPath();
-            ctx.ellipse(cx, cy + 4, 22, 16, 0, 0, Math.PI * 2);
+            ctx.ellipse(cx, cy + 2, 20, 15, 0, 0, Math.PI * 2);
             ctx.fill();
 
             ctx.fillStyle = '#ffffff';
-            ctx.fillRect(cx - 20, cy - 24, 13, 13);
-            ctx.fillRect(cx + 7, cy - 24, 13, 13);
+            ctx.fillRect(cx - 18, cy - 26, 12, 12);
+            ctx.fillRect(cx + 6, cy - 26, 12, 12);
 
             ctx.fillStyle = '#111111';
-            ctx.fillRect(cx - 16, cy - 20, 6, 6);
-            ctx.fillRect(cx + 11, cy - 20, 6, 6);
+            ctx.fillRect(cx - 14, cy - 22, 5, 5);
+            ctx.fillRect(cx + 10, cy - 22, 5, 5);
 
             ctx.strokeStyle = '#111111';
             ctx.lineWidth = 2.5;
             if (mood === 'happy') {
                 ctx.beginPath();
-                ctx.arc(cx - 13, cy - 32, 5, Math.PI, 0);
+                ctx.arc(cx - 12, cy - 34, 4, Math.PI, 0);
                 ctx.stroke();
                 ctx.beginPath();
-                ctx.arc(cx + 13, cy - 32, 5, Math.PI, 0);
+                ctx.arc(cx + 12, cy - 34, 4, Math.PI, 0);
                 ctx.stroke();
             } else {
                 ctx.beginPath();
-                ctx.moveTo(cx - 20, cy - 30);
-                ctx.lineTo(cx - 8, cy - 26);
+                ctx.moveTo(cx - 18, cy - 32);
+                ctx.lineTo(cx - 8, cy - 28);
                 ctx.stroke();
                 ctx.beginPath();
-                ctx.moveTo(cx + 8, cy - 26);
-                ctx.lineTo(cx + 20, cy - 30);
+                ctx.moveTo(cx + 8, cy - 28);
+                ctx.lineTo(cx + 18, cy - 32);
                 ctx.stroke();
             }
 
             ctx.fillStyle = '#9d0208';
-            ctx.fillRect(cx - 26, cy - 46, 9, 12);
-            ctx.fillRect(cx + 17, cy - 46, 9, 12);
+            ctx.fillRect(cx - 24, cy - 48, 8, 12);
+            ctx.fillRect(cx + 16, cy - 48, 8, 12);
 
-            // Proper wings
+            // Clear functional wings
             ctx.fillStyle = '#9d0208';
-            ctx.fillRect(cx - 48, cy + 2, 16, 22);
-            ctx.fillRect(cx + 32, cy + 2, 16, 22);
+            ctx.fillRect(cx - 50, cy - 8, 18, 28);
+            ctx.fillRect(cx + 32, cy - 8, 18, 28);
 
             const flameH = 16 + flameFlicker * 0.7;
             ctx.fillStyle = '#ffba08';
-            ctx.fillRect(cx - 7, cy - 52, 14, flameH);
+            ctx.fillRect(cx - 7, cy - 54, 14, flameH);
             ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 4, cy - 48, 8, flameH - 4);
+            ctx.fillRect(cx - 4, cy - 50, 8, flameH - 4);
 
             ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 55, cy + 36, 22, 14);
+            ctx.fillRect(cx - 56, cy + 34, 24, 15);
 
             ctx.fillStyle = '#ffba08';
-            ctx.fillRect(cx - 60, cy + 34, 14, 12);
+            ctx.fillRect(cx - 62, cy + 32, 15, 13);
             ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 57, cy + 36, 8, 8);
+            ctx.fillRect(cx - 58, cy + 34, 8, 9);
 
             ctx.fillStyle = '#9d0208';
-            ctx.fillRect(cx - 22, cy + 56, 12, 9);
-            ctx.fillRect(cx + 10, cy + 56, 12, 9);
+            ctx.fillRect(cx - 22, cy + 54, 12, 9);
+            ctx.fillRect(cx + 10, cy + 54, 12, 9);
         }
 
-        // === STAGE 3: INFERNYX (Ultimate) - Armored, powerful presence ===
+        // STAGE 3: INFERNYX (Ultimate) - Tall, powerful dragon silhouette with big wings
         function drawInfernyx(mood, breathOffset, flameFlicker) {
             const cx = 110;
-            const cy = 112 + breathOffset;
+            const cy = 105 + breathOffset;
 
             ctx.fillStyle = 'rgba(0,0,0,0.35)';
             ctx.beginPath();
-            ctx.ellipse(cx, cy + 82, 54, 15, 0, 0, Math.PI * 2);
+            ctx.ellipse(cx, cy + 88, 56, 15, 0, 0, Math.PI * 2);
             ctx.fill();
 
+            // Taller, more elongated body
             ctx.fillStyle = '#e85d04';
             ctx.beginPath();
-            ctx.ellipse(cx, cy + 16, 48, 46, 0, 0, Math.PI * 2);
+            ctx.ellipse(cx, cy + 8, 48, 48, 0, 0, Math.PI * 2);
             ctx.fill();
 
             ctx.fillStyle = '#faa307';
             ctx.beginPath();
-            ctx.ellipse(cx, cy + 24, 30, 28, 0, 0, Math.PI * 2);
+            ctx.ellipse(cx, cy + 18, 30, 28, 0, 0, Math.PI * 2);
             ctx.fill();
 
+            // Stronger head + neck presence
             ctx.fillStyle = '#e85d04';
             ctx.beginPath();
-            ctx.ellipse(cx, cy - 14, 50, 44, 0, 0, Math.PI * 2);
+            ctx.ellipse(cx, cy - 22, 46, 40, 0, 0, Math.PI * 2);
             ctx.fill();
 
             ctx.fillStyle = '#faa307';
             ctx.beginPath();
-            ctx.ellipse(cx, cy + 6, 24, 17, 0, 0, Math.PI * 2);
+            ctx.ellipse(cx, cy + 2, 22, 16, 0, 0, Math.PI * 2);
             ctx.fill();
 
             ctx.fillStyle = '#ffffff';
-            ctx.fillRect(cx - 20, cy - 22, 14, 14);
-            ctx.fillRect(cx + 6, cy - 22, 14, 14);
+            ctx.fillRect(cx - 18, cy - 24, 13, 13);
+            ctx.fillRect(cx + 5, cy - 24, 13, 13);
 
             ctx.fillStyle = '#111111';
-            ctx.fillRect(cx - 16, cy - 18, 7, 7);
-            ctx.fillRect(cx + 10, cy - 18, 7, 7);
+            ctx.fillRect(cx - 14, cy - 20, 6, 6);
+            ctx.fillRect(cx + 9, cy - 20, 6, 6);
 
             ctx.strokeStyle = '#111111';
             ctx.lineWidth = 2.5;
             if (mood === 'happy') {
                 ctx.beginPath();
-                ctx.arc(cx - 13, cy - 30, 5, Math.PI, 0);
+                ctx.arc(cx - 12, cy - 32, 5, Math.PI, 0);
                 ctx.stroke();
                 ctx.beginPath();
-                ctx.arc(cx + 13, cy - 30, 5, Math.PI, 0);
+                ctx.arc(cx + 12, cy - 32, 5, Math.PI, 0);
                 ctx.stroke();
             } else {
                 ctx.beginPath();
-                ctx.moveTo(cx - 20, cy - 28);
-                ctx.lineTo(cx - 8, cy - 24);
+                ctx.moveTo(cx - 18, cy - 30);
+                ctx.lineTo(cx - 6, cy - 26);
                 ctx.stroke();
                 ctx.beginPath();
-                ctx.moveTo(cx + 8, cy - 24);
-                ctx.lineTo(cx + 20, cy - 28);
+                ctx.moveTo(cx + 6, cy - 26);
+                ctx.lineTo(cx + 18, cy - 30);
                 ctx.stroke();
             }
 
-            // Horns + head armor look
+            // Larger horns
             ctx.fillStyle = '#9d0208';
-            ctx.fillRect(cx - 26, cy - 48, 10, 14);
-            ctx.fillRect(cx + 16, cy - 48, 10, 14);
+            ctx.fillRect(cx - 26, cy - 50, 10, 14);
+            ctx.fillRect(cx + 16, cy - 50, 10, 14);
 
-            // Large wings
+            // Large dramatic wings (key silhouette difference)
             ctx.fillStyle = '#9d0208';
-            ctx.fillRect(cx - 52, cy - 2, 18, 26);
-            ctx.fillRect(cx + 34, cy - 2, 18, 26);
+            ctx.fillRect(cx - 58, cy - 18, 22, 36);
+            ctx.fillRect(cx + 36, cy - 18, 22, 36);
 
-            const flameH = 18 + flameFlicker * 0.8;
+            const flameH = 20 + flameFlicker * 0.9;
             ctx.fillStyle = '#ffba08';
-            ctx.fillRect(cx - 8, cy - 54, 16, flameH);
+            ctx.fillRect(cx - 9, cy - 58, 18, flameH);
             ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 5, cy - 50, 10, flameH - 5);
+            ctx.fillRect(cx - 6, cy - 54, 12, flameH - 6);
 
             ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 58, cy + 38, 26, 16);
+            ctx.fillRect(cx - 60, cy + 32, 28, 18);
 
             ctx.fillStyle = '#ffba08';
-            ctx.fillRect(cx - 64, cy + 36, 16, 14);
+            ctx.fillRect(cx - 66, cy + 30, 18, 16);
             ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 60, cy + 38, 9, 10);
+            ctx.fillRect(cx - 62, cy + 32, 10, 12);
 
             ctx.fillStyle = '#9d0208';
-            ctx.fillRect(cx - 24, cy + 58, 13, 10);
-            ctx.fillRect(cx + 11, cy + 58, 13, 10);
+            ctx.fillRect(cx - 24, cy + 54, 14, 11);
+            ctx.fillRect(cx + 10, cy + 54, 14, 11);
         }
 
         function drawPet(mood, breathOffset, flameFlicker) {
@@ -573,7 +576,6 @@
 
         function setStage(stage) {
             currentStage = stage;
-            // Force redraw
             const avg = (pet.hunger + pet.happiness + pet.cleanliness + pet.energy) / 4;
             let mood = (avg >= 50) ? 'happy' : 'sad';
             drawPet(mood, 0, 0);
