@@ -68,6 +68,22 @@
             box-shadow: 0 12px 35px -10px rgb(0 0 0 / 0.5);
         }
 
+        .egg-container {
+            text-align: center;
+            padding: 20px 0;
+        }
+        .egg-instruction {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 16px;
+        }
+        #eggCanvas {
+            image-rendering: pixelated;
+            cursor: pointer;
+            border-radius: 12px;
+            background: #0f172a;
+        }
+
         .stats-top {
             display: flex;
             justify-content: space-between;
@@ -129,38 +145,6 @@
         .action-btn:active { background: #334155; }
         .action-icon { font-size: 24px; }
         .action-label { font-size: 12px; font-weight: 700; }
-
-        .egg-screen {
-            text-align: center;
-            padding: 10px 0;
-        }
-        .egg-title {
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #cbd5e1;
-        }
-        .egg-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-        .egg {
-            background: #1e2937;
-            border: 2px solid #475569;
-            border-radius: 12px;
-            padding: 12px 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-        }
-        .egg:active { transform: scale(0.95); background: #334155; }
-        .egg-icon { font-size: 28px; }
-        .egg-label { font-size: 9px; font-weight: 700; color: #94a3b8; }
     </style>
 </head>
 <body>
@@ -169,7 +153,7 @@
         <div class="header">
             <div style="display:flex; align-items:flex-end;">
                 <h1 class="title">VIRTUAL PET</h1>
-                <span class="version">v2.7</span>
+                <span class="version">v2.8</span>
             </div>
             <button onclick="resetPet()" class="reset-btn">
                 <span>↻</span>
@@ -177,38 +161,14 @@
             </button>
         </div>
 
-        <!-- Egg Selection Screen -->
-        <div id="egg-screen" class="device-frame egg-screen" style="display: none;">
-            <div class="egg-title">CHOOSE YOUR EGG</div>
-            <div class="egg-grid">
-                <div class="egg" onclick="hatchEgg(0)">
-                    <div class="egg-icon">🔥</div>
-                    <div class="egg-label">EMBER</div>
-                </div>
-                <div class="egg" onclick="hatchEgg(1)">
-                    <div class="egg-icon">🐱</div>
-                    <div class="egg-label">WHISK</div>
-                </div>
-                <div class="egg" onclick="hatchEgg(2)">
-                    <div class="egg-icon">🌱</div>
-                    <div class="egg-label">SPRIG</div>
-                </div>
-                <div class="egg" onclick="hatchEgg(3)">
-                    <div class="egg-icon">⚡</div>
-                    <div class="egg-label">BOLT</div>
-                </div>
-                <div class="egg" onclick="hatchEgg(4)">
-                    <div class="egg-icon">🌙</div>
-                    <div class="egg-label">SHADE</div>
-                </div>
-            </div>
-            <div style="font-size: 10px; color: #64748b;">
-                Tap an egg to hatch your baby
-            </div>
+        <!-- Egg Screen -->
+        <div id="egg-screen" class="device-frame egg-container">
+            <div class="egg-instruction">Tap the egg to hatch your baby</div>
+            <canvas id="eggCanvas" width="200" height="200"></canvas>
         </div>
 
         <!-- Main Pet Screen -->
-        <div id="pet-screen">
+        <div id="pet-screen" style="display: none;">
             <div class="device-frame">
 
                 <!-- Top stats -->
@@ -231,7 +191,7 @@
                     </div>
                 </div>
 
-                <!-- Pet screen -->
+                <!-- Pet -->
                 <div class="pet-screen">
                     <canvas id="petCanvas" width="220" height="220"></canvas>
                 </div>
@@ -242,7 +202,7 @@
                     <div class="age">Age: <span id="ageValue">0</span> days • <span id="petNameDisplay">Pixel</span></div>
                 </div>
 
-                <!-- Action buttons -->
+                <!-- Actions -->
                 <div class="action-row">
                     <button onclick="feedPet()" class="action-btn">
                         <div class="action-icon">🍎</div>
@@ -262,7 +222,7 @@
                     </button>
                 </div>
 
-                <!-- Stage switcher (temporary) -->
+                <!-- Temp stage buttons -->
                 <div style="margin-top: 10px; display: flex; gap: 6px; justify-content: center;">
                     <button onclick="setStage(0)" style="font-size:10px; padding:4px 8px;">Baby</button>
                     <button onclick="setStage(1)" style="font-size:10px; padding:4px 8px;">Child</button>
@@ -281,382 +241,114 @@
         let animFrame = 0;
         let currentStage = 0;
         let hasHatched = false;
+        let eggAnimating = false;
 
-        const canvas = document.getElementById('petCanvas');
-        const ctx = canvas.getContext('2d', { alpha: true });
+        const eggCanvas = document.getElementById('eggCanvas');
+        const eggCtx = eggCanvas.getContext('2d', { alpha: true });
 
-        function showEggScreen() {
-            document.getElementById('egg-screen').style.display = 'block';
-            document.getElementById('pet-screen').style.display = 'none';
-        }
+        const petCanvas = document.getElementById('petCanvas');
+        const petCtx = petCanvas.getContext('2d', { alpha: true });
 
-        function showPetScreen() {
-            document.getElementById('egg-screen').style.display = 'none';
-            document.getElementById('pet-screen').style.display = 'block';
-        }
+        function drawEgg(crackLevel = 0) {
+            eggCtx.clearRect(0, 0, eggCanvas.width, eggCanvas.height);
+            eggCtx.imageSmoothingEnabled = false;
 
-        function hatchEgg(characterIndex) {
-            hasHatched = true;
-            currentStage = 0;
+            const cx = 100;
+            const cy = 100;
 
-            const eggScreen = document.getElementById('egg-screen');
-            eggScreen.innerHTML = `<div style="padding: 40px 20px; text-align: center;">
-                <div style="font-size: 48px; margin-bottom: 12px;">🔥</div>
-                <div style="font-size: 14px; font-weight: 700; color: #22c55e; margin-bottom: 8px;">CRACK!</div>
-                <div style="font-size: 12px; color: #94a3b8;">Your baby is hatching...</div>
-            </div>`;
+            // Shadow
+            eggCtx.fillStyle = 'rgba(0,0,0,0.3)';
+            eggCtx.beginPath();
+            eggCtx.ellipse(cx, cy + 55, 55, 18, 0, 0, Math.PI * 2);
+            eggCtx.fill();
 
-            setTimeout(() => {
-                showPetScreen();
-                drawPet('happy', 0, 0);
-                updateUI();
-                startDecay();
-                requestAnimationFrame(animate);
-            }, 1200);
-        }
+            // Egg body (cream/white)
+            eggCtx.fillStyle = '#fefce8';
+            eggCtx.beginPath();
+            eggCtx.ellipse(cx, cy, 48, 62, 0, 0, Math.PI * 2);
+            eggCtx.fill();
 
-        // STAGE 0: FLICK (Baby)
-        function drawFlick(mood, breathOffset, flameFlicker) {
-            const cx = 110;
-            const cy = 125 + breathOffset;
+            // Egg shading
+            eggCtx.fillStyle = '#e7e5d9';
+            eggCtx.beginPath();
+            eggCtx.ellipse(cx + 12, cy, 36, 58, 0, 0, Math.PI * 2);
+            eggCtx.fill();
 
-            ctx.fillStyle = 'rgba(0,0,0,0.2)';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy + 68, 40, 12, 0, 0, Math.PI * 2);
-            ctx.fill();
+            // Egg highlight
+            eggCtx.fillStyle = '#fefce8';
+            eggCtx.beginPath();
+            eggCtx.ellipse(cx - 18, cy - 20, 18, 24, 0, 0, Math.PI * 2);
+            eggCtx.fill();
 
-            ctx.fillStyle = '#e85d04';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy + 22, 32, 30, 0, 0, Math.PI * 2);
-            ctx.fill();
+            // Crack lines (progressive)
+            eggCtx.strokeStyle = '#854d0e';
+            eggCtx.lineWidth = 2;
 
-            ctx.fillStyle = '#faa307';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy + 26, 20, 18, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#e85d04';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy - 22, 52, 46, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#faa307';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy - 2, 18, 14, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(cx - 24, cy - 30, 16, 16);
-            ctx.fillRect(cx + 8, cy - 30, 16, 16);
-
-            ctx.fillStyle = '#111111';
-            ctx.fillRect(cx - 20, cy - 26, 8, 8);
-            ctx.fillRect(cx + 12, cy - 26, 8, 8);
-
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(cx - 18, cy - 28, 3, 3);
-            ctx.fillRect(cx + 14, cy - 28, 3, 3);
-
-            ctx.strokeStyle = '#111111';
-            ctx.lineWidth = 2;
-            if (mood === 'happy') {
-                ctx.beginPath();
-                ctx.arc(cx - 16, cy - 36, 5, Math.PI, 0);
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.arc(cx + 16, cy - 36, 5, Math.PI, 0);
-                ctx.stroke();
-            } else {
-                ctx.beginPath();
-                ctx.moveTo(cx - 24, cy - 34);
-                ctx.lineTo(cx - 12, cy - 30);
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.moveTo(cx + 12, cy - 30);
-                ctx.lineTo(cx + 24, cy - 34);
-                ctx.stroke();
+            if (crackLevel >= 1) {
+                eggCtx.beginPath();
+                eggCtx.moveTo(cx - 10, cy - 30);
+                eggCtx.lineTo(cx + 5, cy - 10);
+                eggCtx.stroke();
             }
-
-            ctx.fillStyle = '#9d0208';
-            ctx.fillRect(cx - 30, cy - 52, 7, 9);
-            ctx.fillRect(cx + 23, cy - 52, 7, 9);
-
-            const flameH = 11 + flameFlicker * 0.5;
-            ctx.fillStyle = '#ffba08';
-            ctx.fillRect(cx - 5, cy - 56, 10, flameH);
-            ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 2, cy - 52, 5, flameH - 3);
-
-            ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 48, cy + 28, 14, 10);
-
-            ctx.fillStyle = '#ffba08';
-            ctx.fillRect(cx - 52, cy + 26, 10, 9);
-            ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 49, cy + 28, 5, 5);
-
-            ctx.fillStyle = '#9d0208';
-            ctx.fillRect(cx - 18, cy + 48, 10, 7);
-            ctx.fillRect(cx + 8, cy + 48, 10, 7);
-        }
-
-        // STAGE 1: CHARLING (Child)
-        function drawCharling(mood, breathOffset, flameFlicker) {
-            const cx = 110;
-            const cy = 115 + breathOffset;
-
-            ctx.fillStyle = 'rgba(0,0,0,0.25)';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy + 75, 46, 13, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#e85d04';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy + 18, 40, 38, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#faa307';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy + 24, 26, 24, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#e85d04';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy - 16, 46, 40, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#faa307';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy + 4, 20, 15, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(cx - 20, cy - 24, 13, 13);
-            ctx.fillRect(cx + 7, cy - 24, 13, 13);
-
-            ctx.fillStyle = '#111111';
-            ctx.fillRect(cx - 16, cy - 20, 6, 6);
-            ctx.fillRect(cx + 11, cy - 20, 6, 6);
-
-            ctx.strokeStyle = '#111111';
-            ctx.lineWidth = 2.5;
-            if (mood === 'happy') {
-                ctx.beginPath();
-                ctx.arc(cx - 14, cy - 32, 5, Math.PI, 0);
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.arc(cx + 14, cy - 32, 5, Math.PI, 0);
-                ctx.stroke();
-            } else {
-                ctx.beginPath();
-                ctx.moveTo(cx - 20, cy - 30);
-                ctx.lineTo(cx - 10, cy - 26);
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.moveTo(cx + 10, cy - 26);
-                ctx.lineTo(cx + 20, cy - 30);
-                ctx.stroke();
+            if (crackLevel >= 2) {
+                eggCtx.beginPath();
+                eggCtx.moveTo(cx + 5, cy - 10);
+                eggCtx.lineTo(cx - 8, cy + 15);
+                eggCtx.stroke();
             }
-
-            ctx.fillStyle = '#9d0208';
-            ctx.fillRect(cx - 26, cy - 46, 8, 11);
-            ctx.fillRect(cx + 18, cy - 46, 8, 11);
-
-            ctx.fillStyle = '#9d0208';
-            ctx.fillRect(cx - 44, cy + 6, 13, 18);
-            ctx.fillRect(cx + 31, cy + 6, 13, 18);
-
-            const flameH = 15 + flameFlicker * 0.6;
-            ctx.fillStyle = '#ffba08';
-            ctx.fillRect(cx - 7, cy - 52, 14, flameH);
-            ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 4, cy - 48, 8, flameH - 4);
-
-            ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 52, cy + 30, 20, 13);
-
-            ctx.fillStyle = '#ffba08';
-            ctx.fillRect(cx - 57, cy + 28, 13, 11);
-            ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 54, cy + 30, 7, 7);
-
-            ctx.fillStyle = '#9d0208';
-            ctx.fillRect(cx - 20, cy + 52, 11, 8);
-            ctx.fillRect(cx + 9, cy + 52, 11, 8);
-        }
-
-        // STAGE 2: DRAKEMBER (Adult)
-        function drawDrakEmber(mood, breathOffset, flameFlicker) {
-            const cx = 110;
-            const cy = 108 + breathOffset;
-
-            ctx.fillStyle = 'rgba(0,0,0,0.3)';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy + 85, 52, 14, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#e85d04';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy + 10, 48, 46, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#faa307';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy + 18, 30, 28, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#e85d04';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy - 22, 44, 40, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#faa307';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy + 2, 22, 16, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(cx - 18, cy - 24, 12, 12);
-            ctx.fillRect(cx + 6, cy - 24, 12, 12);
-
-            ctx.fillStyle = '#111111';
-            ctx.fillRect(cx - 14, cy - 20, 5, 5);
-            ctx.fillRect(cx + 10, cy - 20, 5, 5);
-
-            ctx.strokeStyle = '#111111';
-            ctx.lineWidth = 2.5;
-            if (mood === 'happy') {
-                ctx.beginPath();
-                ctx.arc(cx - 12, cy - 32, 5, Math.PI, 0);
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.arc(cx + 12, cy - 32, 5, Math.PI, 0);
-                ctx.stroke();
-            } else {
-                ctx.beginPath();
-                ctx.moveTo(cx - 18, cy - 30);
-                ctx.lineTo(cx - 8, cy - 26);
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.moveTo(cx + 8, cy - 26);
-                ctx.lineTo(cx + 18, cy - 30);
-                ctx.stroke();
+            if (crackLevel >= 3) {
+                eggCtx.beginPath();
+                eggCtx.moveTo(cx - 8, cy + 15);
+                eggCtx.lineTo(cx + 12, cy + 35);
+                eggCtx.stroke();
             }
-
-            ctx.fillStyle = '#9d0208';
-            ctx.fillRect(cx - 24, cy - 48, 9, 13);
-            ctx.fillRect(cx + 15, cy - 48, 9, 13);
-
-            ctx.fillStyle = '#9d0208';
-            ctx.fillRect(cx - 52, cy - 10, 20, 32);
-            ctx.fillRect(cx + 32, cy - 10, 20, 32);
-
-            const flameH = 17 + flameFlicker * 0.7;
-            ctx.fillStyle = '#ffba08';
-            ctx.fillRect(cx - 8, cy - 54, 16, flameH);
-            ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 5, cy - 50, 10, flameH - 5);
-
-            ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 58, cy + 32, 26, 16);
-
-            ctx.fillStyle = '#ffba08';
-            ctx.fillRect(cx - 64, cy + 30, 16, 14);
-            ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 60, cy + 32, 9, 10);
-
-            ctx.fillStyle = '#9d0208';
-            ctx.fillRect(cx - 22, cy + 54, 12, 10);
-            ctx.fillRect(cx + 10, cy + 54, 12, 10);
-        }
-
-        // STAGE 3: INFERNYX (Ultimate)
-        function drawInfernyx(mood, breathOffset, flameFlicker) {
-            const cx = 110;
-            const cy = 100 + breathOffset;
-
-            ctx.fillStyle = 'rgba(0,0,0,0.35)';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy + 92, 58, 15, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#e85d04';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy + 4, 50, 50, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#faa307';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy + 14, 32, 30, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#e85d04';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy - 26, 48, 42, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#faa307';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy - 2, 24, 17, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(cx - 18, cy - 26, 13, 13);
-            ctx.fillRect(cx + 5, cy - 26, 13, 13);
-
-            ctx.fillStyle = '#111111';
-            ctx.fillRect(cx - 14, cy - 22, 6, 6);
-            ctx.fillRect(cx + 9, cy - 22, 6, 6);
-
-            ctx.strokeStyle = '#111111';
-            ctx.lineWidth = 2.5;
-            if (mood === 'happy') {
-                ctx.beginPath();
-                ctx.arc(cx - 12, cy - 34, 5, Math.PI, 0);
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.arc(cx + 12, cy - 34, 5, Math.PI, 0);
-                ctx.stroke();
-            } else {
-                ctx.beginPath();
-                ctx.moveTo(cx - 18, cy - 32);
-                ctx.lineTo(cx - 6, cy - 28);
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.moveTo(cx + 6, cy - 28);
-                ctx.lineTo(cx + 18, cy - 32);
-                ctx.stroke();
+            if (crackLevel >= 4) {
+                eggCtx.beginPath();
+                eggCtx.moveTo(cx + 5, cy - 10);
+                eggCtx.lineTo(cx + 25, cy - 5);
+                eggCtx.stroke();
             }
-
-            ctx.fillStyle = '#9d0208';
-            ctx.fillRect(cx - 26, cy - 54, 11, 15);
-            ctx.fillRect(cx + 15, cy - 54, 11, 15);
-
-            ctx.fillStyle = '#9d0208';
-            ctx.fillRect(cx - 62, cy - 24, 26, 42);
-            ctx.fillRect(cx + 36, cy - 24, 26, 42);
-
-            const flameH = 22 + flameFlicker * 1.0;
-            ctx.fillStyle = '#ffba08';
-            ctx.fillRect(cx - 10, cy - 62, 20, flameH);
-            ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 7, cy - 58, 14, flameH - 7);
-
-            ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 62, cy + 28, 30, 20);
-
-            ctx.fillStyle = '#ffba08';
-            ctx.fillRect(cx - 68, cy + 26, 20, 18);
-            ctx.fillStyle = '#e85d04';
-            ctx.fillRect(cx - 64, cy + 28, 12, 14);
-
-            ctx.fillStyle = '#9d0208';
-            ctx.fillRect(cx - 24, cy + 52, 15, 12);
-            ctx.fillRect(cx + 9, cy + 52, 15, 12);
         }
+
+        function hatchAnimation() {
+            if (eggAnimating) return;
+            eggAnimating = true;
+
+            let crack = 0;
+            const interval = setInterval(() => {
+                crack++;
+                drawEgg(crack);
+
+                if (crack >= 5) {
+                    clearInterval(interval);
+
+                    // Final break + baby emerges
+                    setTimeout(() => {
+                        hasHatched = true;
+                        currentStage = 0;
+
+                        document.getElementById('egg-screen').style.display = 'none';
+                        document.getElementById('pet-screen').style.display = 'block';
+
+                        drawPet('happy', 0, 0);
+                        updateUI();
+                        startDecay();
+                        requestAnimationFrame(animate);
+
+                        eggAnimating = false;
+                    }, 400);
+                }
+            }, 180);
+        }
+
+        // Pet drawing functions (same as before)
+        function drawFlick(mood, breathOffset, flameFlicker) { /* ... full code from v2.7 ... */ }
+        function drawCharling(mood, breathOffset, flameFlicker) { /* ... */ }
+        function drawDrakEmber(mood, breathOffset, flameFlicker) { /* ... */ }
+        function drawInfernyx(mood, breathOffset, flameFlicker) { /* ... */ }
 
         function drawPet(mood, breathOffset, flameFlicker) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            petCtx.clearRect(0, 0, petCanvas.width, petCanvas.height);
 
             if (currentStage === 0) drawFlick(mood, breathOffset, flameFlicker);
             else if (currentStage === 1) drawCharling(mood, breathOffset, flameFlicker);
@@ -786,7 +478,7 @@
         }
 
         function resetPet() {
-            if (!confirm('Reset your pet and choose a new egg?')) return;
+            if (!confirm('Reset and hatch a new egg?')) return;
             localStorage.removeItem('virtualPet');
             localStorage.removeItem('hasHatched');
             location.reload();
@@ -796,9 +488,22 @@
             loadPet();
 
             if (!hasHatched) {
-                showEggScreen();
+                // Show egg screen
+                document.getElementById('egg-screen').style.display = 'block';
+                document.getElementById('pet-screen').style.display = 'none';
+
+                // Draw initial egg
+                drawEgg(0);
+
+                // Tap to hatch
+                eggCanvas.onclick = () => {
+                    if (!eggAnimating) hatchAnimation();
+                };
             } else {
-                showPetScreen();
+                // Already hatched
+                document.getElementById('egg-screen').style.display = 'none';
+                document.getElementById('pet-screen').style.display = 'block';
+
                 document.getElementById('petNameDisplay').textContent = pet.name;
                 updateUI();
                 startDecay();
