@@ -3,240 +3,463 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Pet App</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Virtual Pet • Offline</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
         
+        :root {
+            --bg: #0f172a;
+            --card: #1e2937;
+            --accent: #10b981;
+            --accent-dark: #059669;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1135 100%);
+            color: #e2e8f0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh;
+            line-height: 1.5;
         }
         
         .pixel-font {
             font-family: 'Press Start 2P', system-ui;
+            letter-spacing: 1px;
         }
         
-        .pet-container {
-            transition: transform 0.3s ease;
+        .container {
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 24px 16px;
         }
         
-        .pet-happy {
-            animation: bounce 1s infinite ease-in-out;
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
         }
         
-        .pet-sad {
-            animation: shake 0.5s infinite ease-in-out;
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #10b981;
+            margin: 0;
+            line-height: 1;
         }
         
-        .stat-bar {
-            transition: width 0.4s ease;
+        .subtitle {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+        
+        .card {
+            background: #1e2937;
+            border-radius: 20px;
+            border: 1px solid #334155;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        
+        .pet-visual {
+            width: 160px;
+            height: 160px;
+            background: #334155;
+            border-radius: 9999px;
+            border: 6px solid #064e3b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            position: relative;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .pet-visual.happy {
+            animation: petBounce 1.2s infinite ease-in-out;
+        }
+        
+        .pet-visual.sad {
+            animation: petShake 0.6s infinite ease-in-out;
+        }
+        
+        .pet-emoji {
+            font-size: 110px;
+            line-height: 1;
+            transition: all 0.4s ease;
+            user-select: none;
+        }
+        
+        .pet-face-details {
+            position: absolute;
+            top: 38%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 38px;
+        }
+        
+        .pet-face-details div {
+            width: 11px;
+            height: 11px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 3px #1e2937;
+            opacity: 0.85;
+        }
+        
+        @keyframes petBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        
+        @keyframes petShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+        
+        .mood-text {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+        
+        .age-text {
+            font-size: 11px;
+            color: #64748b;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748b;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            padding-left: 4px;
+        }
+        
+        .stat-row {
+            margin-bottom: 16px;
+        }
+        
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+            padding: 0 4px;
+        }
+        
+        .stat-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        
+        .stat-value {
+            font-family: ui-monospace, monospace;
+            font-size: 13px;
+            font-weight: 600;
+            min-width: 32px;
+            text-align: right;
+        }
+        
+        .progress-bg {
+            height: 10px;
+            background: #334155;
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hunger .progress-fill { background: linear-gradient(to right, #fb923c, #f59e0b); }
+        .happiness .progress-fill { background: linear-gradient(to right, #f472b6, #e11d48); }
+        .cleanliness .progress-fill { background: linear-gradient(to right, #22d3ee, #14b8a6); }
+        .energy .progress-fill { background: linear-gradient(to right, #facc15, #eab308); }
+        
+        .actions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
         
         .action-btn {
+            background: #1e2937;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
             transition: all 0.2s ease;
+            text-align: center;
+        }
+        
+        .action-btn:hover {
+            border-color: #475569;
+            transform: translateY(-1px);
         }
         
         .action-btn:active {
-            transform: scale(0.95);
+            transform: scale(0.97);
         }
         
-        .message-log {
-            scrollbar-width: thin;
-            scrollbar-color: #4b5563 #1f2937;
+        .action-icon {
+            font-size: 28px;
+            margin-bottom: 2px;
         }
         
-        .pet-face {
-            font-size: 120px;
-            line-height: 1;
-            transition: all 0.4s ease;
+        .action-label {
+            font-weight: 600;
+            font-size: 14px;
         }
         
-        .mood-happy { filter: hue-rotate(20deg) saturate(1.3); }
-        .mood-neutral { filter: none; }
-        .mood-sad { filter: grayscale(0.3) hue-rotate(-10deg); }
+        .action-sub {
+            font-size: 10px;
+            color: #64748b;
+        }
         
-        .game-container {
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+        .status-card {
+            background: #1e2937;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        
+        .status-text {
+            font-size: 14px;
+            line-height: 1.5;
+            flex: 1;
+        }
+        
+        .message {
+            color: #10b981;
+        }
+        
+        .message.critical {
+            color: #f87171;
+            font-weight: 500;
+        }
+        
+        .reset-btn {
+            background: #450a0a;
+            color: #fda4af;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 11px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .reset-btn:hover {
+            background: #7f1d1d;
+        }
+        
+        .tip {
+            font-size: 11px;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0 4px;
+        }
+        
+        .name-input {
+            width: 100%;
+            background: #1e2937;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-size: 17px;
+            font-weight: 500;
+            color: white;
+            outline: none;
+        }
+        
+        .name-input:focus {
+            border-color: #10b981;
         }
     </style>
 </head>
-<body class="bg-[#0f172a] text-white min-h-screen">
-    <div class="max-w-md mx-auto px-4 py-6">
+<body>
+    <div class="container">
         <!-- Header -->
-        <div class="flex items-center justify-between mb-6">
+        <div class="header">
             <div>
-                <h1 class="pixel-font text-3xl font-bold tracking-wider text-emerald-400">VIRTUAL PET</h1>
-                <p class="text-emerald-300 text-sm">v1.0 • Fresh Start</p>
+                <h1 class="title pixel-font">VIRTUAL PET</h1>
+                <div class="subtitle">Offline • v1.0</div>
             </div>
-            <div class="flex items-center gap-2">
-                <button onclick="resetPet()" 
-                        class="px-3 py-1.5 text-xs bg-red-900 hover:bg-red-800 rounded-lg flex items-center gap-1.5 transition-colors">
-                    <i class="fas fa-redo text-xs"></i>
-                    <span>Reset</span>
-                </button>
-            </div>
+            <button onclick="resetPet()" class="reset-btn">
+                <span>↻</span>
+                <span>Reset</span>
+            </button>
         </div>
 
         <!-- Pet Name -->
-        <div class="mb-4">
-            <div class="flex items-center gap-2 mb-1">
-                <label class="text-sm text-gray-400">Your Pet's Name</label>
-            </div>
+        <div style="margin-bottom: 16px;">
+            <div style="font-size: 11px; color: #64748b; margin-bottom: 6px; padding-left: 4px;">YOUR PET'S NAME</div>
             <input id="petName" type="text" value="Pixel" 
-                   class="w-full bg-[#1e2937] border border-gray-700 focus:border-emerald-500 rounded-xl px-4 py-2.5 text-lg font-medium outline-none"
+                   class="name-input"
                    oninput="updatePetName()">
         </div>
 
-        <!-- Pet Display -->
-        <div class="game-container bg-[#1e2937] rounded-3xl p-6 mb-6 border border-gray-700">
-            <div class="flex flex-col items-center">
-                <!-- Pet Visual -->
-                <div id="petVisual" 
-                     class="pet-container w-40 h-40 flex items-center justify-center bg-[#334155] rounded-full mb-4 border-4 border-emerald-900 relative">
-                    <div id="petEmoji" class="pet-face transition-all">🐱</div>
-                    
-                    <!-- Simple face details -->
-                    <div class="absolute top-1/3 left-1/4 w-3 h-3 bg-white rounded-full opacity-80" style="box-shadow: 0 0 0 2px #1e2937;"></div>
-                    <div class="absolute top-1/3 right-1/4 w-3 h-3 bg-white rounded-full opacity-80" style="box-shadow: 0 0 0 2px #1e2937;"></div>
-                </div>
-                
-                <div class="text-center">
-                    <div id="petMood" class="text-emerald-400 font-medium text-sm tracking-widest">HAPPY</div>
-                    <div id="petAge" class="text-xs text-gray-400 mt-0.5">Age: <span id="ageValue">0</span> days</div>
+        <!-- Pet Visual -->
+        <div class="card" style="text-align: center; padding-top: 24px; padding-bottom: 24px;">
+            <div id="petVisual" class="pet-visual">
+                <div id="petEmoji" class="pet-emoji">🐱</div>
+                <div class="pet-face-details">
+                    <div></div>
+                    <div></div>
                 </div>
             </div>
+            
+            <div id="petMood" class="mood-text" style="color: #10b981;">HAPPY</div>
+            <div class="age-text">Age: <span id="ageValue">0</span> days</div>
         </div>
 
         <!-- Stats -->
-        <div class="mb-6">
-            <h3 class="text-sm font-medium text-gray-400 mb-3 px-1">NEEDS</h3>
+        <div>
+            <div class="section-title">NEEDS</div>
             
-            <div class="space-y-4 bg-[#1e2937] rounded-2xl p-5 border border-gray-700">
+            <div class="card" style="padding: 20px 18px;">
                 <!-- Hunger -->
-                <div>
-                    <div class="flex justify-between items-center mb-1.5 px-1">
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-apple-alt text-orange-400"></i>
-                            <span class="font-medium">Hunger</span>
+                <div class="stat-row hunger">
+                    <div class="stat-header">
+                        <div class="stat-label">
+                            <span style="font-size: 18px;">🍎</span>
+                            <span>Hunger</span>
                         </div>
-                        <span id="hungerValue" class="font-mono text-sm w-8 text-right">80</span>
+                        <span id="hungerValue" class="stat-value">80</span>
                     </div>
-                    <div class="h-3 bg-[#334155] rounded-full overflow-hidden">
-                        <div id="hungerBar" class="stat-bar h-full bg-gradient-to-r from-orange-400 to-amber-400 rounded-full" style="width: 80%"></div>
+                    <div class="progress-bg">
+                        <div id="hungerBar" class="progress-fill" style="width: 80%"></div>
                     </div>
                 </div>
                 
                 <!-- Happiness -->
-                <div>
-                    <div class="flex justify-between items-center mb-1.5 px-1">
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-heart text-pink-400"></i>
-                            <span class="font-medium">Happiness</span>
+                <div class="stat-row happiness">
+                    <div class="stat-header">
+                        <div class="stat-label">
+                            <span style="font-size: 18px;">❤️</span>
+                            <span>Happiness</span>
                         </div>
-                        <span id="happinessValue" class="font-mono text-sm w-8 text-right">75</span>
+                        <span id="happinessValue" class="stat-value">75</span>
                     </div>
-                    <div class="h-3 bg-[#334155] rounded-full overflow-hidden">
-                        <div id="happinessBar" class="stat-bar h-full bg-gradient-to-r from-pink-400 to-rose-400 rounded-full" style="width: 75%"></div>
+                    <div class="progress-bg">
+                        <div id="happinessBar" class="progress-fill" style="width: 75%"></div>
                     </div>
                 </div>
                 
                 <!-- Cleanliness -->
-                <div>
-                    <div class="flex justify-between items-center mb-1.5 px-1">
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-soap text-cyan-400"></i>
-                            <span class="font-medium">Cleanliness</span>
+                <div class="stat-row cleanliness">
+                    <div class="stat-header">
+                        <div class="stat-label">
+                            <span style="font-size: 18px;">🧼</span>
+                            <span>Cleanliness</span>
                         </div>
-                        <span id="cleanValue" class="font-mono text-sm w-8 text-right">85</span>
+                        <span id="cleanValue" class="stat-value">85</span>
                     </div>
-                    <div class="h-3 bg-[#334155] rounded-full overflow-hidden">
-                        <div id="cleanBar" class="stat-bar h-full bg-gradient-to-r from-cyan-400 to-teal-400 rounded-full" style="width: 85%"></div>
+                    <div class="progress-bg">
+                        <div id="cleanBar" class="progress-fill" style="width: 85%"></div>
                     </div>
                 </div>
                 
                 <!-- Energy -->
-                <div>
-                    <div class="flex justify-between items-center mb-1.5 px-1">
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-bolt text-yellow-400"></i>
-                            <span class="font-medium">Energy</span>
+                <div class="stat-row energy">
+                    <div class="stat-header">
+                        <div class="stat-label">
+                            <span style="font-size: 18px;">⚡</span>
+                            <span>Energy</span>
                         </div>
-                        <span id="energyValue" class="font-mono text-sm w-8 text-right">90</span>
+                        <span id="energyValue" class="stat-value">90</span>
                     </div>
-                    <div class="h-3 bg-[#334155] rounded-full overflow-hidden">
-                        <div id="energyBar" class="stat-bar h-full bg-gradient-to-r from-yellow-400 to-amber-300 rounded-full" style="width: 90%"></div>
+                    <div class="progress-bg">
+                        <div id="energyBar" class="progress-fill" style="width: 90%"></div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Actions -->
-        <div class="mb-6">
-            <h3 class="text-sm font-medium text-gray-400 mb-3 px-1">ACTIONS</h3>
+        <div>
+            <div class="section-title">ACTIONS</div>
             
-            <div class="grid grid-cols-2 gap-3">
-                <button onclick="feedPet()" 
-                        class="action-btn flex flex-col items-center justify-center gap-2 bg-[#1e2937] hover:bg-orange-900 border border-gray-700 hover:border-orange-700 rounded-2xl py-4 px-3 transition-all active:scale-[0.985]">
-                    <i class="fas fa-apple-alt text-3xl text-orange-400"></i>
-                    <div class="text-center">
-                        <div class="font-semibold">Feed</div>
-                        <div class="text-[10px] text-gray-400">+Hunger</div>
+            <div class="actions-grid">
+                <button onclick="feedPet()" class="action-btn">
+                    <div class="action-icon">🍎</div>
+                    <div>
+                        <div class="action-label">Feed</div>
+                        <div class="action-sub">+ Hunger</div>
                     </div>
                 </button>
                 
-                <button onclick="playWithPet()" 
-                        class="action-btn flex flex-col items-center justify-center gap-2 bg-[#1e2937] hover:bg-pink-900 border border-gray-700 hover:border-pink-700 rounded-2xl py-4 px-3 transition-all active:scale-[0.985]">
-                    <i class="fas fa-gamepad text-3xl text-pink-400"></i>
-                    <div class="text-center">
-                        <div class="font-semibold">Play</div>
-                        <div class="text-[10px] text-gray-400">+Happiness</div>
+                <button onclick="playWithPet()" class="action-btn">
+                    <div class="action-icon">🎮</div>
+                    <div>
+                        <div class="action-label">Play</div>
+                        <div class="action-sub">+ Happiness</div>
                     </div>
                 </button>
                 
-                <button onclick="cleanPet()" 
-                        class="action-btn flex flex-col items-center justify-center gap-2 bg-[#1e2937] hover:bg-cyan-900 border border-gray-700 hover:border-cyan-700 rounded-2xl py-4 px-3 transition-all active:scale-[0.985]">
-                    <i class="fas fa-bath text-3xl text-cyan-400"></i>
-                    <div class="text-center">
-                        <div class="font-semibold">Clean</div>
-                        <div class="text-[10px] text-gray-400">+Cleanliness</div>
+                <button onclick="cleanPet()" class="action-btn">
+                    <div class="action-icon">🧼</div>
+                    <div>
+                        <div class="action-label">Clean</div>
+                        <div class="action-sub">+ Cleanliness</div>
                     </div>
                 </button>
                 
-                <button onclick="restPet()" 
-                        class="action-btn flex flex-col items-center justify-center gap-2 bg-[#1e2937] hover:bg-yellow-900 border border-gray-700 hover:border-yellow-700 rounded-2xl py-4 px-3 transition-all active:scale-[0.985]">
-                    <i class="fas fa-bed text-3xl text-yellow-400"></i>
-                    <div class="text-center">
-                        <div class="font-semibold">Rest</div>
-                        <div class="text-[10px] text-gray-400">+Energy</div>
+                <button onclick="restPet()" class="action-btn">
+                    <div class="action-icon">🛏️</div>
+                    <div>
+                        <div class="action-label">Rest</div>
+                        <div class="action-sub">+ Energy</div>
                     </div>
                 </button>
             </div>
         </div>
 
-        <!-- Status Message -->
-        <div class="bg-[#1e2937] border border-gray-700 rounded-2xl p-4 mb-4">
-            <div class="flex items-start gap-3">
-                <i class="fas fa-comment-dots text-emerald-400 mt-0.5"></i>
-                <div class="flex-1">
-                    <div id="statusMessage" class="text-sm leading-relaxed">Your pet is doing great! Keep caring for it.</div>
-                </div>
+        <!-- Status -->
+        <div class="status-card">
+            <div style="font-size: 20px; margin-top: 2px;">💬</div>
+            <div id="statusMessage" class="status-text message">
+                Your pet is doing great! Keep caring for it.
             </div>
         </div>
 
-        <!-- Quick Tips -->
-        <div class="text-[10px] text-gray-500 px-1 flex items-center gap-1.5">
-            <i class="fas fa-info-circle"></i>
-            <span>Stats slowly decrease over time. Take good care!</span>
+        <div class="tip">
+            <span>ⓘ</span>
+            <span>Stats decrease over time. Take good care of your pet!</span>
         </div>
     </div>
 
     <script>
-        // Tailwind script
-        function initTailwind() {
-            document.documentElement.style.setProperty('--accent', '#10b981');
-        }
-        
         // Game State
         let pet = {
             name: "Pixel",
@@ -260,7 +483,6 @@
             const saved = localStorage.getItem('virtualPet');
             if (saved) {
                 const loaded = JSON.parse(saved);
-                // Merge to keep new fields if any
                 pet = { ...pet, ...loaded };
             }
             
@@ -269,7 +491,6 @@
                 messages = JSON.parse(savedMessages);
             }
             
-            // Update input
             document.getElementById('petName').value = pet.name;
         }
         
@@ -281,89 +502,86 @@
         }
         
         function updateUI() {
-            // Values
+            // Numeric values
             document.getElementById('hungerValue').textContent = Math.round(pet.hunger);
             document.getElementById('happinessValue').textContent = Math.round(pet.happiness);
             document.getElementById('cleanValue').textContent = Math.round(pet.cleanliness);
             document.getElementById('energyValue').textContent = Math.round(pet.energy);
-            document.getElementById('ageValue').textContent = pet.age;
+            document.getElementById('ageValue').textContent = Math.floor(pet.age);
             
-            // Bars
+            // Progress bars
             document.getElementById('hungerBar').style.width = `${pet.hunger}%`;
             document.getElementById('happinessBar').style.width = `${pet.happiness}%`;
             document.getElementById('cleanBar').style.width = `${pet.cleanliness}%`;
             document.getElementById('energyBar').style.width = `${pet.energy}%`;
             
-            // Pet visual & mood
+            // Pet mood & animation
+            const visual = document.getElementById('petVisual');
             const emojiEl = document.getElementById('petEmoji');
             const moodEl = document.getElementById('petMood');
-            const visual = document.getElementById('petVisual');
             
             const avg = (pet.hunger + pet.happiness + pet.cleanliness + pet.energy) / 4;
             
             let emoji = '🐱';
             let moodText = 'CONTENT';
-            let moodClass = 'mood-neutral';
+            let moodColor = '#64748b';
+            
+            visual.classList.remove('happy', 'sad');
             
             if (avg >= 80) {
                 emoji = '😺';
                 moodText = 'VERY HAPPY';
-                moodClass = 'mood-happy';
-                visual.classList.add('pet-happy');
-                visual.classList.remove('pet-sad');
+                moodColor = '#10b981';
+                visual.classList.add('happy');
             } else if (avg >= 60) {
                 emoji = '🐱';
                 moodText = 'HAPPY';
-                moodClass = 'mood-neutral';
-                visual.classList.remove('pet-happy', 'pet-sad');
+                moodColor = '#10b981';
             } else if (avg >= 40) {
                 emoji = '😿';
                 moodText = 'NEEDS CARE';
-                moodClass = 'mood-sad';
-                visual.classList.add('pet-sad');
-                visual.classList.remove('pet-happy');
+                moodColor = '#f59e0b';
+                visual.classList.add('sad');
             } else {
                 emoji = '😾';
-                moodText = 'VERY SAD';
-                moodClass = 'mood-sad';
-                visual.classList.add('pet-sad');
-                visual.classList.remove('pet-happy');
+                moodText = 'STRUGGLING';
+                moodColor = '#ef4444';
+                visual.classList.add('sad');
             }
             
             emojiEl.textContent = emoji;
-            emojiEl.className = `pet-face ${moodClass}`;
             moodEl.textContent = moodText;
+            moodEl.style.color = moodColor;
             
-            // Status message
             updateStatusMessage(avg);
         }
         
         function updateStatusMessage(avg) {
             const msgEl = document.getElementById('statusMessage');
+            msgEl.classList.remove('critical');
             
             if (avg >= 85) {
-                msgEl.textContent = `${pet.name} is thriving! You're doing an amazing job.`;
+                msgEl.textContent = `${pet.name} is thriving! You're doing great.`;
             } else if (avg >= 70) {
                 msgEl.textContent = `${pet.name} is happy and well cared for.`;
             } else if (avg >= 50) {
                 msgEl.textContent = `${pet.name} could use some attention.`;
             } else if (avg >= 30) {
-                msgEl.textContent = `${pet.name} is feeling neglected. Quick, do something!`;
+                msgEl.textContent = `${pet.name} is feeling neglected. Do something!`;
+                msgEl.classList.add('critical');
             } else {
-                msgEl.textContent = `${pet.name} is really struggling... please help!`;
+                msgEl.textContent = `${pet.name} is really struggling... help!`;
+                msgEl.classList.add('critical');
             }
         }
         
         function addMessage(text) {
-            const timestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            messages.unshift({time: timestamp, text});
+            messages.unshift(text);
+            if (messages.length > 5) messages.pop();
             
-            // Keep only last 6 messages
-            if (messages.length > 6) messages.pop();
-            
-            // Update status with latest
             const msgEl = document.getElementById('statusMessage');
-            msgEl.innerHTML = `<span class="text-emerald-300">${text}</span>`;
+            msgEl.textContent = text;
+            msgEl.classList.remove('critical');
             
             savePet();
         }
@@ -373,12 +591,11 @@
                 addMessage(`${pet.name} is already full!`);
                 return;
             }
-            
             pet.hunger = Math.min(100, pet.hunger + 22);
             pet.happiness = Math.min(100, pet.happiness + 5);
             pet.energy = Math.max(0, pet.energy - 3);
             
-            addMessage(`You fed ${pet.name}. Yummy!`);
+            addMessage(`You fed ${pet.name}. Delicious!`);
             updateUI();
             savePet();
             checkCritical();
@@ -386,16 +603,15 @@
         
         function playWithPet() {
             if (pet.energy < 15) {
-                addMessage(`${pet.name} is too tired to play right now.`);
+                addMessage(`${pet.name} is too tired to play.`);
                 return;
             }
-            
             pet.happiness = Math.min(100, pet.happiness + 25);
             pet.hunger = Math.max(0, pet.hunger - 8);
             pet.energy = Math.max(0, pet.energy - 18);
             pet.cleanliness = Math.max(0, pet.cleanliness - 5);
             
-            addMessage(`You played with ${pet.name}! Lots of fun.`);
+            addMessage(`You played with ${pet.name}! So much fun.`);
             updateUI();
             savePet();
             checkCritical();
@@ -403,10 +619,9 @@
         
         function cleanPet() {
             if (pet.cleanliness >= 95) {
-                addMessage(`${pet.name} is already sparkling clean.`);
+                addMessage(`${pet.name} is already clean.`);
                 return;
             }
-            
             pet.cleanliness = Math.min(100, pet.cleanliness + 28);
             pet.happiness = Math.min(100, pet.happiness + 8);
             pet.energy = Math.max(0, pet.energy - 5);
@@ -419,57 +634,49 @@
         
         function restPet() {
             if (pet.energy >= 95) {
-                addMessage(`${pet.name} isn't tired right now.`);
+                addMessage(`${pet.name} isn't tired.`);
                 return;
             }
-            
             pet.energy = Math.min(100, pet.energy + 30);
             pet.hunger = Math.max(0, pet.hunger - 5);
             pet.happiness = Math.min(100, pet.happiness + 4);
             
-            addMessage(`${pet.name} had a nice rest. Feeling refreshed!`);
+            addMessage(`${pet.name} had a good rest. Refreshed!`);
             updateUI();
             savePet();
             checkCritical();
         }
         
         function checkCritical() {
-            const critical = [];
-            if (pet.hunger <= 15) critical.push('hungry');
-            if (pet.happiness <= 15) critical.push('unhappy');
-            if (pet.cleanliness <= 15) critical.push('dirty');
-            if (pet.energy <= 15) critical.push('exhausted');
+            const lowStats = [];
+            if (pet.hunger <= 15) lowStats.push('hungry');
+            if (pet.happiness <= 15) lowStats.push('unhappy');
+            if (pet.cleanliness <= 15) lowStats.push('dirty');
+            if (pet.energy <= 15) lowStats.push('exhausted');
             
-            if (critical.length > 0) {
-                const msg = `${pet.name} is ${critical.join(' and ')}!`;
+            if (lowStats.length > 0) {
                 const msgEl = document.getElementById('statusMessage');
-                msgEl.innerHTML = `<span class="text-red-400 font-medium">${msg}</span>`;
+                msgEl.textContent = `${pet.name} is ${lowStats.join(' and ')}!`;
+                msgEl.classList.add('critical');
             }
         }
         
         function decayStats() {
-            // Slow natural decay
-            const decayRate = 1.2;
+            const rate = 1.15;
             
-            pet.hunger = Math.max(0, pet.hunger - (decayRate * 0.8));
-            pet.happiness = Math.max(0, pet.happiness - (decayRate * 0.7));
-            pet.cleanliness = Math.max(0, pet.cleanliness - (decayRate * 0.5));
-            pet.energy = Math.max(0, pet.energy - (decayRate * 0.6));
+            pet.hunger = Math.max(0, pet.hunger - rate * 0.85);
+            pet.happiness = Math.max(0, pet.happiness - rate * 0.75);
+            pet.cleanliness = Math.max(0, pet.cleanliness - rate * 0.55);
+            pet.energy = Math.max(0, pet.energy - rate * 0.65);
             
-            // Random small events
-            if (Math.random() < 0.08) {
-                pet.happiness = Math.max(0, pet.happiness - 3);
+            // Occasional random dip
+            if (Math.random() < 0.07) {
+                pet.happiness = Math.max(0, pet.happiness - 4);
             }
             
-            // Age up slowly
-            if (Math.random() < 0.15) {
-                pet.age += 0.1;
-                if (Math.floor(pet.age) > Math.floor(pet.age - 0.1)) {
-                    // crossed a day
-                    if (Math.random() < 0.3) {
-                        addMessage(`${pet.name} is growing up nicely.`);
-                    }
-                }
+            // Slow aging
+            if (Math.random() < 0.12) {
+                pet.age += 0.12;
             }
             
             updateUI();
@@ -479,15 +686,11 @@
         
         function startDecay() {
             if (decayInterval) clearInterval(decayInterval);
-            
-            // Decay every 8 seconds (feels natural but not too fast)
-            decayInterval = setInterval(() => {
-                decayStats();
-            }, 8000);
+            decayInterval = setInterval(decayStats, 7500);
         }
         
         function resetPet() {
-            if (!confirm('Reset your virtual pet to default stats?')) return;
+            if (!confirm('Reset your pet back to default stats?')) return;
             
             pet = {
                 name: "Pixel",
@@ -501,37 +704,30 @@
             messages = [];
             
             document.getElementById('petName').value = pet.name;
-            
             localStorage.removeItem('virtualPet');
             localStorage.removeItem('virtualPetMessages');
             
             updateUI();
-            addMessage('Pet has been reset. Fresh start!');
+            const msgEl = document.getElementById('statusMessage');
+            msgEl.textContent = 'Pet reset. Fresh start!';
+            msgEl.classList.remove('critical');
         }
         
         function initGame() {
-            initTailwind();
             loadPet();
-            
-            // Initial UI
             updateUI();
             
-            // Welcome message if new
+            const msgEl = document.getElementById('statusMessage');
+            
             if (messages.length === 0) {
-                addMessage(`Welcome! Take good care of ${pet.name}.`);
+                msgEl.textContent = `Welcome! Take good care of ${pet.name}.`;
             } else {
-                // Show last message
-                const last = messages[0];
-                document.getElementById('statusMessage').innerHTML = `<span class="text-emerald-300">${last.text}</span>`;
+                msgEl.textContent = messages[0] || `Welcome back to ${pet.name}!`;
             }
             
             startDecay();
-            
-            // Keyboard shortcuts hint (optional)
-            console.log('%c[Virtual Pet] Tip: You can also use keyboard shortcuts in future versions!', 'color:#64748b');
         }
         
-        // Boot the app
         window.onload = initGame;
     </script>
 </body>
