@@ -1,9 +1,9 @@
 // ============================================
-// VIRTUAL PET v4.3 - Multi-File Structure
+// VIRTUAL PET v4.4 - Sprig Added
 // ============================================
 // index.html  -> Clean loader
 // style.css   -> All styling
-// main.js     -> Core logic + characters
+// main.js     -> Core logic + 3 characters (Ember, Whisk, Sprig)
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -99,7 +99,13 @@ function hatchAnimation() {
                 hasHatched = true;
                 currentStage = 0;
 
-                const randomPet = Math.random() < 0.5 ? 'flick' : 'puff';
+                // Randomly choose between Flick, Puff, or Bud (Sprig)
+                const rand = Math.random();
+                let randomPet;
+                if (rand < 0.33) randomPet = 'flick';
+                else if (rand < 0.66) randomPet = 'puff';
+                else randomPet = 'bud';
+
                 localStorage.setItem('hatchedPetType', randomPet);
 
                 document.getElementById('egg-screen').style.display = 'none';
@@ -763,6 +769,316 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
+// SPRIG LINE (Plant/Nature) - Strong Evolution Progression
+// ============================================
+
+// STAGE 0: BUD (Baby) - Mostly cute head + tiny sprout
+function drawBud(mood, breathOffset, flameFlicker) {
+    const cx = 110;
+    const cy = 130 + breathOffset;
+
+    // Tiny shadow
+    petCtx.fillStyle = 'rgba(0,0,0,0.2)';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 58, 32, 9, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Tiny sprout body
+    petCtx.fillStyle = '#4ade80';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 32, 20, 18, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Big cute head (dominant feature)
+    petCtx.fillStyle = '#4ade80';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy - 14, 44, 40, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Snout area
+    petCtx.fillStyle = '#86efac';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 6, 14, 11, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Big eyes
+    petCtx.fillStyle = '#ffffff';
+    petCtx.fillRect(cx - 18, cy - 22, 11, 11);
+    petCtx.fillRect(cx + 7, cy - 22, 11, 11);
+
+    petCtx.fillStyle = '#166534';
+    petCtx.fillRect(cx - 14, cy - 18, 5, 5);
+    petCtx.fillRect(cx + 11, cy - 18, 5, 5);
+
+    petCtx.fillStyle = '#ffffff';
+    petCtx.fillRect(cx - 12, cy - 20, 2, 2);
+    petCtx.fillRect(cx + 13, cy - 20, 2, 2);
+
+    // Happy eyebrows
+    petCtx.strokeStyle = '#166534';
+    petCtx.lineWidth = 2;
+    if (mood === 'happy') {
+        petCtx.beginPath();
+        petCtx.arc(cx - 13, cy - 32, 4, Math.PI, 0);
+        petCtx.stroke();
+        petCtx.beginPath();
+        petCtx.arc(cx + 13, cy - 32, 4, Math.PI, 0);
+        petCtx.stroke();
+    } else {
+        petCtx.beginPath();
+        petCtx.moveTo(cx - 18, cy - 30);
+        petCtx.lineTo(cx - 8, cy - 26);
+        petCtx.stroke();
+        petCtx.beginPath();
+        petCtx.moveTo(cx + 8, cy - 26);
+        petCtx.lineTo(cx + 18, cy - 30);
+        petCtx.stroke();
+    }
+
+    // Tiny sprout on head
+    petCtx.fillStyle = '#166534';
+    petCtx.fillRect(cx - 3, cy - 48, 6, 10);
+    petCtx.fillStyle = '#4ade80';
+    petCtx.fillRect(cx - 5, cy - 42, 3, 4);
+    petCtx.fillRect(cx + 2, cy - 42, 3, 4);
+
+    // Tiny root nubs
+    petCtx.fillStyle = '#166534';
+    petCtx.fillRect(cx - 14, cy + 46, 6, 5);
+    petCtx.fillRect(cx + 8, cy + 46, 6, 5);
+}
+
+// STAGE 1: SPROUT (Child) - Stem + first leaves appear
+function drawSprout(mood, breathOffset, flameFlicker) {
+    const cx = 110;
+    const cy = 120 + breathOffset;
+
+    // Shadow
+    petCtx.fillStyle = 'rgba(0,0,0,0.25)';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 68, 38, 10, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Stem/body developing
+    petCtx.fillStyle = '#4ade80';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 22, 26, 30, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Head still prominent
+    petCtx.fillStyle = '#4ade80';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy - 12, 40, 36, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    petCtx.fillStyle = '#86efac';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 6, 16, 12, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Eyes
+    petCtx.fillStyle = '#ffffff';
+    petCtx.fillRect(cx - 16, cy - 20, 10, 10);
+    petCtx.fillRect(cx + 6, cy - 20, 10, 10);
+
+    petCtx.fillStyle = '#166534';
+    petCtx.fillRect(cx - 12, cy - 16, 4, 4);
+    petCtx.fillRect(cx + 10, cy - 16, 4, 4);
+
+    // Eyebrows
+    petCtx.strokeStyle = '#166534';
+    petCtx.lineWidth = 2;
+    if (mood === 'happy') {
+        petCtx.beginPath();
+        petCtx.arc(cx - 11, cy - 28, 4, Math.PI, 0);
+        petCtx.stroke();
+        petCtx.beginPath();
+        petCtx.arc(cx + 11, cy - 28, 4, Math.PI, 0);
+        petCtx.stroke();
+    } else {
+        petCtx.beginPath();
+        petCtx.moveTo(cx - 16, cy - 26);
+        petCtx.lineTo(cx - 6, cy - 22);
+        petCtx.stroke();
+        petCtx.beginPath();
+        petCtx.moveTo(cx + 6, cy - 22);
+        petCtx.lineTo(cx + 16, cy - 26);
+        petCtx.stroke();
+    }
+
+    // First leaves appear (new feature!)
+    petCtx.fillStyle = '#166534';
+    petCtx.fillRect(cx - 28, cy + 4, 12, 8);
+    petCtx.fillRect(cx + 16, cy + 4, 12, 8);
+
+    petCtx.fillStyle = '#4ade80';
+    petCtx.fillRect(cx - 26, cy + 6, 8, 5);
+    petCtx.fillRect(cx + 18, cy + 6, 8, 5);
+
+    // Small stem detail
+    petCtx.fillStyle = '#166534';
+    petCtx.fillRect(cx - 4, cy - 42, 8, 12);
+}
+
+// STAGE 2: SPRIG (Adult) - Vines + defined body
+function drawSprig(mood, breathOffset, flameFlicker) {
+    const cx = 110;
+    const cy = 112 + breathOffset;
+
+    // Shadow
+    petCtx.fillStyle = 'rgba(0,0,0,0.3)';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 74, 44, 11, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Defined body
+    petCtx.fillStyle = '#4ade80';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 14, 34, 36, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Head
+    petCtx.fillStyle = '#4ade80';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy - 14, 38, 34, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    petCtx.fillStyle = '#86efac';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 4, 18, 13, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Eyes
+    petCtx.fillStyle = '#ffffff';
+    petCtx.fillRect(cx - 15, cy - 20, 10, 10);
+    petCtx.fillRect(cx + 5, cy - 20, 10, 10);
+
+    petCtx.fillStyle = '#166534';
+    petCtx.fillRect(cx - 11, cy - 16, 4, 4);
+    petCtx.fillRect(cx + 9, cy - 16, 4, 4);
+
+    // Eyebrows
+    petCtx.strokeStyle = '#166534';
+    petCtx.lineWidth = 2;
+    if (mood === 'happy') {
+        petCtx.beginPath();
+        petCtx.arc(cx - 10, cy - 28, 4, Math.PI, 0);
+        petCtx.stroke();
+        petCtx.beginPath();
+        petCtx.arc(cx + 10, cy - 28, 4, Math.PI, 0);
+        petCtx.stroke();
+    } else {
+        petCtx.beginPath();
+        petCtx.moveTo(cx - 15, cy - 26);
+        petCtx.lineTo(cx - 5, cy - 22);
+        petCtx.stroke();
+        petCtx.beginPath();
+        petCtx.moveTo(cx + 5, cy - 22);
+        petCtx.lineTo(cx + 15, cy - 26);
+        petCtx.stroke();
+    }
+
+    // Vines appear (major new feature!)
+    petCtx.fillStyle = '#166534';
+    petCtx.fillRect(cx - 32, cy + 8, 14, 18);
+    petCtx.fillRect(cx + 18, cy + 8, 14, 18);
+
+    // More leaves
+    petCtx.fillStyle = '#4ade80';
+    petCtx.fillRect(cx - 30, cy + 10, 10, 7);
+    petCtx.fillRect(cx + 20, cy + 10, 10, 7);
+
+    // Stem detail on head
+    petCtx.fillStyle = '#166534';
+    petCtx.fillRect(cx - 5, cy - 44, 10, 14);
+}
+
+// STAGE 3: VERDANT (Ultimate) - Dramatic final form with flowing vines + bloom
+function drawVerdant(mood, breathOffset, flameFlicker) {
+    const cx = 110;
+    const cy = 102 + breathOffset;
+
+    // Shadow
+    petCtx.fillStyle = 'rgba(0,0,0,0.35)';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 82, 50, 12, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Taller, more imposing body
+    petCtx.fillStyle = '#4ade80';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 8, 38, 42, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Head
+    petCtx.fillStyle = '#4ade80';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy - 18, 40, 36, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    petCtx.fillStyle = '#86efac';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 2, 20, 14, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Eyes
+    petCtx.fillStyle = '#ffffff';
+    petCtx.fillRect(cx - 15, cy - 20, 11, 11);
+    petCtx.fillRect(cx + 4, cy - 20, 11, 11);
+
+    petCtx.fillStyle = '#166534';
+    petCtx.fillRect(cx - 11, cy - 16, 5, 5);
+    petCtx.fillRect(cx + 8, cy - 16, 5, 5);
+
+    // Eyebrows
+    petCtx.strokeStyle = '#166534';
+    petCtx.lineWidth = 2;
+    if (mood === 'happy') {
+        petCtx.beginPath();
+        petCtx.arc(cx - 10, cy - 28, 4, Math.PI, 0);
+        petCtx.stroke();
+        petCtx.beginPath();
+        petCtx.arc(cx + 10, cy - 28, 4, Math.PI, 0);
+        petCtx.stroke();
+    } else {
+        petCtx.beginPath();
+        petCtx.moveTo(cx - 15, cy - 26);
+        petCtx.lineTo(cx - 5, cy - 22);
+        petCtx.stroke();
+        petCtx.beginPath();
+        petCtx.moveTo(cx + 5, cy - 22);
+        petCtx.lineTo(cx + 15, cy - 26);
+        petCtx.stroke();
+    }
+
+    // Flowing vines (major new feature!)
+    petCtx.fillStyle = '#166534';
+    petCtx.fillRect(cx - 38, cy - 4, 18, 28);
+    petCtx.fillRect(cx + 20, cy - 4, 18, 28);
+
+    // Flower bloom on head (new feature!)
+    petCtx.fillStyle = '#f472b6';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy - 48, 14, 10, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    petCtx.fillStyle = '#ec4899';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy - 48, 8, 6, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Bark-like armor details (new feature!)
+    petCtx.fillStyle = '#166534';
+    petCtx.fillRect(cx - 20, cy + 28, 8, 10);
+    petCtx.fillRect(cx + 12, cy + 28, 8, 10);
+
+    // More leaves and vines
+    petCtx.fillStyle = '#4ade80';
+    petCtx.fillRect(cx - 36, cy + 2, 12, 8);
+    petCtx.fillRect(cx + 24, cy + 2, 12, 8);
+}
+
+// ============================================
 // CORE GAME LOGIC
 // ============================================
 
@@ -776,6 +1092,11 @@ function drawPet(mood, breathOffset, flameFlicker) {
         else if (currentStage === 1) drawWhisp(mood, breathOffset, flameFlicker);
         else if (currentStage === 2) drawWhisk(mood, breathOffset, flameFlicker);
         else if (currentStage === 3) drawNimbrix(mood, breathOffset, flameFlicker);
+    } else if (hatchedType === 'bud') {
+        if (currentStage === 0) drawBud(mood, breathOffset, flameFlicker);
+        else if (currentStage === 1) drawSprout(mood, breathOffset, flameFlicker);
+        else if (currentStage === 2) drawSprig(mood, breathOffset, flameFlicker);
+        else if (currentStage === 3) drawVerdant(mood, breathOffset, flameFlicker);
     } else {
         if (currentStage === 0) drawFlick(mood, breathOffset, flameFlicker);
         else if (currentStage === 1) drawCharling(mood, breathOffset, flameFlicker);
