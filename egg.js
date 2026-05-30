@@ -65,6 +65,11 @@ function drawEggBase(shakeX = 0) {
     eggCtx.beginPath();
     eggCtx.ellipse(cx + 12, cy, 36, 58, 0, 0, Math.PI * 2);
     eggCtx.fill();
+
+    eggCtx.fillStyle = '#fefce8';
+    eggCtx.beginPath();
+    eggCtx.ellipse(cx - 18, cy - 20, 18, 24, 0, 0, Math.PI * 2);
+    eggCtx.fill();
 }
 
 function hatchAnimation() {
@@ -119,4 +124,3 @@ function hatchAnimation() {
             }, 380);
         }
     }, 33);
-}
