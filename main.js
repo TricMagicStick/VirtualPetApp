@@ -1,5 +1,5 @@
 // ============================================
-// VIRTUAL PET v4.35 - Ultimate Cloud Body Fixed + Stage Names Displayed
+// VIRTUAL PET v4.36 - Ultimate Cloud Connection Fixed (No Head Lowering)
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -214,7 +214,7 @@ function getStageName() {
 }
 
 // ============================================
-// WHISK LINE v4.35 - Strong Visible Cloud Body on Ultimate
+// WHISK LINE v4.36 - Cloud Connection Fixed (Head stays high)
 // ============================================
 
 // Baby - Puff
@@ -427,7 +427,7 @@ function drawWhisk(mood, breathOffset, flameFlicker) {
     petCtx.fill();
 }
 
-// Ultimate - Nimbrix (Strong visible cloud body)
+// Ultimate - Nimbrix (Cloud connection added behind head, head stays high)
 function drawNimbrix(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 98 + breathOffset;
@@ -438,13 +438,13 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 90, 64, 13, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Main cloud body - much more visible and solid
+    // Main cloud body
     petCtx.fillStyle = '#94a3b8';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 52, 52, 26, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Fluffy cloud layers (lighter highlights)
+    // Fluffy cloud layers
     petCtx.fillStyle = '#e0f2fe';
     petCtx.beginPath();
     petCtx.ellipse(cx - 24, cy + 42, 24, 13, 0, 0, Math.PI * 2);
@@ -459,7 +459,16 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx + 12, cy + 38, 16, 9, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Cat head on top of cloud
+    // Cloud "shoulders" / connection behind the head (fills the gap)
+    petCtx.fillStyle = '#94a3b8';
+    petCtx.beginPath();
+    petCtx.ellipse(cx - 14, cy + 22, 18, 10, 0, 0, Math.PI * 2);
+    petCtx.fill();
+    petCtx.beginPath();
+    petCtx.ellipse(cx + 14, cy + 24, 16, 9, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Cat head (position unchanged)
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 6, 18, 15, 0, 0, Math.PI * 2);
@@ -488,7 +497,7 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 4, cy - 7, 2, 2);
     petCtx.fillRect(cx + 6, cy - 7, 2, 2);
 
-    // Long tail coming out of cloud
+    // Long tail
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
     petCtx.ellipse(cx + 26, cy + 34, 20, 8, -0.35, 0, Math.PI * 2);
@@ -1789,7 +1798,6 @@ function updatePetVisual() {
     moodEl.textContent = moodText;
     moodEl.style.color = moodColor;
 
-    // Update stage name display
     const stageEl = document.getElementById('stageName');
     if (stageEl) {
         stageEl.textContent = getStageName();
