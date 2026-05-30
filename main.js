@@ -1,5 +1,5 @@
 // ============================================
-// VIRTUAL PET v4.24 - Triangular body + massive feather fan
+// VIRTUAL PET v4.25 - Fixed head + beak + staged progression
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -1034,8 +1034,8 @@ function drawVerdant(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
-// BOLT LINE (Lightning Bird) - v4.24
-// Triangular body + massive feather fan
+// BOLT LINE (Lightning Bird) - v4.25
+// Fixed head + beak + staged progression
 // ============================================
 
 function drawZap(mood, breathOffset, flameFlicker) {
@@ -1133,12 +1133,13 @@ function drawSpark(mood, breathOffset, flameFlicker) {
     petCtx.rect(cx + 14, cy + 18, 10, 18);
     petCtx.fill();
 
+    // Small head spikes (child)
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
-    petCtx.rect(cx - 10, cy - 10, 4, 8);
+    petCtx.rect(cx - 8, cy - 10, 3, 6);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.rect(cx + 6, cy - 10, 4, 8);
+    petCtx.rect(cx + 5, cy - 10, 3, 6);
     petCtx.fill();
 
     drawLightningBolt(cx + 16, cy + 54, 20, 5, 0.25, '#eab308');
@@ -1194,12 +1195,13 @@ function drawBolt(mood, breathOffset, flameFlicker) {
     petCtx.rect(cx + 22, cy + 16, 4, 10);
     petCtx.fill();
 
+    // Head spikes (adult)
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
-    petCtx.rect(cx - 10, cy - 12, 4, 10);
+    petCtx.rect(cx - 9, cy - 12, 4, 8);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.rect(cx + 6, cy - 12, 4, 10);
+    petCtx.rect(cx + 5, cy - 12, 4, 8);
     petCtx.fill();
 
     drawLightningBolt(cx + 18, cy + 54, 26, 6, 0.2, '#eab308');
@@ -1214,7 +1216,7 @@ function drawStorm(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 82, 48, 12, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // TRIANGULAR BODY (pointed bottom)
+    // TRIANGULAR BODY (kept)
     petCtx.fillStyle = '#eab308';
     petCtx.beginPath();
     petCtx.moveTo(cx, cy - 8);
@@ -1222,34 +1224,31 @@ function drawStorm(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 22, cy + 52);
     petCtx.fill();
 
-    // Smaller triangular head
+    // FIXED HEAD - more rounded/angular mix, not fully triangular
     petCtx.fillStyle = '#eab308';
     petCtx.beginPath();
-    petCtx.moveTo(cx, cy - 12);
-    petCtx.lineTo(cx - 14, cy + 8);
-    petCtx.lineTo(cx + 14, cy + 8);
+    petCtx.rect(cx - 14, cy - 14, 28, 22);
     petCtx.fill();
 
-    // Sharp beak
+    // Sharp beak (properly attached)
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
-    petCtx.moveTo(cx + 14, cy - 2);
-    petCtx.lineTo(cx + 28, cy + 2);
-    petCtx.lineTo(cx + 14, cy + 6);
+    petCtx.moveTo(cx + 14, cy - 4);
+    petCtx.lineTo(cx + 26, cy);
+    petCtx.lineTo(cx + 14, cy + 4);
     petCtx.fill();
 
     petCtx.fillStyle = '#ffffff';
-    petCtx.fillRect(cx - 7, cy - 6, 6, 6);
-    petCtx.fillRect(cx + 1, cy - 6, 6, 6);
+    petCtx.fillRect(cx - 8, cy - 10, 6, 6);
+    petCtx.fillRect(cx + 2, cy - 10, 6, 6);
 
     petCtx.fillStyle = '#111111';
-    petCtx.fillRect(cx - 4, cy - 4, 3, 3);
-    petCtx.fillRect(cx + 4, cy - 4, 3, 3);
+    petCtx.fillRect(cx - 5, cy - 8, 3, 3);
+    petCtx.fillRect(cx + 5, cy - 8, 3, 3);
 
-    // MASSIVE layered fanned feathers (many angles)
+    // MASSIVE layered fanned feathers
     petCtx.fillStyle = '#ca8a04';
 
-    // Wing base
     petCtx.beginPath();
     petCtx.moveTo(cx - 20, cy + 6);
     petCtx.lineTo(cx - 48, cy - 10);
@@ -1262,8 +1261,8 @@ function drawStorm(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 14, cy + 24);
     petCtx.fill();
 
-    // Feather layer 1 (outer long)
     petCtx.fillStyle = '#854d0e';
+
     petCtx.beginPath();
     petCtx.moveTo(cx - 42, cy - 8);
     petCtx.lineTo(cx - 56, cy - 28);
@@ -1276,7 +1275,6 @@ function drawStorm(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 30, cy + 4);
     petCtx.fill();
 
-    // Feather layer 2
     petCtx.beginPath();
     petCtx.moveTo(cx - 36, cy - 2);
     petCtx.lineTo(cx - 50, cy - 20);
@@ -1289,7 +1287,6 @@ function drawStorm(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 24, cy + 10);
     petCtx.fill();
 
-    // Feather layer 3
     petCtx.beginPath();
     petCtx.moveTo(cx - 30, cy + 4);
     petCtx.lineTo(cx - 44, cy - 14);
@@ -1302,7 +1299,6 @@ function drawStorm(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 18, cy + 16);
     petCtx.fill();
 
-    // Feather layer 4 (inner)
     petCtx.beginPath();
     petCtx.moveTo(cx - 24, cy + 10);
     petCtx.lineTo(cx - 36, cy - 6);
@@ -1318,10 +1314,10 @@ function drawStorm(mood, breathOffset, flameFlicker) {
     // Head spikes
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
-    petCtx.rect(cx - 8, cy - 14, 4, 10);
+    petCtx.rect(cx - 8, cy - 16, 4, 10);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.rect(cx + 4, cy - 14, 4, 10);
+    petCtx.rect(cx + 4, cy - 16, 4, 10);
     petCtx.fill();
 
     drawLightningBolt(cx + 20, cy + 54, 32, 7, 0.15, '#eab308');
