@@ -1,6 +1,6 @@
 // ============================================
-// VIRTUAL PET v4.16 - Better organic tails + vines
-// Segmented tapered tails + curving vines with leaf offshoots
+// VIRTUAL PET v4.17 - WUMBO tails + WUMBO vines
+// Heavily exaggerated segmented tails and dramatic curving vines
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -387,10 +387,9 @@ function drawInfernyx(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
-// WHISK LINE - v4.16 Better segmented tapered tails
+// WHISK LINE - v4.17 WUMBO segmented tapered tails
 // ============================================
 
-// Helper: draw a curved tapered tail segment
 function drawTailSegment(cx, cy, length, width, angle, color) {
     petCtx.save();
     petCtx.translate(cx, cy);
@@ -408,7 +407,7 @@ function drawTailSegment(cx, cy, length, width, angle, color) {
     petCtx.restore();
 }
 
-// STAGE 0: PUFF (Baby) - Segmented tapered tail
+// STAGE 0: PUFF (Baby) - WUMBO segmented tail
 function drawPuff(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 130 + breathOffset;
@@ -486,9 +485,10 @@ function drawPuff(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 12, cy - 38);
     petCtx.fill();
 
-    // Segmented tapered tail (baby)
-    drawTailSegment(cx + 18, cy + 36, 12, 5, -0.6, '#64748b');
-    drawTailSegment(cx + 28, cy + 38, 8, 3.5, -0.3, '#64748b');
+    // WUMBO segmented tapered tail (baby)
+    drawTailSegment(cx + 16, cy + 34, 16, 7, -0.7, '#64748b');
+    drawTailSegment(cx + 30, cy + 36, 12, 5, -0.4, '#64748b');
+    drawTailSegment(cx + 40, cy + 38, 8, 3.5, -0.1, '#64748b');
 
     petCtx.fillStyle = '#bae6fd';
     petCtx.beginPath();
@@ -499,7 +499,7 @@ function drawPuff(mood, breathOffset, flameFlicker) {
     petCtx.fill();
 }
 
-// STAGE 1: WHISP (Child) - Segmented tapered tail
+// STAGE 1: WHISP (Child) - WUMBO segmented tail
 function drawWhisp(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 118 + breathOffset;
@@ -573,9 +573,10 @@ function drawWhisp(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 10, cy - 30);
     petCtx.fill();
 
-    // Segmented tapered tail (child)
-    drawTailSegment(cx + 22, cy + 40, 14, 6, -0.5, '#64748b');
-    drawTailSegment(cx + 34, cy + 42, 10, 4, -0.2, '#64748b');
+    // WUMBO segmented tapered tail (child)
+    drawTailSegment(cx + 20, cy + 38, 18, 8, -0.6, '#64748b');
+    drawTailSegment(cx + 36, cy + 40, 14, 6, -0.3, '#64748b');
+    drawTailSegment(cx + 48, cy + 42, 10, 4, -0.05, '#64748b');
 
     petCtx.fillStyle = '#bae6fd';
     petCtx.beginPath();
@@ -586,7 +587,7 @@ function drawWhisp(mood, breathOffset, flameFlicker) {
     petCtx.fill();
 }
 
-// STAGE 2: WHISK (Adult) - Segmented tapered tail
+// STAGE 2: WHISK (Adult) - WUMBO segmented tail
 function drawWhisk(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 108 + breathOffset;
@@ -660,9 +661,10 @@ function drawWhisk(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 8, cy - 32);
     petCtx.fill();
 
-    // Segmented tapered tail (adult)
-    drawTailSegment(cx + 24, cy + 44, 16, 7, -0.4, '#64748b');
-    drawTailSegment(cx + 38, cy + 46, 12, 5, -0.15, '#64748b');
+    // WUMBO segmented tapered tail (adult)
+    drawTailSegment(cx + 22, cy + 42, 20, 9, -0.5, '#64748b');
+    drawTailSegment(cx + 40, cy + 44, 16, 7, -0.2, '#64748b');
+    drawTailSegment(cx + 54, cy + 46, 12, 5, 0.05, '#64748b');
 
     petCtx.fillStyle = '#bae6fd';
     petCtx.beginPath();
@@ -673,7 +675,7 @@ function drawWhisk(mood, breathOffset, flameFlicker) {
     petCtx.fill();
 }
 
-// STAGE 3: NIMBRIX (Ultimate) - Segmented tapered tail
+// STAGE 3: NIMBRIX (Ultimate) - WUMBO segmented tail
 function drawNimbrix(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 96 + breathOffset;
@@ -740,9 +742,10 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 6, cy - 32);
     petCtx.fill();
 
-    // Segmented tapered tail (ultimate)
-    drawTailSegment(cx + 26, cy + 50, 18, 8, -0.35, '#64748b');
-    drawTailSegment(cx + 42, cy + 52, 14, 5.5, -0.1, '#64748b');
+    // WUMBO segmented tapered tail (ultimate)
+    drawTailSegment(cx + 24, cy + 48, 22, 10, -0.45, '#64748b');
+    drawTailSegment(cx + 44, cy + 50, 18, 8, -0.15, '#64748b');
+    drawTailSegment(cx + 60, cy + 52, 14, 6, 0.1, '#64748b');
 
     petCtx.fillStyle = '#e0f2fe';
     petCtx.beginPath();
@@ -762,7 +765,7 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
-// SPRIG LINE - v4.16 Better curving vines with leaf offshoots
+// SPRIG LINE - v4.17 WUMBO curving vines with big leaf offshoots
 // ============================================
 
 function drawBud(mood, breathOffset, flameFlicker) {
@@ -884,17 +887,17 @@ function drawSprout(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
-    // Small curving vine with leaf offshoot
+    // WUMBO curving vine with big leaf offshoot
     petCtx.strokeStyle = '#166534';
-    petCtx.lineWidth = 2;
+    petCtx.lineWidth = 3;
     petCtx.beginPath();
-    petCtx.moveTo(cx - 20, cy + 10);
-    petCtx.quadraticCurveTo(cx - 28, cy + 4, cx - 26, cy - 2);
+    petCtx.moveTo(cx - 22, cy + 12);
+    petCtx.quadraticCurveTo(cx - 34, cy + 2, cx - 30, cy - 6);
     petCtx.stroke();
 
     petCtx.fillStyle = '#4ade80';
     petCtx.beginPath();
-    petCtx.ellipse(cx - 28, cy + 2, 5, 3, -0.5, 0, Math.PI * 2);
+    petCtx.ellipse(cx - 36, cy + 0, 8, 5, -0.7, 0, Math.PI * 2);
     petCtx.fill();
 
     petCtx.fillStyle = '#166534';
@@ -953,27 +956,27 @@ function drawSprig(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
-    // Curving vine with leaf offshoots
+    // WUMBO curving vines with big leaf offshoots
     petCtx.strokeStyle = '#166534';
-    petCtx.lineWidth = 2.5;
+    petCtx.lineWidth = 3.5;
     petCtx.beginPath();
-    petCtx.moveTo(cx - 24, cy + 14);
-    petCtx.quadraticCurveTo(cx - 32, cy + 6, cx - 28, cy - 2);
+    petCtx.moveTo(cx - 26, cy + 16);
+    petCtx.quadraticCurveTo(cx - 38, cy + 4, cx - 32, cy - 6);
     petCtx.stroke();
 
     petCtx.beginPath();
-    petCtx.moveTo(cx + 24, cy + 14);
-    petCtx.quadraticCurveTo(cx + 32, cy + 6, cx + 28, cy - 2);
+    petCtx.moveTo(cx + 26, cy + 16);
+    petCtx.quadraticCurveTo(cx + 38, cy + 4, cx + 32, cy - 6);
     petCtx.stroke();
 
-    // Leaf offshoots
+    // Big leaf offshoots
     petCtx.fillStyle = '#4ade80';
     petCtx.beginPath();
-    petCtx.ellipse(cx - 32, cy + 4, 6, 4, -0.6, 0, Math.PI * 2);
+    petCtx.ellipse(cx - 40, cy + 2, 10, 6, -0.8, 0, Math.PI * 2);
     petCtx.fill();
 
     petCtx.beginPath();
-    petCtx.ellipse(cx + 32, cy + 4, 6, 4, 0.6, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 40, cy + 2, 10, 6, 0.8, 0, Math.PI * 2);
     petCtx.fill();
 
     petCtx.fillStyle = '#166534';
