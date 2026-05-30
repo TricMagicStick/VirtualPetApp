@@ -1,5 +1,6 @@
 // ============================================
-// VIRTUAL PET v4.26 - Proper Evolution System + Force Button
+// VIRTUAL PET v4.27 - Fast Evolution Time Scale
+// (Days compressed to ~10 minute cycles)
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -121,7 +122,7 @@ function hatchAnimation() {
 }
 
 // ============================================
-// EVOLUTION SYSTEM
+// EVOLUTION SYSTEM (Fast Time Scale)
 // ============================================
 
 function getAverageCare() {
@@ -132,12 +133,13 @@ function canEvolve() {
     const avg = getAverageCare();
     const age = Math.floor(pet.age);
 
+    // Fast time scale (~10 min per "day")
     if (currentStage === 0) {
-        return age >= 1 && avg >= 60;
+        return age >= 2 && avg >= 60;   // ~2-3 real minutes
     } else if (currentStage === 1) {
-        return age >= 3 && avg >= 65;
+        return age >= 6 && avg >= 65;   // ~6-8 real minutes
     } else if (currentStage === 2) {
-        return age >= 7 && avg >= 70;
+        return age >= 12 && avg >= 70;  // ~12-15 real minutes
     }
     return false;
 }
@@ -155,7 +157,6 @@ function evolvePet() {
     updateUI();
     savePet();
 
-    // Simple evolution feedback
     const moodEl = document.getElementById('petMood');
     const originalText = moodEl.textContent;
     const originalColor = moodEl.style.color;
@@ -1431,7 +1432,6 @@ function animate() {
 
     drawPet(mood, breath, flameFlicker);
 
-    // Check for automatic evolution
     if (currentStage < 3 && canEvolve()) {
         const age = Math.floor(pet.age);
         if (age > lastEvolutionAge) {
@@ -1532,14 +1532,16 @@ function restPet() {
 }
 
 function decayStats() {
-    // More natural decay rates for virtual pet genre
+    // Faster age progression (~10 min per in-game day)
     pet.hunger = Math.max(0, pet.hunger - 1.2);
     pet.happiness = Math.max(0, pet.happiness - 0.9);
     pet.cleanliness = Math.max(0, pet.cleanliness - 0.65);
     pet.energy = Math.max(0, pet.energy - 0.85);
 
     if (Math.random() < 0.04) pet.happiness = Math.max(0, pet.happiness - 2);
-    if (Math.random() < 0.06) pet.age += 0.06;
+
+    // Age now progresses faster
+    if (Math.random() < 0.25) pet.age += 0.12;
 
     updateUI();
     savePet();
