@@ -1,5 +1,5 @@
 /* ============================================
-   VIRTUAL PET - Retro Digital Embroidery (Refined v4.40)
+   VIRTUAL PET - Clean Retro Embroidery (v4.40)
    ============================================ */
 
 body {
@@ -58,34 +58,24 @@ body {
 .device-frame {
     background: #1e293b;
     border-radius: 28px;
-    padding: 22px 20px 26px;   /* More breathing room */
+    padding: 18px 16px 22px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.4),
                 inset 0 1px 0 rgba(255,255,255,0.08);
     
-    /* === Retro Digital Embroidery === */
+    /* === Retro Digital Embroidery (clean) === */
     border: 3px dashed #475569;
     position: relative;
     box-sizing: border-box;
-}
-
-/* Inner stitch line */
-.device-frame::before {
-    content: '';
-    position: absolute;
-    inset: 7px;
-    border: 1px dashed #334155;
-    border-radius: 20px;
-    pointer-events: none;
 }
 
 /* Top-left corner embroidery */
 .device-frame::after {
     content: '';
     position: absolute;
-    top: 18px;
-    left: 18px;
-    width: 13px;
-    height: 13px;
+    top: 16px;
+    left: 16px;
+    width: 14px;
+    height: 14px;
     border-top: 2px solid #64748b;
     border-left: 2px solid #64748b;
     border-radius: 2px;
@@ -100,23 +90,23 @@ body {
 .pet-screen::before {
     content: '';
     position: absolute;
-    top: -1px;
-    right: 18px;
-    width: 13px;
-    height: 13px;
+    top: -2px;
+    right: 16px;
+    width: 14px;
+    height: 14px;
     border-top: 2px solid #64748b;
     border-right: 2px solid #64748b;
     border-radius: 2px;
     opacity: 0.5;
 }
 
-/* Stage name - improved readability */
+/* Stage name - good readability */
 .stage-name {
     position: relative;
-    color: #c0d0ff;           /* Lighter, more readable */
+    color: #c0d0ff;
     font-size: 14px;
     font-weight: 600;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 
 .stage-name::after {
