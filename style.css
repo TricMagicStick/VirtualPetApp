@@ -1,5 +1,5 @@
 /* ============================================
-   VIRTUAL PET - Retro Digital Embroidery Layer (Fixed v4.39)
+   VIRTUAL PET - Retro Digital Embroidery (Refined v4.40)
    ============================================ */
 
 body {
@@ -58,7 +58,7 @@ body {
 .device-frame {
     background: #1e293b;
     border-radius: 28px;
-    padding: 20px 18px 24px;   /* Increased padding to fix left offset */
+    padding: 22px 20px 26px;   /* More breathing room */
     box-shadow: 0 10px 30px rgba(0,0,0,0.4),
                 inset 0 1px 0 rgba(255,255,255,0.08);
     
@@ -68,31 +68,31 @@ body {
     box-sizing: border-box;
 }
 
-/* Inner stitch line for depth */
+/* Inner stitch line */
 .device-frame::before {
     content: '';
     position: absolute;
-    inset: 6px;                 /* Slightly larger inset */
+    inset: 7px;
     border: 1px dashed #334155;
     border-radius: 20px;
     pointer-events: none;
 }
 
-/* Embroidered top-left corner flourish */
+/* Top-left corner embroidery */
 .device-frame::after {
     content: '';
     position: absolute;
-    top: 16px;
-    left: 16px;
-    width: 14px;
-    height: 14px;
+    top: 18px;
+    left: 18px;
+    width: 13px;
+    height: 13px;
     border-top: 2px solid #64748b;
     border-left: 2px solid #64748b;
     border-radius: 2px;
     opacity: 0.5;
 }
 
-/* Embroidered top-right corner flourish */
+/* Top-right corner embroidery */
 .pet-screen {
     position: relative;
 }
@@ -100,28 +100,32 @@ body {
 .pet-screen::before {
     content: '';
     position: absolute;
-    top: -2px;
-    right: 16px;
-    width: 14px;
-    height: 14px;
+    top: -1px;
+    right: 18px;
+    width: 13px;
+    height: 13px;
     border-top: 2px solid #64748b;
     border-right: 2px solid #64748b;
     border-radius: 2px;
     opacity: 0.5;
 }
 
-/* Subtle dashed accent under stage name */
+/* Stage name - improved readability */
 .stage-name {
     position: relative;
+    color: #c0d0ff;           /* Lighter, more readable */
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
 }
 
 .stage-name::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: -5px;
     left: 50%;
     transform: translateX(-50%);
-    width: 48px;
+    width: 46px;
     height: 1px;
     background: repeating-linear-gradient(
         to right,
@@ -136,7 +140,7 @@ body {
 .stats-top {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     padding: 0 4px;
 }
 
@@ -153,7 +157,7 @@ body {
     background: #0f172a;
     border-radius: 16px;
     padding: 10px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
 }
 
@@ -164,7 +168,7 @@ canvas {
 
 .pet-status {
     text-align: center;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
 }
 
 .mood {
