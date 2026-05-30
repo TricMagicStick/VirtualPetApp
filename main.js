@@ -1,6 +1,5 @@
 // ============================================
-// VIRTUAL PET v4.31 - Improved Serpentine Dragon
-// Longer flowing segments + proper wings (no rectangles)
+// VIRTUAL PET v4.32 - Dragon Neck + Larger Downward Wings
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -179,64 +178,69 @@ function forceEvolution() {
 }
 
 // ============================================
-// IMPROVED SERPENTINE DRAGON (v4.31)
-// Longer segments + proper wings
+// SERPENTINE DRAGON v4.32 - Neck + Large Downward Wings
 // ============================================
 
-// Baby - Flick (Red, cute, improved proportions)
+// Baby - Flick (with neck + large downward wings)
 function drawFlick(mood, breathOffset, flameFlicker) {
     const cx = 110;
-    const cy = 128 + breathOffset;
+    const cy = 126 + breathOffset;
 
     // Shadow
     petCtx.fillStyle = 'rgba(0,0,0,0.2)';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy + 54, 38, 9, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx, cy + 56, 40, 9, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Body - longer segments
+    // Body
     petCtx.fillStyle = '#b91c1c';
-    petCtx.fillRect(cx - 11, cy + 26, 22, 20);
+    petCtx.fillRect(cx - 11, cy + 28, 22, 18);
     petCtx.fillRect(cx - 7, cy + 44, 14, 16);
+
+    // Neck (new)
+    petCtx.fillStyle = '#991b1b';
+    petCtx.fillRect(cx - 6, cy + 12, 12, 10);
 
     // Head - structured
     petCtx.fillStyle = '#b91c1c';
     petCtx.beginPath();
-    petCtx.moveTo(cx - 17, cy + 4);
-    petCtx.lineTo(cx + 17, cy + 4);
-    petCtx.lineTo(cx + 13, cy - 20);
-    petCtx.lineTo(cx - 13, cy - 20);
+    petCtx.moveTo(cx - 16, cy + 6);
+    petCtx.lineTo(cx + 16, cy + 6);
+    petCtx.lineTo(cx + 12, cy - 18);
+    petCtx.lineTo(cx - 12, cy - 18);
     petCtx.fill();
 
     petCtx.fillStyle = '#991b1b';
-    petCtx.fillRect(cx - 7, cy - 16, 14, 9);
+    petCtx.fillRect(cx - 6, cy - 14, 12, 8);
 
     // Eyes
     petCtx.fillStyle = '#fefce8';
-    petCtx.fillRect(cx - 11, cy - 12, 5, 5);
-    petCtx.fillRect(cx + 6, cy - 12, 5, 5);
+    petCtx.fillRect(cx - 10, cy - 10, 4, 4);
+    petCtx.fillRect(cx + 6, cy - 10, 4, 4);
 
     petCtx.fillStyle = '#111111';
-    petCtx.fillRect(cx - 8, cy - 9, 2, 2);
-    petCtx.fillRect(cx + 8, cy - 9, 2, 2);
+    petCtx.fillRect(cx - 7, cy - 7, 2, 2);
+    petCtx.fillRect(cx + 8, cy - 7, 2, 2);
 
-    // Tiny horns
+    // Horns
     petCtx.fillStyle = '#7f1d1d';
-    petCtx.fillRect(cx - 9, cy - 22, 3, 5);
-    petCtx.fillRect(cx + 6, cy - 22, 3, 5);
+    petCtx.fillRect(cx - 8, cy - 20, 3, 5);
+    petCtx.fillRect(cx + 5, cy - 20, 3, 5);
 
-    // Small wing nubs (better shape)
+    // Large downward wings (tripled size + tilted down)
     petCtx.fillStyle = '#7f1d1d';
+    // Left wing
     petCtx.beginPath();
-    petCtx.moveTo(cx - 18, cy + 10);
-    petCtx.lineTo(cx - 10, cy + 6);
-    petCtx.lineTo(cx - 10, cy + 14);
+    petCtx.moveTo(cx - 28, cy + 14);
+    petCtx.lineTo(cx - 6, cy + 8);
+    petCtx.lineTo(cx - 6, cy + 22);
     petCtx.fill();
 
+    // Right wing
     petCtx.beginPath();
-    petCtx.moveTo(cx + 18, cy + 10);
-    petCtx.lineTo(cx + 10, cy + 6);
-    petCtx.lineTo(cx + 10, cy + 14);
+    petCtx.moveTo(cx + 28, cy + 14);
+    petCtx.lineTo(cx + 6, cy + 8);
+    petCtx.lineTo(cx + 6, cy + 22);
     petCtx.fill();
 
     // Short tail
@@ -248,47 +252,139 @@ function drawFlick(mood, breathOffset, flameFlicker) {
     petCtx.lineWidth = 2;
     if (mood === 'happy') {
         petCtx.beginPath();
-        petCtx.arc(cx - 8, cy - 18, 3, Math.PI, 0);
+        petCtx.arc(cx - 7, cy - 16, 3, Math.PI, 0);
         petCtx.stroke();
         petCtx.beginPath();
-        petCtx.arc(cx + 8, cy - 18, 3, Math.PI, 0);
+        petCtx.arc(cx + 7, cy - 16, 3, Math.PI, 0);
         petCtx.stroke();
     } else {
         petCtx.beginPath();
-        petCtx.moveTo(cx - 12, cy - 16);
-        petCtx.lineTo(cx - 4, cy - 13);
+        petCtx.moveTo(cx - 11, cy - 14);
+        petCtx.lineTo(cx - 3, cy - 11);
         petCtx.stroke();
         petCtx.beginPath();
-        petCtx.moveTo(cx + 4, cy - 13);
-        petCtx.lineTo(cx + 12, cy - 16);
+        petCtx.moveTo(cx + 3, cy - 11);
+        petCtx.lineTo(cx + 11, cy - 14);
         petCtx.stroke();
     }
 }
 
-// Child - Charling (longer body)
+// Child - Charling (with neck + improved wings)
 function drawCharling(mood, breathOffset, flameFlicker) {
     const cx = 110;
-    const cy = 122 + breathOffset;
+    const cy = 120 + breathOffset;
 
     // Shadow
     petCtx.fillStyle = 'rgba(0,0,0,0.25)';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy + 60, 42, 10, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx, cy + 62, 44, 10, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Longer body segments
+    // Body
     petCtx.fillStyle = '#b91c1c';
-    petCtx.fillRect(cx - 12, cy + 20, 24, 16);
-    petCtx.fillRect(cx - 10, cy + 34, 20, 16);
-    petCtx.fillRect(cx - 6, cy + 48, 12, 14);
+    petCtx.fillRect(cx - 12, cy + 18, 24, 15);
+    petCtx.fillRect(cx - 10, cy + 31, 20, 15);
+    petCtx.fillRect(cx - 6, cy + 44, 12, 14);
+
+    // Neck
+    petCtx.fillStyle = '#991b1b';
+    petCtx.fillRect(cx - 5, cy + 8, 10, 10);
 
     // Head
     petCtx.fillStyle = '#b91c1c';
     petCtx.beginPath();
-    petCtx.moveTo(cx - 15, cy + 2);
-    petCtx.lineTo(cx + 15, cy + 2);
-    petCtx.lineTo(cx + 12, cy - 22);
-    petCtx.lineTo(cx - 12, cy - 22);
+    petCtx.moveTo(cx - 14, cy + 4);
+    petCtx.lineTo(cx + 14, cy + 4);
+    petCtx.lineTo(cx + 11, cy - 20);
+    petCtx.lineTo(cx - 11, cy - 20);
+    petCtx.fill();
+
+    petCtx.fillStyle = '#991b1b';
+    petCtx.fillRect(cx - 5, cy - 16, 10, 8);
+
+    // Eyes
+    petCtx.fillStyle = '#fefce8';
+    petCtx.fillRect(cx - 8, cy - 10, 4, 4);
+    petCtx.fillRect(cx + 4, cy - 10, 4, 4);
+
+    petCtx.fillStyle = '#111111';
+    petCtx.fillRect(cx - 6, cy - 7, 2, 2);
+    petCtx.fillRect(cx + 6, cy - 7, 2, 2);
+
+    // Horns
+    petCtx.fillStyle = '#7f1d1d';
+    petCtx.fillRect(cx - 8, cy - 22, 4, 7);
+    petCtx.fillRect(cx + 4, cy - 22, 4, 7);
+
+    // Larger downward wings
+    petCtx.fillStyle = '#7f1d1d';
+    petCtx.beginPath();
+    petCtx.moveTo(cx - 24, cy + 10);
+    petCtx.lineTo(cx - 6, cy + 6);
+    petCtx.lineTo(cx - 6, cy + 18);
+    petCtx.fill();
+
+    petCtx.beginPath();
+    petCtx.moveTo(cx + 24, cy + 10);
+    petCtx.lineTo(cx + 6, cy + 6);
+    petCtx.lineTo(cx + 6, cy + 18);
+    petCtx.fill();
+
+    // Tail
+    petCtx.fillStyle = '#b91c1c';
+    petCtx.fillRect(cx + 2, cy + 56, 10, 16);
+
+    // Expression
+    petCtx.strokeStyle = '#111111';
+    petCtx.lineWidth = 2;
+    if (mood === 'happy') {
+        petCtx.beginPath();
+        petCtx.arc(cx - 5, cy - 18, 3, Math.PI, 0);
+        petCtx.stroke();
+        petCtx.beginPath();
+        petCtx.arc(cx + 5, cy - 18, 3, Math.PI, 0);
+        petCtx.stroke();
+    } else {
+        petCtx.beginPath();
+        petCtx.moveTo(cx - 9, cy - 16);
+        petCtx.lineTo(cx - 1, cy - 13);
+        petCtx.stroke();
+        petCtx.beginPath();
+        petCtx.moveTo(cx + 1, cy - 13);
+        petCtx.lineTo(cx + 9, cy - 16);
+        petCtx.stroke();
+    }
+}
+
+// Adult - DrakEmber (neck + large wings)
+function drawDrakEmber(mood, breathOffset, flameFlicker) {
+    const cx = 110;
+    const cy = 112 + breathOffset;
+
+    // Shadow
+    petCtx.fillStyle = 'rgba(0,0,0,0.3)';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 70, 50, 11, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Body
+    petCtx.fillStyle = '#b91c1c';
+    petCtx.fillRect(cx - 14, cy + 14, 28, 14);
+    petCtx.fillRect(cx - 12, cy + 26, 24, 13);
+    petCtx.fillRect(cx - 10, cy + 37, 20, 13);
+    petCtx.fillRect(cx - 6, cy + 48, 12, 12);
+
+    // Neck
+    petCtx.fillStyle = '#991b1b';
+    petCtx.fillRect(cx - 6, cy + 6, 12, 10);
+
+    // Head
+    petCtx.fillStyle = '#b91c1c';
+    petCtx.beginPath();
+    petCtx.moveTo(cx - 16, cy + 2);
+    petCtx.lineTo(cx + 16, cy + 2);
+    petCtx.lineTo(cx + 13, cy - 22);
+    petCtx.lineTo(cx - 13, cy - 22);
     petCtx.fill();
 
     petCtx.fillStyle = '#991b1b';
@@ -296,35 +392,40 @@ function drawCharling(mood, breathOffset, flameFlicker) {
 
     // Eyes
     petCtx.fillStyle = '#fefce8';
-    petCtx.fillRect(cx - 9, cy - 12, 4, 4);
-    petCtx.fillRect(cx + 5, cy - 12, 4, 4);
+    petCtx.fillRect(cx - 9, cy - 10, 4, 4);
+    petCtx.fillRect(cx + 5, cy - 10, 4, 4);
 
     petCtx.fillStyle = '#111111';
-    petCtx.fillRect(cx - 7, cy - 9, 2, 2);
-    petCtx.fillRect(cx + 7, cy - 9, 2, 2);
+    petCtx.fillRect(cx - 7, cy - 7, 2, 2);
+    petCtx.fillRect(cx + 7, cy - 7, 2, 2);
 
     // Horns
     petCtx.fillStyle = '#7f1d1d';
-    petCtx.fillRect(cx - 9, cy - 24, 4, 7);
-    petCtx.fillRect(cx + 5, cy - 24, 4, 7);
+    petCtx.fillRect(cx - 10, cy - 26, 5, 9);
+    petCtx.fillRect(cx + 5, cy - 26, 5, 9);
 
-    // Better wing shape (triangle style)
+    // Large downward wings
     petCtx.fillStyle = '#7f1d1d';
     petCtx.beginPath();
-    petCtx.moveTo(cx - 20, cy + 8);
-    petCtx.lineTo(cx - 8, cy + 4);
-    petCtx.lineTo(cx - 8, cy + 14);
+    petCtx.moveTo(cx - 30, cy + 8);
+    petCtx.lineTo(cx - 6, cy + 2);
+    petCtx.lineTo(cx - 6, cy + 20);
     petCtx.fill();
 
     petCtx.beginPath();
-    petCtx.moveTo(cx + 20, cy + 8);
-    petCtx.lineTo(cx + 8, cy + 4);
-    petCtx.lineTo(cx + 8, cy + 14);
+    petCtx.moveTo(cx + 30, cy + 8);
+    petCtx.lineTo(cx + 6, cy + 2);
+    petCtx.lineTo(cx + 6, cy + 20);
     petCtx.fill();
+
+    // Claws
+    petCtx.fillStyle = '#7f1d1d';
+    petCtx.fillRect(cx - 14, cy + 48, 5, 6);
+    petCtx.fillRect(cx + 9, cy + 48, 5, 6);
 
     // Tail
     petCtx.fillStyle = '#b91c1c';
-    petCtx.fillRect(cx + 2, cy + 60, 10, 16);
+    petCtx.fillRect(cx + 2, cy + 58, 12, 20);
 
     // Expression
     petCtx.strokeStyle = '#111111';
@@ -348,35 +449,41 @@ function drawCharling(mood, breathOffset, flameFlicker) {
     }
 }
 
-// Adult - DrakEmber (much longer body + better wings)
-function drawDrakEmber(mood, breathOffset, flameFlicker) {
+// Ultimate - Infernyx (neck + massive wings)
+function drawInfernyx(mood, breathOffset, flameFlicker) {
     const cx = 110;
-    const cy = 114 + breathOffset;
+    const cy = 100 + breathOffset;
 
     // Shadow
-    petCtx.fillStyle = 'rgba(0,0,0,0.3)';
+    petCtx.fillStyle = 'rgba(0,0,0,0.35)';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy + 68, 48, 11, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx, cy + 82, 56, 13, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Long flowing body
-    petCtx.fillStyle = '#b91c1c';
-    petCtx.fillRect(cx - 14, cy + 16, 28, 15);
-    petCtx.fillRect(cx - 12, cy + 29, 24, 14);
-    petCtx.fillRect(cx - 10, cy + 41, 20, 14);
-    petCtx.fillRect(cx - 6, cy + 53, 12, 13);
+    // Body
+    petCtx.fillStyle = '#991b1b';
+    petCtx.fillRect(cx - 16, cy + 8, 32, 12);
+    petCtx.fillRect(cx - 14, cy + 18, 28, 11);
+    petCtx.fillRect(cx - 12, cy + 27, 24, 11);
+    petCtx.fillRect(cx - 10, cy + 36, 20, 11);
+    petCtx.fillRect(cx - 8, cy + 45, 16, 11);
+    petCtx.fillRect(cx - 6, cy + 54, 12, 10);
+
+    // Neck
+    petCtx.fillStyle = '#7f1d1d';
+    petCtx.fillRect(cx - 7, cy + 2, 14, 10);
 
     // Head
-    petCtx.fillStyle = '#b91c1c';
+    petCtx.fillStyle = '#991b1b';
     petCtx.beginPath();
-    petCtx.moveTo(cx - 17, cy);
-    petCtx.lineTo(cx + 17, cy);
-    petCtx.lineTo(cx + 14, cy - 24);
-    petCtx.lineTo(cx - 14, cy - 24);
+    petCtx.moveTo(cx - 18, cy);
+    petCtx.lineTo(cx + 18, cy);
+    petCtx.lineTo(cx + 15, cy - 26);
+    petCtx.lineTo(cx - 15, cy - 26);
     petCtx.fill();
 
-    petCtx.fillStyle = '#991b1b';
-    petCtx.fillRect(cx - 7, cy - 20, 14, 10);
+    petCtx.fillStyle = '#7f1d1d';
+    petCtx.fillRect(cx - 7, cy - 22, 14, 10);
 
     // Eyes
     petCtx.fillStyle = '#fefce8';
@@ -387,165 +494,56 @@ function drawDrakEmber(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 8, cy - 9, 2, 2);
     petCtx.fillRect(cx + 8, cy - 9, 2, 2);
 
-    // Horns
-    petCtx.fillStyle = '#7f1d1d';
-    petCtx.fillRect(cx - 11, cy - 28, 5, 9);
-    petCtx.fillRect(cx + 6, cy - 28, 5, 9);
-
-    // Proper wings (layered triangle style)
-    petCtx.fillStyle = '#7f1d1d';
-    // Left wing
-    petCtx.beginPath();
-    petCtx.moveTo(cx - 26, cy + 6);
-    petCtx.lineTo(cx - 8, cy - 2);
-    petCtx.lineTo(cx - 8, cy + 16);
-    petCtx.fill();
-
-    // Right wing
-    petCtx.beginPath();
-    petCtx.moveTo(cx + 26, cy + 6);
-    petCtx.lineTo(cx + 8, cy - 2);
-    petCtx.lineTo(cx + 8, cy + 16);
-    petCtx.fill();
-
-    // Claws
-    petCtx.fillStyle = '#7f1d1d';
-    petCtx.fillRect(cx - 15, cy + 52, 5, 6);
-    petCtx.fillRect(cx + 10, cy + 52, 5, 6);
-
-    // Tail
-    petCtx.fillStyle = '#b91c1c';
-    petCtx.fillRect(cx + 2, cy + 64, 12, 20);
-
-    // Expression
-    petCtx.strokeStyle = '#111111';
-    petCtx.lineWidth = 2;
-    if (mood === 'happy') {
-        petCtx.beginPath();
-        petCtx.arc(cx - 7, cy - 22, 3, Math.PI, 0);
-        petCtx.stroke();
-        petCtx.beginPath();
-        petCtx.arc(cx + 7, cy - 22, 3, Math.PI, 0);
-        petCtx.stroke();
-    } else {
-        petCtx.beginPath();
-        petCtx.moveTo(cx - 11, cy - 20);
-        petCtx.lineTo(cx - 3, cy - 17);
-        petCtx.stroke();
-        petCtx.beginPath();
-        petCtx.moveTo(cx + 3, cy - 17);
-        petCtx.lineTo(cx + 11, cy - 20);
-        petCtx.stroke();
-    }
-}
-
-// Ultimate - Infernyx (Exponential wumbo + excellent wings)
-function drawInfernyx(mood, breathOffset, flameFlicker) {
-    const cx = 110;
-    const cy = 102 + breathOffset;
-
-    // Large shadow
-    petCtx.fillStyle = 'rgba(0,0,0,0.35)';
-    petCtx.beginPath();
-    petCtx.ellipse(cx, cy + 80, 54, 13, 0, 0, Math.PI * 2);
-    petCtx.fill();
-
-    // Very long serpentine body
-    petCtx.fillStyle = '#991b1b';
-    petCtx.fillRect(cx - 16, cy + 10, 32, 13);
-    petCtx.fillRect(cx - 14, cy + 21, 28, 12);
-    petCtx.fillRect(cx - 12, cy + 31, 24, 12);
-    petCtx.fillRect(cx - 10, cy + 41, 20, 12);
-    petCtx.fillRect(cx - 8, cy + 51, 16, 12);
-    petCtx.fillRect(cx - 6, cy + 61, 12, 11);
-
-    // Head - strong structure
-    petCtx.fillStyle = '#991b1b';
-    petCtx.beginPath();
-    petCtx.moveTo(cx - 19, cy - 2);
-    petCtx.lineTo(cx + 19, cy - 2);
-    petCtx.lineTo(cx + 15, cy - 28);
-    petCtx.lineTo(cx - 15, cy - 28);
-    petCtx.fill();
-
-    petCtx.fillStyle = '#7f1d1d';
-    petCtx.fillRect(cx - 8, cy - 24, 16, 12);
-
-    // Eyes
-    petCtx.fillStyle = '#fefce8';
-    petCtx.fillRect(cx - 11, cy - 14, 4, 4);
-    petCtx.fillRect(cx + 7, cy - 14, 4, 4);
-
-    petCtx.fillStyle = '#111111';
-    petCtx.fillRect(cx - 9, cy - 11, 2, 2);
-    petCtx.fillRect(cx + 9, cy - 11, 2, 2);
-
     // Large horns
     petCtx.fillStyle = '#450a0a';
-    petCtx.fillRect(cx - 13, cy - 34, 6, 12);
-    petCtx.fillRect(cx + 7, cy - 34, 6, 12);
+    petCtx.fillRect(cx - 12, cy - 32, 6, 12);
+    petCtx.fillRect(cx + 6, cy - 32, 6, 12);
 
-    // Dramatic layered wings (proper shape)
+    // Massive downward wings
     petCtx.fillStyle = '#7f1d1d';
-    // Left wing - main
     petCtx.beginPath();
-    petCtx.moveTo(cx - 38, cy - 6);
-    petCtx.lineTo(cx - 8, cy - 12);
-    petCtx.lineTo(cx - 8, cy + 18);
+    petCtx.moveTo(cx - 42, cy - 4);
+    petCtx.lineTo(cx - 6, cy - 10);
+    petCtx.lineTo(cx - 6, cy + 22);
     petCtx.fill();
 
-    // Left wing - lower layer
     petCtx.beginPath();
-    petCtx.moveTo(cx - 32, cy + 2);
-    petCtx.lineTo(cx - 8, cy - 2);
-    petCtx.lineTo(cx - 8, cy + 20);
-    petCtx.fill();
-
-    // Right wing - main
-    petCtx.beginPath();
-    petCtx.moveTo(cx + 38, cy - 6);
-    petCtx.lineTo(cx + 8, cy - 12);
-    petCtx.lineTo(cx + 8, cy + 18);
-    petCtx.fill();
-
-    // Right wing - lower layer
-    petCtx.beginPath();
-    petCtx.moveTo(cx + 32, cy + 2);
-    petCtx.lineTo(cx + 8, cy - 2);
-    petCtx.lineTo(cx + 8, cy + 20);
+    petCtx.moveTo(cx + 42, cy - 4);
+    petCtx.lineTo(cx + 6, cy - 10);
+    petCtx.lineTo(cx + 6, cy + 22);
     petCtx.fill();
 
     // Claws
     petCtx.fillStyle = '#450a0a';
-    petCtx.fillRect(cx - 17, cy + 58, 6, 8);
-    petCtx.fillRect(cx + 11, cy + 58, 6, 8);
+    petCtx.fillRect(cx - 16, cy + 52, 6, 8);
+    petCtx.fillRect(cx + 10, cy + 52, 6, 8);
 
-    // Long powerful tail
+    // Tail
     petCtx.fillStyle = '#991b1b';
-    petCtx.fillRect(cx + 2, cy + 70, 14, 24);
+    petCtx.fillRect(cx + 2, cy + 62, 14, 26);
 
-    // Flame on tail
+    // Flame
     petCtx.fillStyle = '#f59e0b';
-    petCtx.fillRect(cx + 6, cy + 90, 6, 8);
+    petCtx.fillRect(cx + 6, cy + 84, 6, 8);
 
     // Expression
     petCtx.strokeStyle = '#111111';
     petCtx.lineWidth = 2.5;
     if (mood === 'happy') {
         petCtx.beginPath();
-        petCtx.arc(cx - 8, cy - 26, 3.5, Math.PI, 0);
+        petCtx.arc(cx - 7, cy - 24, 3.5, Math.PI, 0);
         petCtx.stroke();
         petCtx.beginPath();
-        petCtx.arc(cx + 8, cy - 26, 3.5, Math.PI, 0);
+        petCtx.arc(cx + 7, cy - 24, 3.5, Math.PI, 0);
         petCtx.stroke();
     } else {
         petCtx.beginPath();
-        petCtx.moveTo(cx - 13, cy - 24);
-        petCtx.lineTo(cx - 3, cy - 21);
+        petCtx.moveTo(cx - 12, cy - 22);
+        petCtx.lineTo(cx - 2, cy - 19);
         petCtx.stroke();
         petCtx.beginPath();
-        petCtx.moveTo(cx + 3, cy - 21);
-        petCtx.lineTo(cx + 13, cy - 24);
+        petCtx.moveTo(cx + 2, cy - 19);
+        petCtx.lineTo(cx + 12, cy - 22);
         petCtx.stroke();
     }
 }
@@ -691,8 +689,6 @@ function drawWhisp(mood, breathOffset, flameFlicker) {
         petCtx.arc(cx - 7, cy - 18, 3, Math.PI, 0);
         petCtx.stroke();
         petCtx.beginPath();
-        petCtx.arc(cx + 7, cy - 18, 3, Math.PI, 0);
-        petCtx.stroke();
     } else {
         petCtx.beginPath();
         petCtx.moveTo(cx - 12, cy - 16);
