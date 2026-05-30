@@ -1,6 +1,6 @@
 // ============================================
-// VIRTUAL PET v4.22 - Dramatic Bolt Ultimate
-// Long sharp triangles + spiked wing feathers
+// VIRTUAL PET v4.23 - Full dramatic Bolt Ultimate
+// Thick wings + many layered fanned feathers
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -787,6 +787,17 @@ function drawBud(mood, breathOffset, flameFlicker) {
         petCtx.arc(cx - 11, cy - 24, 4, Math.PI, 0);
         petCtx.stroke();
         petCtx.beginPath();
+        petCtx.arc(cx + 11, cy - 24, 4, Math.PI, 0);
+        petCtx.stroke();
+    } else {
+        petCtx.beginPath();
+        petCtx.moveTo(cx - 17, cy - 22);
+        petCtx.lineTo(cx - 6, cy - 19);
+        petCtx.stroke();
+        petCtx.beginPath();
+        petCtx.moveTo(cx + 6, cy - 19);
+        petCtx.lineTo(cx + 17, cy - 22);
+        petCtx.stroke();
     }
 
     petCtx.fillStyle = '#166534';
@@ -1024,8 +1035,8 @@ function drawVerdant(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
-// BOLT LINE (Lightning Bird) - v4.22 Dramatic Ultimate
-// Long sharp triangles + spiked wing feathers
+// BOLT LINE (Lightning Bird) - v4.23 Full dramatic Ultimate
+// Thick wings + many layered fanned feathers
 // ============================================
 
 function drawZap(mood, breathOffset, flameFlicker) {
@@ -1229,35 +1240,62 @@ function drawStorm(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 4, cy - 2, 3, 3);
     petCtx.fillRect(cx + 4, cy - 2, 3, 3);
 
-    // Long sharp triangular wings
+    // Thick full wings with many layered fanned feathers
     petCtx.fillStyle = '#ca8a04';
+    // Main wing base (thicker)
     petCtx.beginPath();
-    petCtx.moveTo(cx - 32, cy + 12);
-    petCtx.lineTo(cx - 48, cy - 8);
-    petCtx.lineTo(cx - 20, cy + 20);
+    petCtx.moveTo(cx - 28, cy + 14);
+    petCtx.lineTo(cx - 52, cy - 4);
+    petCtx.lineTo(cx - 18, cy + 28);
     petCtx.fill();
 
     petCtx.beginPath();
-    petCtx.moveTo(cx + 32, cy + 12);
-    petCtx.lineTo(cx + 48, cy - 8);
-    petCtx.lineTo(cx + 20, cy + 20);
+    petCtx.moveTo(cx + 28, cy + 14);
+    petCtx.lineTo(cx + 52, cy - 4);
+    petCtx.lineTo(cx + 18, cy + 28);
     petCtx.fill();
 
-    // Spiked wing feathers (long triangles)
+    // Layer 1 feathers (long fanned)
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
-    petCtx.moveTo(cx - 42, cy - 2);
-    petCtx.lineTo(cx - 52, cy - 18);
-    petCtx.lineTo(cx - 32, cy + 6);
+    petCtx.moveTo(cx - 46, cy - 2);
+    petCtx.lineTo(cx - 58, cy - 20);
+    petCtx.lineTo(cx - 34, cy + 8);
     petCtx.fill();
 
     petCtx.beginPath();
-    petCtx.moveTo(cx + 42, cy - 2);
-    petCtx.lineTo(cx + 52, cy - 18);
-    petCtx.lineTo(cx + 32, cy + 6);
+    petCtx.moveTo(cx + 46, cy - 2);
+    petCtx.lineTo(cx + 58, cy - 20);
+    petCtx.lineTo(cx + 34, cy + 8);
     petCtx.fill();
 
-    // Prominent head spikes
+    // Layer 2 feathers (more fanned)
+    petCtx.beginPath();
+    petCtx.moveTo(cx - 40, cy + 4);
+    petCtx.lineTo(cx - 54, cy - 12);
+    petCtx.lineTo(cx - 28, cy + 16);
+    petCtx.fill();
+
+    petCtx.beginPath();
+    petCtx.moveTo(cx + 40, cy + 4);
+    petCtx.lineTo(cx + 54, cy - 12);
+    petCtx.lineTo(cx + 28, cy + 16);
+    petCtx.fill();
+
+    // Layer 3 feathers (inner fanned)
+    petCtx.beginPath();
+    petCtx.moveTo(cx - 34, cy + 10);
+    petCtx.lineTo(cx - 46, cy - 4);
+    petCtx.lineTo(cx - 24, cy + 22);
+    petCtx.fill();
+
+    petCtx.beginPath();
+    petCtx.moveTo(cx + 34, cy + 10);
+    petCtx.lineTo(cx + 46, cy - 4);
+    petCtx.lineTo(cx + 24, cy + 22);
+    petCtx.fill();
+
+    // Head spikes
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
     petCtx.rect(cx - 10, cy - 14, 5, 12);
