@@ -1,6 +1,6 @@
 // ============================================
-// VIRTUAL PET v4.20 - Lightning Bird (Bolt) added
-// Angular sharp design - no curves in body
+// VIRTUAL PET v4.21 - Bolt improvements
+// Head spikes + larger angular wing feathers
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -1035,33 +1035,10 @@ function drawVerdant(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
-// BOLT LINE (Lightning Bird) - v4.20
-// Angular sharp design - no curves in body
+// BOLT LINE (Lightning Bird) - v4.21
+// Head spikes + larger angular wing feathers
 // ============================================
 
-// Helper for sharp angular lightning bolt segments
-function drawLightningBolt(cx, cy, length, width, angle, color) {
-    petCtx.save();
-    petCtx.translate(cx, cy);
-    petCtx.rotate(angle);
-
-    petCtx.fillStyle = color;
-    petCtx.beginPath();
-    petCtx.moveTo(0, 0);
-    petCtx.lineTo(length * 0.4, -width);
-    petCtx.lineTo(length * 0.35, 0);
-    petCtx.lineTo(length, -width * 0.7);
-    petCtx.lineTo(length * 0.65, width * 0.3);
-    petCtx.lineTo(length * 0.75, width * 0.1);
-    petCtx.lineTo(length * 0.3, width * 0.5);
-    petCtx.lineTo(0, 0);
-    petCtx.closePath();
-    petCtx.fill();
-
-    petCtx.restore();
-}
-
-// STAGE 0: ZAP (Baby) - Small sharp angular chick
 function drawZap(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 132 + breathOffset;
@@ -1071,19 +1048,16 @@ function drawZap(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 56, 34, 9, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Small angular body (no curves)
     petCtx.fillStyle = '#eab308';
     petCtx.beginPath();
     petCtx.rect(cx - 14, cy + 28, 28, 24);
     petCtx.fill();
 
-    // Smaller head (angular)
     petCtx.fillStyle = '#eab308';
     petCtx.beginPath();
     petCtx.rect(cx - 16, cy - 4, 32, 28);
     petCtx.fill();
 
-    // Sharp beak
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
     petCtx.moveTo(cx + 16, cy + 6);
@@ -1091,7 +1065,6 @@ function drawZap(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 16, cy + 14);
     petCtx.fill();
 
-    // Bigger baby eyes
     petCtx.fillStyle = '#ffffff';
     petCtx.fillRect(cx - 10, cy + 2, 8, 8);
     petCtx.fillRect(cx + 2, cy + 2, 8, 8);
@@ -1100,7 +1073,6 @@ function drawZap(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 7, cy + 4, 4, 4);
     petCtx.fillRect(cx + 5, cy + 4, 4, 4);
 
-    // Small angular wings
     petCtx.fillStyle = '#ca8a04';
     petCtx.beginPath();
     petCtx.rect(cx - 20, cy + 20, 8, 14);
@@ -1109,11 +1081,18 @@ function drawZap(mood, breathOffset, flameFlicker) {
     petCtx.rect(cx + 12, cy + 20, 8, 14);
     petCtx.fill();
 
-    // Short jagged tail
+    // Small head spikes (baby)
+    petCtx.fillStyle = '#854d0e';
+    petCtx.beginPath();
+    petCtx.rect(cx - 8, cy - 8, 3, 6);
+    petCtx.fill();
+    petCtx.beginPath();
+    petCtx.rect(cx + 5, cy - 8, 3, 6);
+    petCtx.fill();
+
     drawLightningBolt(cx + 14, cy + 52, 16, 4, 0.3, '#eab308');
 }
 
-// STAGE 1: SPARK (Child) - Developing angular wings
 function drawSpark(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 120 + breathOffset;
@@ -1123,19 +1102,16 @@ function drawSpark(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 66, 38, 10, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Angular body
     petCtx.fillStyle = '#eab308';
     petCtx.beginPath();
     petCtx.rect(cx - 16, cy + 22, 32, 32);
     petCtx.fill();
 
-    // Smaller head
     petCtx.fillStyle = '#eab308';
     petCtx.beginPath();
     petCtx.rect(cx - 14, cy - 6, 28, 26);
     petCtx.fill();
 
-    // Sharp beak
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
     petCtx.moveTo(cx + 14, cy + 4);
@@ -1151,7 +1127,6 @@ function drawSpark(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 6, cy + 2, 3, 3);
     petCtx.fillRect(cx + 5, cy + 2, 3, 3);
 
-    // Angular wings developing
     petCtx.fillStyle = '#ca8a04';
     petCtx.beginPath();
     petCtx.rect(cx - 24, cy + 18, 10, 18);
@@ -1160,11 +1135,18 @@ function drawSpark(mood, breathOffset, flameFlicker) {
     petCtx.rect(cx + 14, cy + 18, 10, 18);
     petCtx.fill();
 
-    // Jagged tail
+    // Head spikes (child)
+    petCtx.fillStyle = '#854d0e';
+    petCtx.beginPath();
+    petCtx.rect(cx - 10, cy - 10, 4, 8);
+    petCtx.fill();
+    petCtx.beginPath();
+    petCtx.rect(cx + 6, cy - 10, 4, 8);
+    petCtx.fill();
+
     drawLightningBolt(cx + 16, cy + 54, 20, 5, 0.25, '#eab308');
 }
 
-// STAGE 2: BOLT (Adult) - Proper angular bird form
 function drawBolt(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 112 + breathOffset;
@@ -1174,19 +1156,16 @@ function drawBolt(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 72, 42, 11, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Angular body
     petCtx.fillStyle = '#eab308';
     petCtx.beginPath();
     petCtx.rect(cx - 18, cy + 16, 36, 38);
     petCtx.fill();
 
-    // Smaller head
     petCtx.fillStyle = '#eab308';
     petCtx.beginPath();
     petCtx.rect(cx - 13, cy - 8, 26, 24);
     petCtx.fill();
 
-    // Sharp beak
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
     petCtx.moveTo(cx + 13, cy + 2);
@@ -1202,7 +1181,7 @@ function drawBolt(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 5, cy + 0, 3, 3);
     petCtx.fillRect(cx + 4, cy + 0, 3, 3);
 
-    // Large angular wings
+    // Larger angular wing feathers
     petCtx.fillStyle = '#ca8a04';
     petCtx.beginPath();
     petCtx.rect(cx - 28, cy + 14, 12, 22);
@@ -1211,11 +1190,27 @@ function drawBolt(mood, breathOffset, flameFlicker) {
     petCtx.rect(cx + 16, cy + 14, 12, 22);
     petCtx.fill();
 
-    // Long jagged tail
+    // Extra large angular feathers on wings
+    petCtx.fillStyle = '#854d0e';
+    petCtx.beginPath();
+    petCtx.rect(cx - 26, cy + 16, 4, 10);
+    petCtx.fill();
+    petCtx.beginPath();
+    petCtx.rect(cx + 22, cy + 16, 4, 10);
+    petCtx.fill();
+
+    // Head spikes (adult)
+    petCtx.fillStyle = '#854d0e';
+    petCtx.beginPath();
+    petCtx.rect(cx - 10, cy - 12, 4, 10);
+    petCtx.fill();
+    petCtx.beginPath();
+    petCtx.rect(cx + 6, cy - 12, 4, 10);
+    petCtx.fill();
+
     drawLightningBolt(cx + 18, cy + 54, 26, 6, 0.2, '#eab308');
 }
 
-// STAGE 3: STORM (Ultimate) - Large dramatic angular bird
 function drawStorm(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 100 + breathOffset;
@@ -1225,19 +1220,16 @@ function drawStorm(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 82, 48, 12, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Angular body
     petCtx.fillStyle = '#eab308';
     petCtx.beginPath();
     petCtx.rect(cx - 20, cy + 10, 40, 44);
     petCtx.fill();
 
-    // Smaller head
     petCtx.fillStyle = '#eab308';
     petCtx.beginPath();
     petCtx.rect(cx - 12, cy - 10, 24, 22);
     petCtx.fill();
 
-    // Sharp aggressive beak
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
     petCtx.moveTo(cx + 12, cy);
@@ -1253,7 +1245,7 @@ function drawStorm(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 4, cy - 2, 3, 3);
     petCtx.fillRect(cx + 4, cy - 2, 3, 3);
 
-    // Large dramatic angular wings
+    // Large dramatic angular wings with big feathers
     petCtx.fillStyle = '#ca8a04';
     petCtx.beginPath();
     petCtx.rect(cx - 32, cy + 8, 14, 28);
@@ -1262,10 +1254,26 @@ function drawStorm(mood, breathOffset, flameFlicker) {
     petCtx.rect(cx + 18, cy + 8, 14, 28);
     petCtx.fill();
 
-    // Very long jagged lightning tail
+    // Very large angular wing feathers
+    petCtx.fillStyle = '#854d0e';
+    petCtx.beginPath();
+    petCtx.rect(cx - 30, cy + 10, 5, 14);
+    petCtx.fill();
+    petCtx.beginPath();
+    petCtx.rect(cx + 25, cy + 10, 5, 14);
+    petCtx.fill();
+
+    // Prominent head spikes (ultimate)
+    petCtx.fillStyle = '#854d0e';
+    petCtx.beginPath();
+    petCtx.rect(cx - 10, cy - 14, 5, 12);
+    petCtx.fill();
+    petCtx.beginPath();
+    petCtx.rect(cx + 5, cy - 14, 5, 12);
+    petCtx.fill();
+
     drawLightningBolt(cx + 20, cy + 54, 32, 7, 0.15, '#eab308');
 
-    // Sharp lightning accents on wings
     petCtx.fillStyle = '#fef08c';
     petCtx.beginPath();
     petCtx.rect(cx - 30, cy + 12, 4, 8);
