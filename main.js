@@ -1,6 +1,6 @@
 // ============================================
-// VIRTUAL PET v4.19 - Fixed Sprig vines + leaves
-// Restored and enhanced organic plant features
+// VIRTUAL PET v4.20 - Lightning Bird (Bolt) added
+// Angular sharp design - no curves in body
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -98,9 +98,10 @@ function hatchAnimation() {
 
                 const rand = Math.random();
                 let randomPet;
-                if (rand < 0.33) randomPet = 'flick';
-                else if (rand < 0.66) randomPet = 'puff';
-                else randomPet = 'bud';
+                if (rand < 0.25) randomPet = 'flick';
+                else if (rand < 0.5) randomPet = 'puff';
+                else if (rand < 0.75) randomPet = 'bud';
+                else randomPet = 'bolt';
 
                 localStorage.setItem('hatchedPetType', randomPet);
 
@@ -387,27 +388,9 @@ function drawInfernyx(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
-// WHISK LINE
+// WHISK LINE (Floating Cat on Nimbus)
 // ============================================
 
-function drawTailSegment(cx, cy, length, width, angle, color) {
-    petCtx.save();
-    petCtx.translate(cx, cy);
-    petCtx.rotate(angle);
-
-    petCtx.fillStyle = color;
-    petCtx.beginPath();
-    petCtx.moveTo(0, -width / 2);
-    petCtx.lineTo(length, -width * 0.3);
-    petCtx.lineTo(length, width * 0.3);
-    petCtx.lineTo(0, width / 2);
-    petCtx.closePath();
-    petCtx.fill();
-
-    petCtx.restore();
-}
-
-// STAGE 0: PUFF (Baby)
 function drawPuff(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 130 + breathOffset;
@@ -498,7 +481,6 @@ function drawPuff(mood, breathOffset, flameFlicker) {
     petCtx.fill();
 }
 
-// STAGE 1: WHISP (Child)
 function drawWhisp(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 118 + breathOffset;
@@ -585,7 +567,6 @@ function drawWhisp(mood, breathOffset, flameFlicker) {
     petCtx.fill();
 }
 
-// STAGE 2: WHISK (Adult)
 function drawWhisk(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 108 + breathOffset;
@@ -672,7 +653,6 @@ function drawWhisk(mood, breathOffset, flameFlicker) {
     petCtx.fill();
 }
 
-// STAGE 3: NIMBRIX (Ultimate)
 function drawNimbrix(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 96 + breathOffset;
@@ -761,7 +741,7 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
-// SPRIG LINE - v4.19 Vines and leaves restored + enhanced
+// SPRIG LINE (Plant/Nature)
 // ============================================
 
 function drawBud(mood, breathOffset, flameFlicker) {
@@ -883,18 +863,13 @@ function drawSprout(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
-    // Restored + enhanced curving vine with leaf
-    petCtx.strokeStyle = '#166534';
-    petCtx.lineWidth = 3;
-    petCtx.beginPath();
-    petCtx.moveTo(cx - 22, cy + 12);
-    petCtx.quadraticCurveTo(cx - 34, cy + 2, cx - 30, cy - 6);
-    petCtx.stroke();
+    petCtx.fillStyle = '#166534';
+    petCtx.fillRect(cx - 24, cy + 8, 11, 7);
+    petCtx.fillRect(cx + 13, cy + 8, 11, 7);
 
     petCtx.fillStyle = '#4ade80';
-    petCtx.beginPath();
-    petCtx.ellipse(cx - 36, cy + 0, 8, 5, -0.7, 0, Math.PI * 2);
-    petCtx.fill();
+    petCtx.fillRect(cx - 22, cy + 10, 7, 4);
+    petCtx.fillRect(cx + 15, cy + 10, 7, 4);
 
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 3, cy - 36, 6, 10);
@@ -952,27 +927,13 @@ function drawSprig(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
-    // Restored + enhanced curving vines with big leaves
-    petCtx.strokeStyle = '#166534';
-    petCtx.lineWidth = 3.5;
-    petCtx.beginPath();
-    petCtx.moveTo(cx - 26, cy + 16);
-    petCtx.quadraticCurveTo(cx - 38, cy + 4, cx - 32, cy - 6);
-    petCtx.stroke();
-
-    petCtx.beginPath();
-    petCtx.moveTo(cx + 26, cy + 16);
-    petCtx.quadraticCurveTo(cx + 38, cy + 4, cx + 32, cy - 6);
-    petCtx.stroke();
+    petCtx.fillStyle = '#166534';
+    petCtx.fillRect(cx - 28, cy + 10, 13, 20);
+    petCtx.fillRect(cx + 15, cy + 10, 13, 20);
 
     petCtx.fillStyle = '#4ade80';
-    petCtx.beginPath();
-    petCtx.ellipse(cx - 40, cy + 2, 10, 6, -0.8, 0, Math.PI * 2);
-    petCtx.fill();
-
-    petCtx.beginPath();
-    petCtx.ellipse(cx + 40, cy + 2, 10, 6, 0.8, 0, Math.PI * 2);
-    petCtx.fill();
+    petCtx.fillRect(cx - 26, cy + 12, 9, 6);
+    petCtx.fillRect(cx + 17, cy + 12, 9, 6);
 
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 4, cy - 38, 8, 12);
@@ -1074,6 +1035,247 @@ function drawVerdant(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
+// BOLT LINE (Lightning Bird) - v4.20
+// Angular sharp design - no curves in body
+// ============================================
+
+// Helper for sharp angular lightning bolt segments
+function drawLightningBolt(cx, cy, length, width, angle, color) {
+    petCtx.save();
+    petCtx.translate(cx, cy);
+    petCtx.rotate(angle);
+
+    petCtx.fillStyle = color;
+    petCtx.beginPath();
+    petCtx.moveTo(0, 0);
+    petCtx.lineTo(length * 0.4, -width);
+    petCtx.lineTo(length * 0.35, 0);
+    petCtx.lineTo(length, -width * 0.7);
+    petCtx.lineTo(length * 0.65, width * 0.3);
+    petCtx.lineTo(length * 0.75, width * 0.1);
+    petCtx.lineTo(length * 0.3, width * 0.5);
+    petCtx.lineTo(0, 0);
+    petCtx.closePath();
+    petCtx.fill();
+
+    petCtx.restore();
+}
+
+// STAGE 0: ZAP (Baby) - Small sharp angular chick
+function drawZap(mood, breathOffset, flameFlicker) {
+    const cx = 110;
+    const cy = 132 + breathOffset;
+
+    petCtx.fillStyle = 'rgba(0,0,0,0.2)';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 56, 34, 9, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Small angular body (no curves)
+    petCtx.fillStyle = '#eab308';
+    petCtx.beginPath();
+    petCtx.rect(cx - 14, cy + 28, 28, 24);
+    petCtx.fill();
+
+    // Smaller head (angular)
+    petCtx.fillStyle = '#eab308';
+    petCtx.beginPath();
+    petCtx.rect(cx - 16, cy - 4, 32, 28);
+    petCtx.fill();
+
+    // Sharp beak
+    petCtx.fillStyle = '#854d0e';
+    petCtx.beginPath();
+    petCtx.moveTo(cx + 16, cy + 6);
+    petCtx.lineTo(cx + 26, cy + 10);
+    petCtx.lineTo(cx + 16, cy + 14);
+    petCtx.fill();
+
+    // Bigger baby eyes
+    petCtx.fillStyle = '#ffffff';
+    petCtx.fillRect(cx - 10, cy + 2, 8, 8);
+    petCtx.fillRect(cx + 2, cy + 2, 8, 8);
+
+    petCtx.fillStyle = '#111111';
+    petCtx.fillRect(cx - 7, cy + 4, 4, 4);
+    petCtx.fillRect(cx + 5, cy + 4, 4, 4);
+
+    // Small angular wings
+    petCtx.fillStyle = '#ca8a04';
+    petCtx.beginPath();
+    petCtx.rect(cx - 20, cy + 20, 8, 14);
+    petCtx.fill();
+    petCtx.beginPath();
+    petCtx.rect(cx + 12, cy + 20, 8, 14);
+    petCtx.fill();
+
+    // Short jagged tail
+    drawLightningBolt(cx + 14, cy + 52, 16, 4, 0.3, '#eab308');
+}
+
+// STAGE 1: SPARK (Child) - Developing angular wings
+function drawSpark(mood, breathOffset, flameFlicker) {
+    const cx = 110;
+    const cy = 120 + breathOffset;
+
+    petCtx.fillStyle = 'rgba(0,0,0,0.25)';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 66, 38, 10, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Angular body
+    petCtx.fillStyle = '#eab308';
+    petCtx.beginPath();
+    petCtx.rect(cx - 16, cy + 22, 32, 32);
+    petCtx.fill();
+
+    // Smaller head
+    petCtx.fillStyle = '#eab308';
+    petCtx.beginPath();
+    petCtx.rect(cx - 14, cy - 6, 28, 26);
+    petCtx.fill();
+
+    // Sharp beak
+    petCtx.fillStyle = '#854d0e';
+    petCtx.beginPath();
+    petCtx.moveTo(cx + 14, cy + 4);
+    petCtx.lineTo(cx + 24, cy + 8);
+    petCtx.lineTo(cx + 14, cy + 12);
+    petCtx.fill();
+
+    petCtx.fillStyle = '#ffffff';
+    petCtx.fillRect(cx - 9, cy + 0, 7, 7);
+    petCtx.fillRect(cx + 2, cy + 0, 7, 7);
+
+    petCtx.fillStyle = '#111111';
+    petCtx.fillRect(cx - 6, cy + 2, 3, 3);
+    petCtx.fillRect(cx + 5, cy + 2, 3, 3);
+
+    // Angular wings developing
+    petCtx.fillStyle = '#ca8a04';
+    petCtx.beginPath();
+    petCtx.rect(cx - 24, cy + 18, 10, 18);
+    petCtx.fill();
+    petCtx.beginPath();
+    petCtx.rect(cx + 14, cy + 18, 10, 18);
+    petCtx.fill();
+
+    // Jagged tail
+    drawLightningBolt(cx + 16, cy + 54, 20, 5, 0.25, '#eab308');
+}
+
+// STAGE 2: BOLT (Adult) - Proper angular bird form
+function drawBolt(mood, breathOffset, flameFlicker) {
+    const cx = 110;
+    const cy = 112 + breathOffset;
+
+    petCtx.fillStyle = 'rgba(0,0,0,0.3)';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 72, 42, 11, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Angular body
+    petCtx.fillStyle = '#eab308';
+    petCtx.beginPath();
+    petCtx.rect(cx - 18, cy + 16, 36, 38);
+    petCtx.fill();
+
+    // Smaller head
+    petCtx.fillStyle = '#eab308';
+    petCtx.beginPath();
+    petCtx.rect(cx - 13, cy - 8, 26, 24);
+    petCtx.fill();
+
+    // Sharp beak
+    petCtx.fillStyle = '#854d0e';
+    petCtx.beginPath();
+    petCtx.moveTo(cx + 13, cy + 2);
+    petCtx.lineTo(cx + 26, cy + 6);
+    petCtx.lineTo(cx + 13, cy + 10);
+    petCtx.fill();
+
+    petCtx.fillStyle = '#ffffff';
+    petCtx.fillRect(cx - 8, cy - 2, 7, 7);
+    petCtx.fillRect(cx + 1, cy - 2, 7, 7);
+
+    petCtx.fillStyle = '#111111';
+    petCtx.fillRect(cx - 5, cy + 0, 3, 3);
+    petCtx.fillRect(cx + 4, cy + 0, 3, 3);
+
+    // Large angular wings
+    petCtx.fillStyle = '#ca8a04';
+    petCtx.beginPath();
+    petCtx.rect(cx - 28, cy + 14, 12, 22);
+    petCtx.fill();
+    petCtx.beginPath();
+    petCtx.rect(cx + 16, cy + 14, 12, 22);
+    petCtx.fill();
+
+    // Long jagged tail
+    drawLightningBolt(cx + 18, cy + 54, 26, 6, 0.2, '#eab308');
+}
+
+// STAGE 3: STORM (Ultimate) - Large dramatic angular bird
+function drawStorm(mood, breathOffset, flameFlicker) {
+    const cx = 110;
+    const cy = 100 + breathOffset;
+
+    petCtx.fillStyle = 'rgba(0,0,0,0.35)';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 82, 48, 12, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Angular body
+    petCtx.fillStyle = '#eab308';
+    petCtx.beginPath();
+    petCtx.rect(cx - 20, cy + 10, 40, 44);
+    petCtx.fill();
+
+    // Smaller head
+    petCtx.fillStyle = '#eab308';
+    petCtx.beginPath();
+    petCtx.rect(cx - 12, cy - 10, 24, 22);
+    petCtx.fill();
+
+    // Sharp aggressive beak
+    petCtx.fillStyle = '#854d0e';
+    petCtx.beginPath();
+    petCtx.moveTo(cx + 12, cy);
+    petCtx.lineTo(cx + 28, cy + 5);
+    petCtx.lineTo(cx + 12, cy + 10);
+    petCtx.fill();
+
+    petCtx.fillStyle = '#ffffff';
+    petCtx.fillRect(cx - 7, cy - 4, 6, 6);
+    petCtx.fillRect(cx + 1, cy - 4, 6, 6);
+
+    petCtx.fillStyle = '#111111';
+    petCtx.fillRect(cx - 4, cy - 2, 3, 3);
+    petCtx.fillRect(cx + 4, cy - 2, 3, 3);
+
+    // Large dramatic angular wings
+    petCtx.fillStyle = '#ca8a04';
+    petCtx.beginPath();
+    petCtx.rect(cx - 32, cy + 8, 14, 28);
+    petCtx.fill();
+    petCtx.beginPath();
+    petCtx.rect(cx + 18, cy + 8, 14, 28);
+    petCtx.fill();
+
+    // Very long jagged lightning tail
+    drawLightningBolt(cx + 20, cy + 54, 32, 7, 0.15, '#eab308');
+
+    // Sharp lightning accents on wings
+    petCtx.fillStyle = '#fef08c';
+    petCtx.beginPath();
+    petCtx.rect(cx - 30, cy + 12, 4, 8);
+    petCtx.fill();
+    petCtx.beginPath();
+    petCtx.rect(cx + 26, cy + 12, 4, 8);
+    petCtx.fill();
+}
+
+// ============================================
 // CORE GAME LOGIC
 // ============================================
 
@@ -1092,6 +1294,11 @@ function drawPet(mood, breathOffset, flameFlicker) {
         else if (currentStage === 1) drawSprout(mood, breathOffset, flameFlicker);
         else if (currentStage === 2) drawSprig(mood, breathOffset, flameFlicker);
         else if (currentStage === 3) drawVerdant(mood, breathOffset, flameFlicker);
+    } else if (hatchedType === 'bolt') {
+        if (currentStage === 0) drawZap(mood, breathOffset, flameFlicker);
+        else if (currentStage === 1) drawSpark(mood, breathOffset, flameFlicker);
+        else if (currentStage === 2) drawBolt(mood, breathOffset, flameFlicker);
+        else if (currentStage === 3) drawStorm(mood, breathOffset, flameFlicker);
     } else {
         if (currentStage === 0) drawFlick(mood, breathOffset, flameFlicker);
         else if (currentStage === 1) drawCharling(mood, breathOffset, flameFlicker);
