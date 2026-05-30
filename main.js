@@ -1,5 +1,5 @@
 // ============================================
-// VIRTUAL PET v4.25 - Fixed head + beak + staged progression
+// VIRTUAL PET v4.26 - Proper Evolution System + Force Button
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -8,6 +8,7 @@ let animFrame = 0;
 let currentStage = 0;
 let hasHatched = false;
 let eggAnimating = false;
+let lastEvolutionAge = 0;
 
 let eggCanvas, eggCtx, petCanvas, petCtx;
 
@@ -94,6 +95,7 @@ function hatchAnimation() {
             setTimeout(() => {
                 hasHatched = true;
                 currentStage = 0;
+                lastEvolutionAge = 0;
 
                 const rand = Math.random();
                 let randomPet;
@@ -116,6 +118,63 @@ function hatchAnimation() {
             }, 400);
         }
     }, 180);
+}
+
+// ============================================
+// EVOLUTION SYSTEM
+// ============================================
+
+function getAverageCare() {
+    return (pet.hunger + pet.happiness + pet.cleanliness + pet.energy) / 4;
+}
+
+function canEvolve() {
+    const avg = getAverageCare();
+    const age = Math.floor(pet.age);
+
+    if (currentStage === 0) {
+        return age >= 1 && avg >= 60;
+    } else if (currentStage === 1) {
+        return age >= 3 && avg >= 65;
+    } else if (currentStage === 2) {
+        return age >= 7 && avg >= 70;
+    }
+    return false;
+}
+
+function evolvePet() {
+    if (currentStage >= 3) return;
+
+    currentStage++;
+    lastEvolutionAge = Math.floor(pet.age);
+
+    const avg = getAverageCare();
+    let mood = (avg >= 50) ? 'happy' : 'sad';
+
+    drawPet(mood, 0, 0);
+    updateUI();
+    savePet();
+
+    // Simple evolution feedback
+    const moodEl = document.getElementById('petMood');
+    const originalText = moodEl.textContent;
+    const originalColor = moodEl.style.color;
+
+    moodEl.textContent = 'EVOLVED!';
+    moodEl.style.color = '#a78bfa';
+
+    setTimeout(() => {
+        moodEl.textContent = originalText;
+        moodEl.style.color = originalColor;
+    }, 1800);
+}
+
+function forceEvolution() {
+    if (currentStage >= 3) {
+        alert('Already at Ultimate stage!');
+        return;
+    }
+    evolvePet();
 }
 
 // ============================================
@@ -1034,8 +1093,7 @@ function drawVerdant(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
-// BOLT LINE (Lightning Bird) - v4.25
-// Fixed head + beak + staged progression
+// BOLT LINE (Lightning Bird)
 // ============================================
 
 function drawZap(mood, breathOffset, flameFlicker) {
@@ -1133,7 +1191,6 @@ function drawSpark(mood, breathOffset, flameFlicker) {
     petCtx.rect(cx + 14, cy + 18, 10, 18);
     petCtx.fill();
 
-    // Small head spikes (child)
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
     petCtx.rect(cx - 8, cy - 10, 3, 6);
@@ -1195,7 +1252,6 @@ function drawBolt(mood, breathOffset, flameFlicker) {
     petCtx.rect(cx + 22, cy + 16, 4, 10);
     petCtx.fill();
 
-    // Head spikes (adult)
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
     petCtx.rect(cx - 9, cy - 12, 4, 8);
@@ -1216,7 +1272,6 @@ function drawStorm(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 82, 48, 12, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // TRIANGULAR BODY (kept)
     petCtx.fillStyle = '#eab308';
     petCtx.beginPath();
     petCtx.moveTo(cx, cy - 8);
@@ -1224,13 +1279,11 @@ function drawStorm(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 22, cy + 52);
     petCtx.fill();
 
-    // FIXED HEAD - more rounded/angular mix, not fully triangular
     petCtx.fillStyle = '#eab308';
     petCtx.beginPath();
     petCtx.rect(cx - 14, cy - 14, 28, 22);
     petCtx.fill();
 
-    // Sharp beak (properly attached)
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
     petCtx.moveTo(cx + 14, cy - 4);
@@ -1246,7 +1299,6 @@ function drawStorm(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 5, cy - 8, 3, 3);
     petCtx.fillRect(cx + 5, cy - 8, 3, 3);
 
-    // MASSIVE layered fanned feathers
     petCtx.fillStyle = '#ca8a04';
 
     petCtx.beginPath();
@@ -1311,7 +1363,6 @@ function drawStorm(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 14, cy + 20);
     petCtx.fill();
 
-    // Head spikes
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
     petCtx.rect(cx - 8, cy - 16, 4, 10);
@@ -1365,7 +1416,7 @@ function drawPet(mood, breathOffset, flameFlicker) {
 
 function setStage(stage) {
     currentStage = stage;
-    const avg = (pet.hunger + pet.happiness + pet.cleanliness + pet.energy) / 4;
+    const avg = getAverageCare();
     let mood = (avg >= 50) ? 'happy' : 'sad';
     drawPet(mood, 0, 0);
 }
@@ -1375,15 +1426,24 @@ function animate() {
     const breath = Math.sin(animFrame * 1.0) * 2.0;
     const flameFlicker = Math.sin(animFrame * 3.8) * 2.8 + (Math.random() - 0.5) * 1.0;
 
-    const avg = (pet.hunger + pet.happiness + pet.cleanliness + pet.energy) / 4;
+    const avg = getAverageCare();
     let mood = (avg >= 50) ? 'happy' : 'sad';
 
     drawPet(mood, breath, flameFlicker);
+
+    // Check for automatic evolution
+    if (currentStage < 3 && canEvolve()) {
+        const age = Math.floor(pet.age);
+        if (age > lastEvolutionAge) {
+            evolvePet();
+        }
+    }
+
     requestAnimationFrame(animate);
 }
 
 function updatePetVisual() {
-    const avg = (pet.hunger + pet.happiness + pet.cleanliness + pet.energy) / 4;
+    const avg = getAverageCare();
     let moodText = 'VERY HAPPY';
     let moodColor = '#22c55e';
 
@@ -1409,6 +1469,7 @@ function updatePetVisual() {
 function savePet() {
     localStorage.setItem('virtualPet', JSON.stringify(pet));
     localStorage.setItem('hasHatched', hasHatched);
+    localStorage.setItem('currentStage', currentStage);
 }
 
 function loadPet() {
@@ -1417,6 +1478,9 @@ function loadPet() {
 
     const hatched = localStorage.getItem('hasHatched');
     if (hatched === 'true') hasHatched = true;
+
+    const savedStage = localStorage.getItem('currentStage');
+    if (savedStage) currentStage = parseInt(savedStage);
 }
 
 function updateUI() {
@@ -1468,13 +1532,15 @@ function restPet() {
 }
 
 function decayStats() {
-    const r = 1.05;
-    pet.hunger = Math.max(0, pet.hunger - r * 0.85);
-    pet.happiness = Math.max(0, pet.happiness - r * 0.75);
-    pet.cleanliness = Math.max(0, pet.cleanliness - r * 0.55);
-    pet.energy = Math.max(0, pet.energy - r * 0.65);
-    if (Math.random() < 0.05) pet.happiness = Math.max(0, pet.happiness - 3);
-    if (Math.random() < 0.08) pet.age += 0.08;
+    // More natural decay rates for virtual pet genre
+    pet.hunger = Math.max(0, pet.hunger - 1.2);
+    pet.happiness = Math.max(0, pet.happiness - 0.9);
+    pet.cleanliness = Math.max(0, pet.cleanliness - 0.65);
+    pet.energy = Math.max(0, pet.energy - 0.85);
+
+    if (Math.random() < 0.04) pet.happiness = Math.max(0, pet.happiness - 2);
+    if (Math.random() < 0.06) pet.age += 0.06;
+
     updateUI();
     savePet();
 }
@@ -1489,6 +1555,7 @@ function resetPet() {
     localStorage.removeItem('virtualPet');
     localStorage.removeItem('hasHatched');
     localStorage.removeItem('hatchedPetType');
+    localStorage.removeItem('currentStage');
     location.reload();
 }
 
