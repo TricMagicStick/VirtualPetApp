@@ -1,5 +1,5 @@
 /* ============================================
-   VIRTUAL PET - Retro Digital Embroidery Layer (Light v4.39)
+   VIRTUAL PET - Retro Digital Embroidery Layer (Fixed v4.39)
    ============================================ */
 
 body {
@@ -58,22 +58,23 @@ body {
 .device-frame {
     background: #1e293b;
     border-radius: 28px;
-    padding: 18px 16px 22px;
+    padding: 20px 18px 24px;   /* Increased padding to fix left offset */
     box-shadow: 0 10px 30px rgba(0,0,0,0.4),
                 inset 0 1px 0 rgba(255,255,255,0.08);
     
     /* === Retro Digital Embroidery === */
     border: 3px dashed #475569;
     position: relative;
+    box-sizing: border-box;
 }
 
 /* Inner stitch line for depth */
 .device-frame::before {
     content: '';
     position: absolute;
-    inset: 5px;
+    inset: 6px;                 /* Slightly larger inset */
     border: 1px dashed #334155;
-    border-radius: 22px;
+    border-radius: 20px;
     pointer-events: none;
 }
 
@@ -81,14 +82,14 @@ body {
 .device-frame::after {
     content: '';
     position: absolute;
-    top: 14px;
-    left: 14px;
-    width: 16px;
-    height: 16px;
-    border-top: 2.5px solid #64748b;
-    border-left: 2.5px solid #64748b;
-    border-radius: 3px;
-    opacity: 0.55;
+    top: 16px;
+    left: 16px;
+    width: 14px;
+    height: 14px;
+    border-top: 2px solid #64748b;
+    border-left: 2px solid #64748b;
+    border-radius: 2px;
+    opacity: 0.5;
 }
 
 /* Embroidered top-right corner flourish */
@@ -99,14 +100,14 @@ body {
 .pet-screen::before {
     content: '';
     position: absolute;
-    top: -3px;
-    right: 14px;
-    width: 16px;
-    height: 16px;
-    border-top: 2.5px solid #64748b;
-    border-right: 2.5px solid #64748b;
-    border-radius: 3px;
-    opacity: 0.55;
+    top: -2px;
+    right: 16px;
+    width: 14px;
+    height: 14px;
+    border-top: 2px solid #64748b;
+    border-right: 2px solid #64748b;
+    border-radius: 2px;
+    opacity: 0.5;
 }
 
 /* Subtle dashed accent under stage name */
@@ -120,7 +121,7 @@ body {
     bottom: -4px;
     left: 50%;
     transform: translateX(-50%);
-    width: 52px;
+    width: 48px;
     height: 1px;
     background: repeating-linear-gradient(
         to right,
@@ -129,14 +130,14 @@ body {
         transparent 3px,
         transparent 7px
     );
-    opacity: 0.45;
+    opacity: 0.4;
 }
 
 .stats-top {
     display: flex;
     justify-content: space-between;
     margin-bottom: 14px;
-    padding: 0 6px;
+    padding: 0 4px;
 }
 
 .stat-item {
@@ -151,8 +152,8 @@ body {
 .pet-screen {
     background: #0f172a;
     border-radius: 16px;
-    padding: 12px;
-    margin-bottom: 14px;
+    padding: 10px;
+    margin-bottom: 12px;
     box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
 }
 
@@ -163,7 +164,7 @@ canvas {
 
 .pet-status {
     text-align: center;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
 }
 
 .mood {
@@ -182,7 +183,7 @@ canvas {
     display: flex;
     gap: 8px;
     justify-content: center;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .action-btn {
