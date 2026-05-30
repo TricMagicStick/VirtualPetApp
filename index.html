@@ -12,7 +12,7 @@
         <div class="header">
             <div style="display:flex; align-items:flex-end;">
                 <h1 class="title">VIRTUAL PET</h1>
-                <span class="version">v4.37</span>
+                <span class="version">v4.39</span>
             </div>
             <button onclick="resetPet()" class="reset-btn">
                 <span>↻</span>
@@ -55,11 +55,13 @@
                     <canvas id="petCanvas" width="220" height="220"></canvas>
                 </div>
 
+                <!-- Stage name moved higher -->
+                <div class="stage-name" id="stageName" style="text-align:center; margin-top: -8px; margin-bottom: 4px; font-size: 13px; color: #a5b4fc; font-weight: 600;">Puff</div>
+
                 <!-- Status -->
                 <div class="pet-status">
                     <div id="petMood" class="mood" style="color:#22c55e;">VERY HAPPY</div>
-                    <div class="age">Age: <span id="ageValue">0</span> days • <span id="petNameDisplay">Pixel</span></div>
-                    <div class="stage-name" id="stageName">Puff</div>
+                    <div class="age">Age: <span id="ageValue">0</span> minutes • <span id="petNameDisplay">Pixel</span></div>
                 </div>
 
                 <!-- Actions -->
