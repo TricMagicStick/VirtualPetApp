@@ -1,5 +1,5 @@
 /* ============================================
-   VIRTUAL PET - Fixed Embroidery Offset (v4.43)
+   VIRTUAL PET - Clean Dashed Border Only (v4.44)
    ============================================ */
 
 body {
@@ -62,42 +62,10 @@ body {
     box-shadow: 0 10px 30px rgba(0,0,0,0.4),
                 inset 0 1px 0 rgba(255,255,255,0.08);
     
-    /* Fixed: position relative so absolute corners are contained */
+    /* Clean dashed border - no corner marks, no inner layers */
     position: relative;
     border: 2.5px dashed #475569;
     box-sizing: border-box;
-}
-
-/* Top-left corner embroidery (now properly contained) */
-.device-frame::after {
-    content: '';
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    width: 10px;
-    height: 10px;
-    border-top: 1.5px solid #64748b;
-    border-left: 1.5px solid #64748b;
-    border-radius: 1px;
-    opacity: 0.4;
-}
-
-/* Top-right corner embroidery */
-.pet-screen {
-    position: relative;
-}
-
-.pet-screen::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    right: 14px;
-    width: 10px;
-    height: 10px;
-    border-top: 1.5px solid #64748b;
-    border-right: 1.5px solid #64748b;
-    border-radius: 1px;
-    opacity: 0.4;
 }
 
 .stage-name {
