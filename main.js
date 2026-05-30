@@ -1791,7 +1791,7 @@ function init() {
         document.getElementById('egg-screen').style.display = 'block';
         document.getElementById('pet-screen').style.display = 'none';
 
-        drawEgg(0);
+        drawEggBase(0);
 
         eggCanvas.onclick = () => {
             if (!eggAnimating) hatchAnimation();
