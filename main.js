@@ -1,7 +1,5 @@
 // ============================================
-// VIRTUAL PET v4.33 - Full Whisk Redo (Fluffy Clouds + New Progression)
-// Baby = Head + Huge Ears + Long Tail
-// Ultimate = Cloud-bodied entity
+// VIRTUAL PET v4.34 - Whisk Fixes (Stronger Cat Identity + Visible Ultimate Body)
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -180,179 +178,180 @@ function forceEvolution() {
 }
 
 // ============================================
-// NEW WHISK LINE v4.33 - Fluffy Clouds + Cloud Body Progression
+// WHISK LINE v4.34 - Fixed Cat Identity + Visible Ultimate Body
 // ============================================
 
-// Baby - Puff (Just a head with huge ears + long tail)
+// Baby - Puff (Stronger cat identity: bigger ears, clearer face, prominent tail)
 function drawPuff(mood, breathOffset, flameFlicker) {
     const cx = 110;
-    const cy = 128 + breathOffset;
+    const cy = 126 + breathOffset;
 
     // Shadow
     petCtx.fillStyle = 'rgba(0,0,0,0.15)';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy + 58, 36, 8, 0, 0, Math.PI * 2);
-    petCtx.fill();
-
-    // Head (very large for baby cuteness)
-    petCtx.fillStyle = '#64748b';
-    petCtx.beginPath();
-    petCtx.ellipse(cx, cy, 38, 34, 0, 0, Math.PI * 2);
-    petCtx.fill();
-
-    // Lighter head highlight
-    petCtx.fillStyle = '#94a3b8';
-    petCtx.beginPath();
-    petCtx.ellipse(cx - 8, cy - 6, 20, 18, 0, 0, Math.PI * 2);
-    petCtx.fill();
-
-    // Huge ears
-    petCtx.fillStyle = '#475569';
-    petCtx.beginPath();
-    petCtx.moveTo(cx - 22, cy - 18);
-    petCtx.lineTo(cx - 38, cy - 42);
-    petCtx.lineTo(cx - 12, cy - 22);
-    petCtx.fill();
-
-    petCtx.beginPath();
-    petCtx.moveTo(cx + 22, cy - 18);
-    petCtx.lineTo(cx + 38, cy - 42);
-    petCtx.lineTo(cx + 12, cy - 22);
-    petCtx.fill();
-
-    // Inner ears
-    petCtx.fillStyle = '#e0f2fe';
-    petCtx.beginPath();
-    petCtx.moveTo(cx - 20, cy - 20);
-    petCtx.lineTo(cx - 30, cy - 36);
-    petCtx.lineTo(cx - 14, cy - 22);
-    petCtx.fill();
-
-    petCtx.beginPath();
-    petCtx.moveTo(cx + 20, cy - 20);
-    petCtx.lineTo(cx + 30, cy - 36);
-    petCtx.lineTo(cx + 14, cy - 22);
-    petCtx.fill();
-
-    // Huge eyes
-    petCtx.fillStyle = '#e0f2fe';
-    petCtx.fillRect(cx - 18, cy - 10, 12, 10);
-    petCtx.fillRect(cx + 6, cy - 10, 12, 10);
-
-    petCtx.fillStyle = '#0f172a';
-    petCtx.fillRect(cx - 14, cy - 6, 5, 5);
-    petCtx.fillRect(cx + 10, cy - 6, 5, 5);
-
-    // Tiny mouth
-    petCtx.strokeStyle = '#0f172a';
-    petCtx.lineWidth = 1.5;
-    if (mood === 'happy') {
-        petCtx.beginPath();
-        petCtx.arc(cx, cy + 6, 4, 0, Math.PI);
-        petCtx.stroke();
-    }
-
-    // Very long expressive tail
-    petCtx.fillStyle = '#64748b';
-    petCtx.beginPath();
-    petCtx.ellipse(cx + 28, cy + 22, 22, 7, -0.6, 0, Math.PI * 2);
-    petCtx.fill();
-    petCtx.beginPath();
-    petCtx.ellipse(cx + 42, cy + 28, 16, 5, -0.3, 0, Math.PI * 2);
-    petCtx.fill();
-    petCtx.beginPath();
-    petCtx.ellipse(cx + 52, cy + 32, 10, 4, 0, 0, Math.PI * 2);
-    petCtx.fill();
-}
-
-// Child - Whisp (Head + starts riding small cloud)
-function drawWhisp(mood, breathOffset, flameFlicker) {
-    const cx = 110;
-    const cy = 120 + breathOffset;
-
-    // Shadow
-    petCtx.fillStyle = 'rgba(0,0,0,0.2)';
-    petCtx.beginPath();
-    petCtx.ellipse(cx, cy + 66, 42, 9, 0, 0, Math.PI * 2);
-    petCtx.fill();
-
-    // Small fluffy cloud base
-    petCtx.fillStyle = '#e0f2fe';
-    petCtx.beginPath();
-    petCtx.ellipse(cx, cy + 52, 28, 10, 0, 0, Math.PI * 2);
-    petCtx.fill();
-    petCtx.beginPath();
-    petCtx.ellipse(cx - 12, cy + 48, 14, 7, 0, 0, Math.PI * 2);
-    petCtx.fill();
-    petCtx.beginPath();
-    petCtx.ellipse(cx + 14, cy + 50, 12, 6, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx, cy + 58, 38, 8, 0, 0, Math.PI * 2);
     petCtx.fill();
 
     // Head
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy - 2, 32, 28, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx, cy, 36, 32, 0, 0, Math.PI * 2);
     petCtx.fill();
 
     petCtx.fillStyle = '#94a3b8';
     petCtx.beginPath();
-    petCtx.ellipse(cx - 6, cy - 8, 16, 14, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx - 7, cy - 5, 18, 16, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Bigger, more cat-like ears
+    petCtx.fillStyle = '#475569';
+    petCtx.beginPath();
+    petCtx.moveTo(cx - 20, cy - 16);
+    petCtx.lineTo(cx - 36, cy - 40);
+    petCtx.lineTo(cx - 10, cy - 20);
+    petCtx.fill();
+
+    petCtx.beginPath();
+    petCtx.moveTo(cx + 20, cy - 16);
+    petCtx.lineTo(cx + 36, cy - 40);
+    petCtx.lineTo(cx + 10, cy - 20);
+    petCtx.fill();
+
+    // Inner ears
+    petCtx.fillStyle = '#e0f2fe';
+    petCtx.beginPath();
+    petCtx.moveTo(cx - 18, cy - 18);
+    petCtx.lineTo(cx - 28, cy - 34);
+    petCtx.lineTo(cx - 12, cy - 20);
+    petCtx.fill();
+
+    petCtx.beginPath();
+    petCtx.moveTo(cx + 18, cy - 18);
+    petCtx.lineTo(cx + 28, cy - 34);
+    petCtx.lineTo(cx + 12, cy - 20);
+    petCtx.fill();
+
+    // Eyes (more cat-like)
+    petCtx.fillStyle = '#e0f2fe';
+    petCtx.fillRect(cx - 16, cy - 8, 10, 8);
+    petCtx.fillRect(cx + 6, cy - 8, 10, 8);
+
+    petCtx.fillStyle = '#0f172a';
+    petCtx.fillRect(cx - 12, cy - 5, 4, 4);
+    petCtx.fillRect(cx + 10, cy - 5, 4, 4);
+
+    // Small nose
+    petCtx.fillStyle = '#475569';
+    petCtx.fillRect(cx - 2, cy + 2, 4, 2);
+
+    // Mouth
+    petCtx.strokeStyle = '#0f172a';
+    petCtx.lineWidth = 1.5;
+    if (mood === 'happy') {
+        petCtx.beginPath();
+        petCtx.arc(cx, cy + 6, 3, 0, Math.PI);
+        petCtx.stroke();
+    }
+
+    // Long prominent tail
+    petCtx.fillStyle = '#64748b';
+    petCtx.beginPath();
+    petCtx.ellipse(cx + 26, cy + 20, 24, 7, -0.55, 0, Math.PI * 2);
+    petCtx.fill();
+    petCtx.beginPath();
+    petCtx.ellipse(cx + 42, cy + 26, 18, 5, -0.25, 0, Math.PI * 2);
+    petCtx.fill();
+    petCtx.beginPath();
+    petCtx.ellipse(cx + 54, cy + 30, 10, 4, 0, 0, Math.PI * 2);
+    petCtx.fill();
+}
+
+// Child - Whisp
+function drawWhisp(mood, breathOffset, flameFlicker) {
+    const cx = 110;
+    const cy = 118 + breathOffset;
+
+    petCtx.fillStyle = 'rgba(0,0,0,0.2)';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 66, 44, 9, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Small fluffy cloud
+    petCtx.fillStyle = '#e0f2fe';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 52, 30, 11, 0, 0, Math.PI * 2);
+    petCtx.fill();
+    petCtx.beginPath();
+    petCtx.ellipse(cx - 14, cy + 48, 15, 7, 0, 0, Math.PI * 2);
+    petCtx.fill();
+    petCtx.beginPath();
+    petCtx.ellipse(cx + 16, cy + 50, 13, 6, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Head
+    petCtx.fillStyle = '#64748b';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy - 2, 30, 26, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    petCtx.fillStyle = '#94a3b8';
+    petCtx.beginPath();
+    petCtx.ellipse(cx - 5, cy - 8, 14, 12, 0, 0, Math.PI * 2);
     petCtx.fill();
 
     // Ears
     petCtx.fillStyle = '#475569';
     petCtx.beginPath();
-    petCtx.moveTo(cx - 18, cy - 18);
-    petCtx.lineTo(cx - 30, cy - 36);
-    petCtx.lineTo(cx - 10, cy - 20);
+    petCtx.moveTo(cx - 16, cy - 16);
+    petCtx.lineTo(cx - 28, cy - 34);
+    petCtx.lineTo(cx - 8, cy - 18);
     petCtx.fill();
 
     petCtx.beginPath();
-    petCtx.moveTo(cx + 18, cy - 18);
-    petCtx.lineTo(cx + 30, cy - 36);
-    petCtx.lineTo(cx + 10, cy - 20);
+    petCtx.moveTo(cx + 16, cy - 16);
+    petCtx.lineTo(cx + 28, cy - 34);
+    petCtx.lineTo(cx + 8, cy - 18);
     petCtx.fill();
 
     // Eyes
     petCtx.fillStyle = '#e0f2fe';
-    petCtx.fillRect(cx - 14, cy - 8, 9, 8);
-    petCtx.fillRect(cx + 5, cy - 8, 9, 8);
+    petCtx.fillRect(cx - 12, cy - 6, 8, 7);
+    petCtx.fillRect(cx + 4, cy - 6, 8, 7);
 
     petCtx.fillStyle = '#0f172a';
-    petCtx.fillRect(cx - 10, cy - 5, 4, 4);
-    petCtx.fillRect(cx + 9, cy - 5, 4, 4);
+    petCtx.fillRect(cx - 9, cy - 3, 3, 3);
+    petCtx.fillRect(cx + 7, cy - 3, 3, 3);
 
     // Long tail
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
-    petCtx.ellipse(cx + 24, cy + 18, 20, 6, -0.5, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 22, cy + 16, 20, 6, -0.5, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.ellipse(cx + 38, cy + 24, 14, 5, -0.2, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 36, cy + 22, 14, 5, -0.2, 0, Math.PI * 2);
     petCtx.fill();
 }
 
-// Adult - Whisk (Riding a proper fluffy cloud)
+// Adult - Whisk
 function drawWhisk(mood, breathOffset, flameFlicker) {
     const cx = 110;
-    const cy = 112 + breathOffset;
+    const cy = 110 + breathOffset;
 
-    // Shadow
     petCtx.fillStyle = 'rgba(0,0,0,0.25)';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy + 74, 50, 10, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx, cy + 74, 52, 10, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Fluffy cloud (bigger and fluffier)
+    // Fluffy cloud
     petCtx.fillStyle = '#e0f2fe';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy + 56, 36, 14, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx, cy + 56, 38, 14, 0, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.ellipse(cx - 18, cy + 50, 18, 9, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx - 20, cy + 50, 18, 9, 0, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.ellipse(cx + 18, cy + 52, 16, 8, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 20, cy + 52, 16, 8, 0, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
     petCtx.ellipse(cx - 8, cy + 46, 12, 6, 0, 0, Math.PI * 2);
@@ -361,126 +360,129 @@ function drawWhisk(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx + 10, cy + 48, 10, 5, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Cat body on cloud
+    // Cat body
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy + 8, 26, 22, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx, cy + 8, 24, 20, 0, 0, Math.PI * 2);
     petCtx.fill();
 
     petCtx.fillStyle = '#94a3b8';
     petCtx.beginPath();
-    petCtx.ellipse(cx - 4, cy + 2, 12, 10, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx - 3, cy + 2, 11, 9, 0, 0, Math.PI * 2);
     petCtx.fill();
 
     // Head
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy - 12, 22, 18, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx, cy - 12, 20, 16, 0, 0, Math.PI * 2);
     petCtx.fill();
 
     // Ears
     petCtx.fillStyle = '#475569';
     petCtx.beginPath();
-    petCtx.moveTo(cx - 14, cy - 22);
-    petCtx.lineTo(cx - 22, cy - 36);
-    petCtx.lineTo(cx - 6, cy - 24);
+    petCtx.moveTo(cx - 12, cy - 20);
+    petCtx.lineTo(cx - 20, cy - 34);
+    petCtx.lineTo(cx - 4, cy - 22);
     petCtx.fill();
 
     petCtx.beginPath();
-    petCtx.moveTo(cx + 14, cy - 22);
-    petCtx.lineTo(cx + 22, cy - 36);
-    petCtx.lineTo(cx + 6, cy - 24);
+    petCtx.moveTo(cx + 12, cy - 20);
+    petCtx.lineTo(cx + 20, cy - 34);
+    petCtx.lineTo(cx + 4, cy - 22);
     petCtx.fill();
 
     // Eyes
     petCtx.fillStyle = '#e0f2fe';
-    petCtx.fillRect(cx - 9, cy - 16, 6, 6);
-    petCtx.fillRect(cx + 3, cy - 16, 6, 6);
+    petCtx.fillRect(cx - 8, cy - 14, 5, 5);
+    petCtx.fillRect(cx + 3, cy - 14, 5, 5);
 
     petCtx.fillStyle = '#0f172a';
-    petCtx.fillRect(cx - 6, cy - 13, 3, 3);
-    petCtx.fillRect(cx + 6, cy - 13, 3, 3);
+    petCtx.fillRect(cx - 5, cy - 11, 2, 2);
+    petCtx.fillRect(cx + 6, cy - 11, 2, 2);
 
-    // Long flowing tail
+    // Long tail
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
-    petCtx.ellipse(cx + 22, cy + 20, 18, 7, -0.4, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 20, cy + 18, 18, 7, -0.4, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.ellipse(cx + 36, cy + 26, 14, 5, -0.1, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 34, cy + 24, 14, 5, -0.1, 0, Math.PI * 2);
     petCtx.fill();
 }
 
-// Ultimate - Nimbrix (Cloud-bodied entity)
+// Ultimate - Nimbrix (Fixed: cat features clearly visible on cloud body)
 function drawNimbrix(mood, breathOffset, flameFlicker) {
     const cx = 110;
-    const cy = 102 + breathOffset;
+    const cy = 100 + breathOffset;
 
-    // Large shadow
+    // Shadow
     petCtx.fillStyle = 'rgba(0,0,0,0.3)';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy + 86, 60, 12, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx, cy + 88, 62, 12, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Big fluffy cloud body (main body is now cloud)
+    // Cloud body (slightly darker base for contrast)
+    petCtx.fillStyle = '#cbd5e1';
+    petCtx.beginPath();
+    petCtx.ellipse(cx, cy + 50, 50, 24, 0, 0, Math.PI * 2);
+    petCtx.fill();
+
+    // Fluffy cloud layers (lighter on top)
     petCtx.fillStyle = '#e0f2fe';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy + 48, 48, 22, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx - 22, cy + 42, 22, 12, 0, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.ellipse(cx - 24, cy + 40, 22, 12, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 22, cy + 44, 20, 11, 0, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.ellipse(cx + 24, cy + 42, 20, 11, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx - 8, cy + 36, 16, 9, 0, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.ellipse(cx - 10, cy + 34, 16, 9, 0, 0, Math.PI * 2);
-    petCtx.fill();
-    petCtx.beginPath();
-    petCtx.ellipse(cx + 12, cy + 36, 14, 8, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 10, cy + 38, 14, 8, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Cat head emerging from cloud
+    // Cat head clearly on top of cloud
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy - 8, 20, 16, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx, cy - 6, 18, 15, 0, 0, Math.PI * 2);
     petCtx.fill();
 
     // Ears
     petCtx.fillStyle = '#475569';
     petCtx.beginPath();
-    petCtx.moveTo(cx - 12, cy - 18);
-    petCtx.lineTo(cx - 20, cy - 32);
-    petCtx.lineTo(cx - 4, cy - 20);
+    petCtx.moveTo(cx - 10, cy - 16);
+    petCtx.lineTo(cx - 18, cy - 30);
+    petCtx.lineTo(cx - 2, cy - 18);
     petCtx.fill();
 
     petCtx.beginPath();
-    petCtx.moveTo(cx + 12, cy - 18);
-    petCtx.lineTo(cx + 20, cy - 32);
-    petCtx.lineTo(cx + 4, cy - 20);
+    petCtx.moveTo(cx + 10, cy - 16);
+    petCtx.lineTo(cx + 18, cy - 30);
+    petCtx.lineTo(cx + 2, cy - 18);
     petCtx.fill();
 
     // Eyes
     petCtx.fillStyle = '#e0f2fe';
-    petCtx.fillRect(cx - 8, cy - 12, 5, 5);
-    petCtx.fillRect(cx + 3, cy - 12, 5, 5);
+    petCtx.fillRect(cx - 7, cy - 10, 4, 4);
+    petCtx.fillRect(cx + 3, cy - 10, 4, 4);
 
     petCtx.fillStyle = '#0f172a';
-    petCtx.fillRect(cx - 5, cy - 9, 2, 2);
-    petCtx.fillRect(cx + 6, cy - 9, 2, 2);
+    petCtx.fillRect(cx - 4, cy - 7, 2, 2);
+    petCtx.fillRect(cx + 6, cy - 7, 2, 2);
 
-    // Long elegant tail coming out of cloud
+    // Long tail clearly visible coming out of cloud
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
-    petCtx.ellipse(cx + 28, cy + 30, 20, 8, -0.35, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 26, cy + 32, 20, 8, -0.35, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.ellipse(cx + 44, cy + 36, 16, 6, -0.1, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 40, cy + 38, 16, 6, -0.1, 0, Math.PI * 2);
     petCtx.fill();
 }
 
 // ============================================
-// DRAGON LINE (Serpentine)
+// DRAGON LINE
 // ============================================
 
 function drawFlick(mood, breathOffset, flameFlicker) {
@@ -806,7 +808,7 @@ function drawInfernyx(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
-// SPRIG LINE (Plant/Nature)
+// SPRIG LINE
 // ============================================
 
 function drawBud(mood, breathOffset, flameFlicker) {
@@ -1100,7 +1102,7 @@ function drawVerdant(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
-// BOLT LINE (Lightning Bird)
+// BOLT LINE
 // ============================================
 
 function drawZap(mood, breathOffset, flameFlicker) {
@@ -1390,7 +1392,7 @@ function drawStorm(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
-// CEPH LINE (Blue Water Octopus)
+// CEPH LINE
 // ============================================
 
 function drawCephling(mood, breathOffset, flameFlicker) {
