@@ -1,5 +1,5 @@
 // ============================================
-// VIRTUAL PET v4.37 - Ultimate Head Slightly Lowered + Offset
+// VIRTUAL PET v4.39 - Age in Minutes + Stage Name Higher
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -214,10 +214,9 @@ function getStageName() {
 }
 
 // ============================================
-// WHISK LINE v4.37 - Head Slightly Lowered + Offset to Side
+// WHISK LINE
 // ============================================
 
-// Baby - Puff
 function drawPuff(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 126 + breathOffset;
@@ -294,7 +293,6 @@ function drawPuff(mood, breathOffset, flameFlicker) {
     petCtx.fill();
 }
 
-// Child - Whisp
 function drawWhisp(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 118 + breathOffset;
@@ -355,7 +353,6 @@ function drawWhisp(mood, breathOffset, flameFlicker) {
     petCtx.fill();
 }
 
-// Adult - Whisk
 function drawWhisk(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 110 + breathOffset;
@@ -427,24 +424,20 @@ function drawWhisk(mood, breathOffset, flameFlicker) {
     petCtx.fill();
 }
 
-// Ultimate - Nimbrix (Head slightly lowered + offset to side)
 function drawNimbrix(mood, breathOffset, flameFlicker) {
     const cx = 110;
-    const cy = 100 + breathOffset;   // slightly lower overall reference
+    const cy = 100 + breathOffset;
 
-    // Shadow
     petCtx.fillStyle = 'rgba(0,0,0,0.35)';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 88, 64, 13, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Main cloud body
     petCtx.fillStyle = '#94a3b8';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 50, 52, 26, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Fluffy cloud layers
     petCtx.fillStyle = '#e0f2fe';
     petCtx.beginPath();
     petCtx.ellipse(cx - 24, cy + 40, 24, 13, 0, 0, Math.PI * 2);
@@ -459,7 +452,6 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx + 12, cy + 36, 16, 9, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Cloud connection behind head
     petCtx.fillStyle = '#94a3b8';
     petCtx.beginPath();
     petCtx.ellipse(cx - 14, cy + 20, 18, 10, 0, 0, Math.PI * 2);
@@ -468,13 +460,11 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx + 14, cy + 22, 16, 9, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Cat head - slightly lowered and offset to the left
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
     petCtx.ellipse(cx - 4, cy - 4, 18, 15, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Ears (adjusted for new head position)
     petCtx.fillStyle = '#475569';
     petCtx.beginPath();
     petCtx.moveTo(cx - 14, cy - 14);
@@ -488,7 +478,6 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 0, cy - 16);
     petCtx.fill();
 
-    // Eyes
     petCtx.fillStyle = '#e0f2fe';
     petCtx.fillRect(cx - 11, cy - 8, 4, 4);
     petCtx.fillRect(cx - 1, cy - 8, 4, 4);
@@ -497,7 +486,6 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 8, cy - 5, 2, 2);
     petCtx.fillRect(cx + 2, cy - 5, 2, 2);
 
-    // Long tail
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
     petCtx.ellipse(cx + 26, cy + 32, 20, 8, -0.35, 0, Math.PI * 2);
@@ -1701,7 +1689,6 @@ function drawAbyssalCeph(mood, breathOffset, flameFlicker) {
     }
 }
 
-// Helper for tail segments
 function drawTailSegment(x, y, length, thickness, angle, color) {
     petCtx.save();
     petCtx.translate(x, y);
@@ -1710,10 +1697,6 @@ function drawTailSegment(x, y, length, thickness, angle, color) {
     petCtx.fillRect(-thickness / 2, 0, thickness, length);
     petCtx.restore();
 }
-
-// ============================================
-// CORE GAME LOGIC
-// ============================================
 
 function drawPet(mood, breathOffset, flameFlicker) {
     petCtx.clearRect(0, 0, petCanvas.width, petCanvas.height);
@@ -1826,7 +1809,11 @@ function updateUI() {
     document.getElementById('happinessValue').textContent = Math.round(pet.happiness);
     document.getElementById('cleanValue').textContent = Math.round(pet.cleanliness);
     document.getElementById('energyValue').textContent = Math.round(pet.energy);
-    document.getElementById('ageValue').textContent = Math.floor(pet.age);
+
+    // Age in minutes
+    const minutes = Math.floor(pet.age * 1440);
+    document.getElementById('ageValue').textContent = minutes;
+
     document.getElementById('petNameDisplay').textContent = pet.name;
 
     updatePetVisual();
