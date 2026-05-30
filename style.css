@@ -1,5 +1,5 @@
 /* ============================================
-   VIRTUAL PET - Clean Retro Embroidery (v4.40)
+   VIRTUAL PET - Minimal Clean Embroidery (v4.42)
    ============================================ */
 
 body {
@@ -62,27 +62,26 @@ body {
     box-shadow: 0 10px 30px rgba(0,0,0,0.4),
                 inset 0 1px 0 rgba(255,255,255,0.08);
     
-    /* === Retro Digital Embroidery (clean) === */
-    border: 3px dashed #475569;
-    position: relative;
+    /* Clean dashed border only - no inner layers */
+    border: 2.5px dashed #475569;
     box-sizing: border-box;
 }
 
-/* Top-left corner embroidery */
+/* Very subtle top-left corner mark */
 .device-frame::after {
     content: '';
     position: absolute;
-    top: 16px;
-    left: 16px;
-    width: 14px;
-    height: 14px;
-    border-top: 2px solid #64748b;
-    border-left: 2px solid #64748b;
-    border-radius: 2px;
-    opacity: 0.5;
+    top: 14px;
+    left: 14px;
+    width: 10px;
+    height: 10px;
+    border-top: 1.5px solid #64748b;
+    border-left: 1.5px solid #64748b;
+    border-radius: 1px;
+    opacity: 0.4;
 }
 
-/* Top-right corner embroidery */
+/* Very subtle top-right corner mark */
 .pet-screen {
     position: relative;
 }
@@ -91,40 +90,20 @@ body {
     content: '';
     position: absolute;
     top: -2px;
-    right: 16px;
-    width: 14px;
-    height: 14px;
-    border-top: 2px solid #64748b;
-    border-right: 2px solid #64748b;
-    border-radius: 2px;
-    opacity: 0.5;
+    right: 14px;
+    width: 10px;
+    height: 10px;
+    border-top: 1.5px solid #64748b;
+    border-right: 1.5px solid #64748b;
+    border-radius: 1px;
+    opacity: 0.4;
 }
 
-/* Stage name - good readability */
 .stage-name {
-    position: relative;
     color: #c0d0ff;
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 6px;
-}
-
-.stage-name::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 46px;
-    height: 1px;
-    background: repeating-linear-gradient(
-        to right,
-        #64748b 0px,
-        #64748b 3px,
-        transparent 3px,
-        transparent 7px
-    );
-    opacity: 0.4;
 }
 
 .stats-top {
