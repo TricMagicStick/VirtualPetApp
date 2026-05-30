@@ -1,6 +1,6 @@
 // ============================================
-// VIRTUAL PET v4.18 - Full WUMBO pass across everything
-// Smaller heads + bigger baby eyes + overall exaggeration
+// VIRTUAL PET v4.19 - Fixed Sprig vines + leaves
+// Restored and enhanced organic plant features
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -119,7 +119,7 @@ function hatchAnimation() {
 }
 
 // ============================================
-// EMBER LINE (Fire/Dragon) - v4.18 WUMBO pass
+// EMBER LINE (Fire/Dragon)
 // ============================================
 
 function drawFlick(mood, breathOffset, flameFlicker) {
@@ -136,7 +136,6 @@ function drawFlick(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 34, 20, 18, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Smaller head
     petCtx.fillStyle = '#e85d04';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 8, 38, 34, 0, 0, Math.PI * 2);
@@ -147,7 +146,6 @@ function drawFlick(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 10, 14, 11, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Bigger baby eyes
     petCtx.fillStyle = '#ffffff';
     petCtx.fillRect(cx - 16, cy - 16, 11, 11);
     petCtx.fillRect(cx + 5, cy - 16, 11, 11);
@@ -205,7 +203,6 @@ function drawCharling(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 24, 26, 28, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Smaller head
     petCtx.fillStyle = '#e85d04';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 6, 32, 28, 0, 0, Math.PI * 2);
@@ -269,7 +266,6 @@ function drawDrakEmber(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 14, 32, 34, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Smaller head
     petCtx.fillStyle = '#e85d04';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 10, 30, 26, 0, 0, Math.PI * 2);
@@ -337,7 +333,6 @@ function drawInfernyx(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 8, 36, 40, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Smaller head
     petCtx.fillStyle = '#e85d04';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 14, 30, 26, 0, 0, Math.PI * 2);
@@ -392,7 +387,7 @@ function drawInfernyx(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
-// WHISK LINE - v4.18 WUMBO pass + smaller heads + bigger baby eyes
+// WHISK LINE
 // ============================================
 
 function drawTailSegment(cx, cy, length, width, angle, color) {
@@ -412,7 +407,7 @@ function drawTailSegment(cx, cy, length, width, angle, color) {
     petCtx.restore();
 }
 
-// STAGE 0: PUFF (Baby) - Smaller head + bigger eyes
+// STAGE 0: PUFF (Baby)
 function drawPuff(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 130 + breathOffset;
@@ -435,7 +430,6 @@ function drawPuff(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx + 10, cy + 46, 10, 5, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Smaller head
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 6, 32, 28, 0, 0, Math.PI * 2);
@@ -446,7 +440,6 @@ function drawPuff(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 8, 12, 9, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Bigger baby eyes
     petCtx.fillStyle = '#ffffff';
     petCtx.fillRect(cx - 15, cy - 14, 11, 11);
     petCtx.fillRect(cx + 4, cy - 14, 11, 11);
@@ -505,7 +498,7 @@ function drawPuff(mood, breathOffset, flameFlicker) {
     petCtx.fill();
 }
 
-// STAGE 1: WHISP (Child) - Smaller head
+// STAGE 1: WHISP (Child)
 function drawWhisp(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 118 + breathOffset;
@@ -528,7 +521,6 @@ function drawWhisp(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx + 12, cy + 54, 12, 5, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Smaller head
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 4, 30, 26, 0, 0, Math.PI * 2);
@@ -593,7 +585,7 @@ function drawWhisp(mood, breathOffset, flameFlicker) {
     petCtx.fill();
 }
 
-// STAGE 2: WHISK (Adult) - Smaller head
+// STAGE 2: WHISK (Adult)
 function drawWhisk(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 108 + breathOffset;
@@ -616,7 +608,6 @@ function drawWhisk(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx + 14, cy + 58, 14, 6, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Smaller head
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 6, 28, 24, 0, 0, Math.PI * 2);
@@ -681,7 +672,7 @@ function drawWhisk(mood, breathOffset, flameFlicker) {
     petCtx.fill();
 }
 
-// STAGE 3: NIMBRIX (Ultimate) - Smaller head
+// STAGE 3: NIMBRIX (Ultimate)
 function drawNimbrix(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 96 + breathOffset;
@@ -701,7 +692,6 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 52, 48, 20, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Smaller head
     petCtx.fillStyle = '#475569';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 6, 28, 24, 0, 0, Math.PI * 2);
@@ -771,7 +761,7 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
-// SPRIG LINE - v4.18 WUMBO pass + smaller heads
+// SPRIG LINE - v4.19 Vines and leaves restored + enhanced
 // ============================================
 
 function drawBud(mood, breathOffset, flameFlicker) {
@@ -788,7 +778,6 @@ function drawBud(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 34, 18, 16, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Smaller head
     petCtx.fillStyle = '#4ade80';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 8, 40, 36, 0, 0, Math.PI * 2);
@@ -856,7 +845,6 @@ function drawSprout(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 26, 24, 28, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Smaller head
     petCtx.fillStyle = '#4ade80';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 6, 34, 30, 0, 0, Math.PI * 2);
@@ -895,13 +883,18 @@ function drawSprout(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
-    petCtx.fillStyle = '#166534';
-    petCtx.fillRect(cx - 24, cy + 8, 11, 7);
-    petCtx.fillRect(cx + 13, cy + 8, 11, 7);
+    // Restored + enhanced curving vine with leaf
+    petCtx.strokeStyle = '#166534';
+    petCtx.lineWidth = 3;
+    petCtx.beginPath();
+    petCtx.moveTo(cx - 22, cy + 12);
+    petCtx.quadraticCurveTo(cx - 34, cy + 2, cx - 30, cy - 6);
+    petCtx.stroke();
 
     petCtx.fillStyle = '#4ade80';
-    petCtx.fillRect(cx - 22, cy + 10, 7, 4);
-    petCtx.fillRect(cx + 15, cy + 10, 7, 4);
+    petCtx.beginPath();
+    petCtx.ellipse(cx - 36, cy + 0, 8, 5, -0.7, 0, Math.PI * 2);
+    petCtx.fill();
 
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 3, cy - 36, 6, 10);
@@ -921,7 +914,6 @@ function drawSprig(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 16, 32, 34, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Smaller head
     petCtx.fillStyle = '#4ade80';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 8, 32, 28, 0, 0, Math.PI * 2);
@@ -960,13 +952,27 @@ function drawSprig(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
-    petCtx.fillStyle = '#166534';
-    petCtx.fillRect(cx - 28, cy + 10, 13, 20);
-    petCtx.fillRect(cx + 15, cy + 10, 13, 20);
+    // Restored + enhanced curving vines with big leaves
+    petCtx.strokeStyle = '#166534';
+    petCtx.lineWidth = 3.5;
+    petCtx.beginPath();
+    petCtx.moveTo(cx - 26, cy + 16);
+    petCtx.quadraticCurveTo(cx - 38, cy + 4, cx - 32, cy - 6);
+    petCtx.stroke();
+
+    petCtx.beginPath();
+    petCtx.moveTo(cx + 26, cy + 16);
+    petCtx.quadraticCurveTo(cx + 38, cy + 4, cx + 32, cy - 6);
+    petCtx.stroke();
 
     petCtx.fillStyle = '#4ade80';
-    petCtx.fillRect(cx - 26, cy + 12, 9, 6);
-    petCtx.fillRect(cx + 17, cy + 12, 9, 6);
+    petCtx.beginPath();
+    petCtx.ellipse(cx - 40, cy + 2, 10, 6, -0.8, 0, Math.PI * 2);
+    petCtx.fill();
+
+    petCtx.beginPath();
+    petCtx.ellipse(cx + 40, cy + 2, 10, 6, 0.8, 0, Math.PI * 2);
+    petCtx.fill();
 
     petCtx.fillStyle = '#166534';
     petCtx.fillRect(cx - 4, cy - 38, 8, 12);
@@ -986,7 +992,6 @@ function drawVerdant(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 10, 36, 40, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Smaller head
     petCtx.fillStyle = '#4ade80';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 12, 34, 30, 0, 0, Math.PI * 2);
