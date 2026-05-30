@@ -1,5 +1,5 @@
 // ============================================
-// VIRTUAL PET v4.36 - Ultimate Cloud Connection Fixed (No Head Lowering)
+// VIRTUAL PET v4.37 - Ultimate Head Slightly Lowered + Offset
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -214,7 +214,7 @@ function getStageName() {
 }
 
 // ============================================
-// WHISK LINE v4.36 - Cloud Connection Fixed (Head stays high)
+// WHISK LINE v4.37 - Head Slightly Lowered + Offset to Side
 // ============================================
 
 // Baby - Puff
@@ -427,83 +427,83 @@ function drawWhisk(mood, breathOffset, flameFlicker) {
     petCtx.fill();
 }
 
-// Ultimate - Nimbrix (Cloud connection added behind head, head stays high)
+// Ultimate - Nimbrix (Head slightly lowered + offset to side)
 function drawNimbrix(mood, breathOffset, flameFlicker) {
     const cx = 110;
-    const cy = 98 + breathOffset;
+    const cy = 100 + breathOffset;   // slightly lower overall reference
 
     // Shadow
     petCtx.fillStyle = 'rgba(0,0,0,0.35)';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy + 90, 64, 13, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx, cy + 88, 64, 13, 0, 0, Math.PI * 2);
     petCtx.fill();
 
     // Main cloud body
     petCtx.fillStyle = '#94a3b8';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy + 52, 52, 26, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx, cy + 50, 52, 26, 0, 0, Math.PI * 2);
     petCtx.fill();
 
     // Fluffy cloud layers
     petCtx.fillStyle = '#e0f2fe';
     petCtx.beginPath();
-    petCtx.ellipse(cx - 24, cy + 42, 24, 13, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx - 24, cy + 40, 24, 13, 0, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.ellipse(cx + 24, cy + 44, 22, 12, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 24, cy + 42, 22, 12, 0, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.ellipse(cx - 10, cy + 36, 18, 10, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx - 10, cy + 34, 18, 10, 0, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.ellipse(cx + 12, cy + 38, 16, 9, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 12, cy + 36, 16, 9, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Cloud "shoulders" / connection behind the head (fills the gap)
+    // Cloud connection behind head
     petCtx.fillStyle = '#94a3b8';
     petCtx.beginPath();
-    petCtx.ellipse(cx - 14, cy + 22, 18, 10, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx - 14, cy + 20, 18, 10, 0, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.ellipse(cx + 14, cy + 24, 16, 9, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 14, cy + 22, 16, 9, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Cat head (position unchanged)
+    // Cat head - slightly lowered and offset to the left
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy - 6, 18, 15, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx - 4, cy - 4, 18, 15, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Ears
+    // Ears (adjusted for new head position)
     petCtx.fillStyle = '#475569';
     petCtx.beginPath();
-    petCtx.moveTo(cx - 10, cy - 16);
-    petCtx.lineTo(cx - 18, cy - 30);
-    petCtx.lineTo(cx - 2, cy - 18);
+    petCtx.moveTo(cx - 14, cy - 14);
+    petCtx.lineTo(cx - 22, cy - 28);
+    petCtx.lineTo(cx - 6, cy - 16);
     petCtx.fill();
 
     petCtx.beginPath();
-    petCtx.moveTo(cx + 10, cy - 16);
-    petCtx.lineTo(cx + 18, cy - 30);
-    petCtx.lineTo(cx + 2, cy - 18);
+    petCtx.moveTo(cx + 6, cy - 14);
+    petCtx.lineTo(cx + 14, cy - 28);
+    petCtx.lineTo(cx + 0, cy - 16);
     petCtx.fill();
 
     // Eyes
     petCtx.fillStyle = '#e0f2fe';
-    petCtx.fillRect(cx - 7, cy - 10, 4, 4);
-    petCtx.fillRect(cx + 3, cy - 10, 4, 4);
+    petCtx.fillRect(cx - 11, cy - 8, 4, 4);
+    petCtx.fillRect(cx - 1, cy - 8, 4, 4);
 
     petCtx.fillStyle = '#0f172a';
-    petCtx.fillRect(cx - 4, cy - 7, 2, 2);
-    petCtx.fillRect(cx + 6, cy - 7, 2, 2);
+    petCtx.fillRect(cx - 8, cy - 5, 2, 2);
+    petCtx.fillRect(cx + 2, cy - 5, 2, 2);
 
     // Long tail
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
-    petCtx.ellipse(cx + 26, cy + 34, 20, 8, -0.35, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 26, cy + 32, 20, 8, -0.35, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.ellipse(cx + 40, cy + 40, 16, 6, -0.1, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 40, cy + 38, 16, 6, -0.1, 0, Math.PI * 2);
     petCtx.fill();
 }
 
