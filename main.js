@@ -1,5 +1,5 @@
 // ============================================
-// VIRTUAL PET v4.34 - Whisk Fixes (Stronger Cat Identity + Visible Ultimate Body)
+// VIRTUAL PET v4.35 - Ultimate Cloud Body Fixed + Stage Names Displayed
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -178,21 +178,55 @@ function forceEvolution() {
 }
 
 // ============================================
-// WHISK LINE v4.34 - Fixed Cat Identity + Visible Ultimate Body
+// STAGE NAME HELPER
 // ============================================
 
-// Baby - Puff (Stronger cat identity: bigger ears, clearer face, prominent tail)
+function getStageName() {
+    const hatchedType = localStorage.getItem('hatchedPetType') || 'flick';
+
+    if (hatchedType === 'puff') {
+        if (currentStage === 0) return 'Puff';
+        if (currentStage === 1) return 'Whisp';
+        if (currentStage === 2) return 'Whisk';
+        if (currentStage === 3) return 'Nimbrix';
+    } else if (hatchedType === 'bud') {
+        if (currentStage === 0) return 'Bud';
+        if (currentStage === 1) return 'Sprout';
+        if (currentStage === 2) return 'Sprig';
+        if (currentStage === 3) return 'Verdant';
+    } else if (hatchedType === 'bolt') {
+        if (currentStage === 0) return 'Zap';
+        if (currentStage === 1) return 'Spark';
+        if (currentStage === 2) return 'Bolt';
+        if (currentStage === 3) return 'Storm';
+    } else if (hatchedType === 'ceph') {
+        if (currentStage === 0) return 'Cephling';
+        if (currentStage === 1) return 'Cephy';
+        if (currentStage === 2) return 'Cephalon';
+        if (currentStage === 3) return 'Abyssal Ceph';
+    } else {
+        if (currentStage === 0) return 'Flick';
+        if (currentStage === 1) return 'Charling';
+        if (currentStage === 2) return 'DrakEmber';
+        if (currentStage === 3) return 'Infernyx';
+    }
+    return 'Unknown';
+}
+
+// ============================================
+// WHISK LINE v4.35 - Strong Visible Cloud Body on Ultimate
+// ============================================
+
+// Baby - Puff
 function drawPuff(mood, breathOffset, flameFlicker) {
     const cx = 110;
     const cy = 126 + breathOffset;
 
-    // Shadow
     petCtx.fillStyle = 'rgba(0,0,0,0.15)';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 58, 38, 8, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Head
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy, 36, 32, 0, 0, Math.PI * 2);
@@ -203,7 +237,6 @@ function drawPuff(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx - 7, cy - 5, 18, 16, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Bigger, more cat-like ears
     petCtx.fillStyle = '#475569';
     petCtx.beginPath();
     petCtx.moveTo(cx - 20, cy - 16);
@@ -217,7 +250,6 @@ function drawPuff(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 10, cy - 20);
     petCtx.fill();
 
-    // Inner ears
     petCtx.fillStyle = '#e0f2fe';
     petCtx.beginPath();
     petCtx.moveTo(cx - 18, cy - 18);
@@ -231,7 +263,6 @@ function drawPuff(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 12, cy - 20);
     petCtx.fill();
 
-    // Eyes (more cat-like)
     petCtx.fillStyle = '#e0f2fe';
     petCtx.fillRect(cx - 16, cy - 8, 10, 8);
     petCtx.fillRect(cx + 6, cy - 8, 10, 8);
@@ -240,11 +271,9 @@ function drawPuff(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 12, cy - 5, 4, 4);
     petCtx.fillRect(cx + 10, cy - 5, 4, 4);
 
-    // Small nose
     petCtx.fillStyle = '#475569';
     petCtx.fillRect(cx - 2, cy + 2, 4, 2);
 
-    // Mouth
     petCtx.strokeStyle = '#0f172a';
     petCtx.lineWidth = 1.5;
     if (mood === 'happy') {
@@ -253,7 +282,6 @@ function drawPuff(mood, breathOffset, flameFlicker) {
         petCtx.stroke();
     }
 
-    // Long prominent tail
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
     petCtx.ellipse(cx + 26, cy + 20, 24, 7, -0.55, 0, Math.PI * 2);
@@ -276,7 +304,6 @@ function drawWhisp(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 66, 44, 9, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Small fluffy cloud
     petCtx.fillStyle = '#e0f2fe';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 52, 30, 11, 0, 0, Math.PI * 2);
@@ -288,7 +315,6 @@ function drawWhisp(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx + 16, cy + 50, 13, 6, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Head
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 2, 30, 26, 0, 0, Math.PI * 2);
@@ -299,7 +325,6 @@ function drawWhisp(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx - 5, cy - 8, 14, 12, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Ears
     petCtx.fillStyle = '#475569';
     petCtx.beginPath();
     petCtx.moveTo(cx - 16, cy - 16);
@@ -313,7 +338,6 @@ function drawWhisp(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 8, cy - 18);
     petCtx.fill();
 
-    // Eyes
     petCtx.fillStyle = '#e0f2fe';
     petCtx.fillRect(cx - 12, cy - 6, 8, 7);
     petCtx.fillRect(cx + 4, cy - 6, 8, 7);
@@ -322,7 +346,6 @@ function drawWhisp(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 9, cy - 3, 3, 3);
     petCtx.fillRect(cx + 7, cy - 3, 3, 3);
 
-    // Long tail
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
     petCtx.ellipse(cx + 22, cy + 16, 20, 6, -0.5, 0, Math.PI * 2);
@@ -342,7 +365,6 @@ function drawWhisk(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx, cy + 74, 52, 10, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Fluffy cloud
     petCtx.fillStyle = '#e0f2fe';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 56, 38, 14, 0, 0, Math.PI * 2);
@@ -360,7 +382,6 @@ function drawWhisk(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx + 10, cy + 48, 10, 5, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Cat body
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy + 8, 24, 20, 0, 0, Math.PI * 2);
@@ -371,13 +392,11 @@ function drawWhisk(mood, breathOffset, flameFlicker) {
     petCtx.ellipse(cx - 3, cy + 2, 11, 9, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Head
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 12, 20, 16, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Ears
     petCtx.fillStyle = '#475569';
     petCtx.beginPath();
     petCtx.moveTo(cx - 12, cy - 20);
@@ -391,7 +410,6 @@ function drawWhisk(mood, breathOffset, flameFlicker) {
     petCtx.lineTo(cx + 4, cy - 22);
     petCtx.fill();
 
-    // Eyes
     petCtx.fillStyle = '#e0f2fe';
     petCtx.fillRect(cx - 8, cy - 14, 5, 5);
     petCtx.fillRect(cx + 3, cy - 14, 5, 5);
@@ -400,7 +418,6 @@ function drawWhisk(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 5, cy - 11, 2, 2);
     petCtx.fillRect(cx + 6, cy - 11, 2, 2);
 
-    // Long tail
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
     petCtx.ellipse(cx + 20, cy + 18, 18, 7, -0.4, 0, Math.PI * 2);
@@ -410,39 +427,39 @@ function drawWhisk(mood, breathOffset, flameFlicker) {
     petCtx.fill();
 }
 
-// Ultimate - Nimbrix (Fixed: cat features clearly visible on cloud body)
+// Ultimate - Nimbrix (Strong visible cloud body)
 function drawNimbrix(mood, breathOffset, flameFlicker) {
     const cx = 110;
-    const cy = 100 + breathOffset;
+    const cy = 98 + breathOffset;
 
     // Shadow
-    petCtx.fillStyle = 'rgba(0,0,0,0.3)';
+    petCtx.fillStyle = 'rgba(0,0,0,0.35)';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy + 88, 62, 12, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx, cy + 90, 64, 13, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Cloud body (slightly darker base for contrast)
-    petCtx.fillStyle = '#cbd5e1';
+    // Main cloud body - much more visible and solid
+    petCtx.fillStyle = '#94a3b8';
     petCtx.beginPath();
-    petCtx.ellipse(cx, cy + 50, 50, 24, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx, cy + 52, 52, 26, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Fluffy cloud layers (lighter on top)
+    // Fluffy cloud layers (lighter highlights)
     petCtx.fillStyle = '#e0f2fe';
     petCtx.beginPath();
-    petCtx.ellipse(cx - 22, cy + 42, 22, 12, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx - 24, cy + 42, 24, 13, 0, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.ellipse(cx + 22, cy + 44, 20, 11, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 24, cy + 44, 22, 12, 0, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.ellipse(cx - 8, cy + 36, 16, 9, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx - 10, cy + 36, 18, 10, 0, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.ellipse(cx + 10, cy + 38, 14, 8, 0, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 12, cy + 38, 16, 9, 0, 0, Math.PI * 2);
     petCtx.fill();
 
-    // Cat head clearly on top of cloud
+    // Cat head on top of cloud
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
     petCtx.ellipse(cx, cy - 6, 18, 15, 0, 0, Math.PI * 2);
@@ -471,13 +488,13 @@ function drawNimbrix(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 4, cy - 7, 2, 2);
     petCtx.fillRect(cx + 6, cy - 7, 2, 2);
 
-    // Long tail clearly visible coming out of cloud
+    // Long tail coming out of cloud
     petCtx.fillStyle = '#64748b';
     petCtx.beginPath();
-    petCtx.ellipse(cx + 26, cy + 32, 20, 8, -0.35, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 26, cy + 34, 20, 8, -0.35, 0, Math.PI * 2);
     petCtx.fill();
     petCtx.beginPath();
-    petCtx.ellipse(cx + 40, cy + 38, 16, 6, -0.1, 0, Math.PI * 2);
+    petCtx.ellipse(cx + 40, cy + 40, 16, 6, -0.1, 0, Math.PI * 2);
     petCtx.fill();
 }
 
@@ -1771,6 +1788,12 @@ function updatePetVisual() {
     const moodEl = document.getElementById('petMood');
     moodEl.textContent = moodText;
     moodEl.style.color = moodColor;
+
+    // Update stage name display
+    const stageEl = document.getElementById('stageName');
+    if (stageEl) {
+        stageEl.textContent = getStageName();
+    }
 }
 
 function savePet() {
