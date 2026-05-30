@@ -1,5 +1,5 @@
 /* ============================================
-   VIRTUAL PET - Clean Dashed Border Only (v4.44)
+   VIRTUAL PET - Symmetric + Centered (v4.45)
    ============================================ */
 
 body {
@@ -58,11 +58,10 @@ body {
 .device-frame {
     background: #1e293b;
     border-radius: 28px;
-    padding: 18px 16px 22px;
+    padding: 18px;                 /* Symmetric padding */
     box-shadow: 0 10px 30px rgba(0,0,0,0.4),
                 inset 0 1px 0 rgba(255,255,255,0.08);
     
-    /* Clean dashed border - no corner marks, no inner layers */
     position: relative;
     border: 2.5px dashed #475569;
     box-sizing: border-box;
@@ -73,6 +72,7 @@ body {
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 6px;
+    text-align: center;           /* Centered */
 }
 
 .stats-top {
