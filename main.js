@@ -1,6 +1,6 @@
 // ============================================
-// VIRTUAL PET v4.21 - Bolt improvements
-// Head spikes + larger angular wing feathers
+// VIRTUAL PET v4.22 - Dramatic Bolt Ultimate
+// Long sharp triangles + spiked wing feathers
 // ============================================
 
 let pet = { name: "Pixel", hunger: 80, happiness: 75, cleanliness: 85, energy: 90, age: 0 };
@@ -787,17 +787,6 @@ function drawBud(mood, breathOffset, flameFlicker) {
         petCtx.arc(cx - 11, cy - 24, 4, Math.PI, 0);
         petCtx.stroke();
         petCtx.beginPath();
-        petCtx.arc(cx + 11, cy - 24, 4, Math.PI, 0);
-        petCtx.stroke();
-    } else {
-        petCtx.beginPath();
-        petCtx.moveTo(cx - 17, cy - 22);
-        petCtx.lineTo(cx - 6, cy - 19);
-        petCtx.stroke();
-        petCtx.beginPath();
-        petCtx.moveTo(cx + 6, cy - 19);
-        petCtx.lineTo(cx + 17, cy - 22);
-        petCtx.stroke();
     }
 
     petCtx.fillStyle = '#166534';
@@ -1035,8 +1024,8 @@ function drawVerdant(mood, breathOffset, flameFlicker) {
 }
 
 // ============================================
-// BOLT LINE (Lightning Bird) - v4.21
-// Head spikes + larger angular wing feathers
+// BOLT LINE (Lightning Bird) - v4.22 Dramatic Ultimate
+// Long sharp triangles + spiked wing feathers
 // ============================================
 
 function drawZap(mood, breathOffset, flameFlicker) {
@@ -1081,7 +1070,6 @@ function drawZap(mood, breathOffset, flameFlicker) {
     petCtx.rect(cx + 12, cy + 20, 8, 14);
     petCtx.fill();
 
-    // Small head spikes (baby)
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
     petCtx.rect(cx - 8, cy - 8, 3, 6);
@@ -1135,7 +1123,6 @@ function drawSpark(mood, breathOffset, flameFlicker) {
     petCtx.rect(cx + 14, cy + 18, 10, 18);
     petCtx.fill();
 
-    // Head spikes (child)
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
     petCtx.rect(cx - 10, cy - 10, 4, 8);
@@ -1181,7 +1168,6 @@ function drawBolt(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 5, cy + 0, 3, 3);
     petCtx.fillRect(cx + 4, cy + 0, 3, 3);
 
-    // Larger angular wing feathers
     petCtx.fillStyle = '#ca8a04';
     petCtx.beginPath();
     petCtx.rect(cx - 28, cy + 14, 12, 22);
@@ -1190,7 +1176,6 @@ function drawBolt(mood, breathOffset, flameFlicker) {
     petCtx.rect(cx + 16, cy + 14, 12, 22);
     petCtx.fill();
 
-    // Extra large angular feathers on wings
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
     petCtx.rect(cx - 26, cy + 16, 4, 10);
@@ -1199,7 +1184,6 @@ function drawBolt(mood, breathOffset, flameFlicker) {
     petCtx.rect(cx + 22, cy + 16, 4, 10);
     petCtx.fill();
 
-    // Head spikes (adult)
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
     petCtx.rect(cx - 10, cy - 12, 4, 10);
@@ -1245,25 +1229,35 @@ function drawStorm(mood, breathOffset, flameFlicker) {
     petCtx.fillRect(cx - 4, cy - 2, 3, 3);
     petCtx.fillRect(cx + 4, cy - 2, 3, 3);
 
-    // Large dramatic angular wings with big feathers
+    // Long sharp triangular wings
     petCtx.fillStyle = '#ca8a04';
     petCtx.beginPath();
-    petCtx.rect(cx - 32, cy + 8, 14, 28);
-    petCtx.fill();
-    petCtx.beginPath();
-    petCtx.rect(cx + 18, cy + 8, 14, 28);
+    petCtx.moveTo(cx - 32, cy + 12);
+    petCtx.lineTo(cx - 48, cy - 8);
+    petCtx.lineTo(cx - 20, cy + 20);
     petCtx.fill();
 
-    // Very large angular wing feathers
+    petCtx.beginPath();
+    petCtx.moveTo(cx + 32, cy + 12);
+    petCtx.lineTo(cx + 48, cy - 8);
+    petCtx.lineTo(cx + 20, cy + 20);
+    petCtx.fill();
+
+    // Spiked wing feathers (long triangles)
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
-    petCtx.rect(cx - 30, cy + 10, 5, 14);
-    petCtx.fill();
-    petCtx.beginPath();
-    petCtx.rect(cx + 25, cy + 10, 5, 14);
+    petCtx.moveTo(cx - 42, cy - 2);
+    petCtx.lineTo(cx - 52, cy - 18);
+    petCtx.lineTo(cx - 32, cy + 6);
     petCtx.fill();
 
-    // Prominent head spikes (ultimate)
+    petCtx.beginPath();
+    petCtx.moveTo(cx + 42, cy - 2);
+    petCtx.lineTo(cx + 52, cy - 18);
+    petCtx.lineTo(cx + 32, cy + 6);
+    petCtx.fill();
+
+    // Prominent head spikes
     petCtx.fillStyle = '#854d0e';
     petCtx.beginPath();
     petCtx.rect(cx - 10, cy - 14, 5, 12);
