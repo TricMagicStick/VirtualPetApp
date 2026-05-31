@@ -1784,6 +1784,7 @@ function resetPet() {
 }
 
 function init() {
+    alert("init() function started");
     initCanvases();
     loadPet();
 
