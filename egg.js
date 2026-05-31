@@ -47,6 +47,7 @@ function growCracks() {
 }
 
 function drawEggBase(shakeX = 0) {
+    alert("drawEggBase called");
     eggCtx.clearRect(0, 0, eggCanvas.width, eggCanvas.height);
     const cx = 100 + shakeX;
     const cy = 100;
