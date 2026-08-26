@@ -1,4 +1,4 @@
-// egg.js - v4.50 Procedural Egg Hatching System
+// egg.js - procedural egg hatching
 let activeCracks = [];
 let eggShake = 0;
 
@@ -47,7 +47,6 @@ function growCracks() {
 }
 
 function drawEggBase(shakeX = 0) {
-    alert("drawEggBase called");
     eggCtx.clearRect(0, 0, eggCanvas.width, eggCanvas.height);
     const cx = 100 + shakeX;
     const cy = 100;
@@ -71,6 +70,13 @@ function drawEggBase(shakeX = 0) {
     eggCtx.beginPath();
     eggCtx.ellipse(cx - 18, cy - 20, 18, 24, 0, 0, Math.PI * 2);
     eggCtx.fill();
+}
+
+function initEgg() {
+    drawEggBase(0);
+    eggCanvas.onclick = () => {
+        if (!eggAnimating) hatchAnimation();
+    };
 }
 
 function hatchAnimation() {
@@ -99,10 +105,13 @@ function hatchAnimation() {
                 hasHatched = true;
                 currentStage = 0;
                 lastEvolutionAge = 0;
+                pet = { ...DEFAULT_PET };
+                lastTick = Date.now();
 
-                const rand = Math.random();
-                let randomPet = (rand < 0.2) ? 'flick' : (rand < 0.4) ? 'puff' : (rand < 0.6) ? 'bud' : (rand < 0.8) ? 'bolt' : 'ceph';
-                localStorage.setItem('hatchedPetType', randomPet);
+                const types = ['flick', 'puff', 'bud', 'bolt', 'ceph'];
+                const randomPet = types[Math.floor(Math.random() * types.length)];
+                setHatchedPetType(randomPet);
+                saveGame();
 
                 const eggScreen = document.getElementById('egg-screen');
                 const petScreen = document.getElementById('pet-screen');
@@ -116,7 +125,8 @@ function hatchAnimation() {
                     eggScreen.style.transition = '';
                     petScreen.style.display = 'block';
 
-                    drawPet('happy', 0, 0);
+                    const mood = (typeof getPetMood === 'function') ? getPetMood().draw : 'happy';
+                    drawPet(mood, 0, 0);
                     updateUI();
                     startDecay();
                     requestAnimationFrame(animate);
@@ -125,3 +135,4 @@ function hatchAnimation() {
             }, 380);
         }
     }, 33);
+}
