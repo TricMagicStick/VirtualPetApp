@@ -8,7 +8,6 @@
 </head>
 <body>
     <div class="app">
-        <!-- Header -->
         <div class="header">
             <div style="display:flex; align-items:flex-end;">
                 <h1 class="title">VIRTUAL PET</h1>
@@ -20,17 +19,13 @@
             </button>
         </div>
 
-        <!-- Egg Screen -->
         <div id="egg-screen" class="device-frame egg-container">
             <div class="egg-instruction">Tap the egg to hatch your baby</div>
             <canvas id="eggCanvas" width="200" height="200"></canvas>
         </div>
 
-        <!-- Main Pet Screen -->
         <div id="pet-screen" style="display: none;">
             <div class="device-frame">
-
-                <!-- Top stats -->
                 <div class="stats-top">
                     <div class="stat-item">
                         <span>🍎</span>
@@ -50,21 +45,17 @@
                     </div>
                 </div>
 
-                <!-- Pet -->
                 <div class="pet-screen">
                     <canvas id="petCanvas" width="220" height="220"></canvas>
                 </div>
 
-                <!-- Stage name -->
                 <div class="stage-name" id="stageName">Nimbrix</div>
 
-                <!-- Status -->
                 <div class="pet-status">
                     <div id="petMood" class="mood" style="color:#22c55e;">VERY HAPPY</div>
                     <div class="age">Age: <span id="ageValue">172</span> minutes • <span id="petNameDisplay">Pixel</span></div>
                 </div>
 
-                <!-- Actions -->
                 <div class="action-row">
                     <button onclick="feedPet()" class="action-btn">
                         <div class="action-icon">🍎</div>
@@ -84,20 +75,23 @@
                     </button>
                 </div>
 
-                <!-- Force Evolution Button -->
                 <div style="margin-top: 12px; text-align: center;">
                     <button onclick="forceEvolution()" style="background: #3b82f6; color: white; border: none; padding: 8px 20px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">
                         FORCE EVOLUTION
                     </button>
                 </div>
-
             </div>
         </div>
     </div>
 
-<!-- Modular script loading order: pets.js overwrites drawPet after main.js -->
+<!-- pets.js owns all pet drawing; opcode sheets are sprite data only -->
 <script src="main.js" defer></script>
 <script src="egg.js" defer></script>
+<script src="sprites-flick.js" defer></script>
+<script src="sprites-puff.js" defer></script>
+<script src="sprites-bud.js" defer></script>
+<script src="sprites-bolt.js" defer></script>
+<script src="sprites-ceph.js" defer></script>
 <script src="pets.js" defer></script>
 <script src="evolution.js" defer></script>
 <script src="storage.js" defer></script>
