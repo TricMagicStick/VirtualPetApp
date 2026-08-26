@@ -92,10 +92,15 @@
         </div>
     </div>
 
-<!-- Modules first so main.js can call them; pets.js last so a sprite PR can override draw* -->
+<!-- Modules first; legacy draw* next; pets.js last so the sprite PR can override -->
 <script src="storage.js" defer></script>
 <script src="evolution.js" defer></script>
 <script src="egg.js" defer></script>
+<script src="sprites-puff.js" defer></script>
+<script src="sprites-flick.js" defer></script>
+<script src="sprites-bud.js" defer></script>
+<script src="sprites-bolt.js" defer></script>
+<script src="sprites-ceph.js" defer></script>
 <script src="main.js" defer></script>
 <script src="pets.js" defer></script>
 </body>
