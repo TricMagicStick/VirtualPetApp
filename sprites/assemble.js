@@ -1,0 +1,21 @@
+if (typeof SPRITE_URLS === 'undefined') { var SPRITE_URLS = {}; }
+SPRITE_URLS["flick"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["flick"] || []).join('');
+SPRITE_URLS["charling"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["charling"] || []).join('');
+SPRITE_URLS["drakember"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["drakember"] || []).join('');
+SPRITE_URLS["infernyx"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["infernyx"] || []).join('');
+SPRITE_URLS["puff"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["puff"] || []).join('');
+SPRITE_URLS["whisp"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["whisp"] || []).join('');
+SPRITE_URLS["whisk"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["whisk"] || []).join('');
+SPRITE_URLS["nimbrix"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["nimbrix"] || []).join('');
+SPRITE_URLS["bud"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["bud"] || []).join('');
+SPRITE_URLS["sprout"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["sprout"] || []).join('');
+SPRITE_URLS["sprig"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["sprig"] || []).join('');
+SPRITE_URLS["verdant"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["verdant"] || []).join('');
+SPRITE_URLS["zap"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["zap"] || []).join('');
+SPRITE_URLS["spark"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["spark"] || []).join('');
+SPRITE_URLS["bolt"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["bolt"] || []).join('');
+SPRITE_URLS["storm"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["storm"] || []).join('');
+SPRITE_URLS["cephling"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["cephling"] || []).join('');
+SPRITE_URLS["cephy"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["cephy"] || []).join('');
+SPRITE_URLS["cephalon"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["cephalon"] || []).join('');
+SPRITE_URLS["abyssal-ceph"] = 'data:image/png;base64,' + (SPRITE_CHUNKS["abyssal-ceph"] || []).join('');
