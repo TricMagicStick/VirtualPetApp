@@ -25,13 +25,7 @@
         }
         set(key, s);
     }
-    var PATCHES = {
-        'flick-sad': [[9534, 1, 'Z']],
-        'sprout-happy': [[5549, 1, 'b']],
-        'sprout-sad': [[1993, 0, 'xfXXt6R2gcgnJ/ac/61AGfQFdL5V0iOu'], [1994, 11, 'h7X'], [2006, 1, 't'], [2013, 1, '9']],
-        'charling-happy': [[4822, 1, '1'], [5826, 1, 'C']],
-        'charling-sad': [[3870, 1, 'Q'], [3902, 1, 'Z']]
-    };
+    var PATCHES = {"flick-sad": [[9534,1,"Z"]],"sprout-happy": [[5549,1,"b"]],"sprout-sad": [[1993,0,"xfXXt6R2gcgnJ/ac/61AGfQFdL5V0iOu"],[1994,11,"h7X"],[2006,1,"t"],[2013,1,"9"]],"charling-happy": [[4822,1,"1"],[5826,1,"C"]],"charling-sad": [[3870,1,"Q"],[3902,1,"Z"]],"bud-happy": [[2262,1,"/"] ,[3349,1,"q"]],"zap-happy": [[1578,1,"E"],[5705,1,"7"],[6174,1,""],[6176,2,"6"]],"zap-sad": [[1825,2,"0W"],[4386,1,"c"]],"bolt-happy": [[1910,1,"q"]],"bolt-sad": [[5554,1,"/"]],"infernyx-happy": [[3217,1,"9"],[5353,1,"7"],[5961,1,"g"]],"whisp-happy": [[2024,1,"b"],[2026,3,"5T"],[2043,1,"g"],[4115,1,"7"]],"whisp-sad": [[3361,1,"0"]]};
     Object.keys(PATCHES).forEach(function (k) { apply(k, PATCHES[k]); });
     console.log('[pico-patches] applied', Object.keys(PATCHES).length, 'keys');
 })();
