@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Virtual Pet</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/style.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <div class="header">
+            <div style="display:flex; align-items:flex-end;">
+                <h1 class="title">VIRTUAL PET</h1>
+                <span class="version">v4.60</span>
+            </div>
+            <button onclick="resetPet()" class="reset-btn">
+                <span>↻</span>
+                <span style="font-size:9px">RESET</span>
+            </button>
+        </div>
+
+        <!-- Egg Screen -->
+        <div id="egg-screen" class="device-frame egg-container">
+            <div class="egg-instruction">Tap the egg to hatch your baby</div>
+            <canvas id="eggCanvas" width="200" height="200"></canvas>
+        </div>
+
+        <!-- Main Pet Screen -->
+        <div id="pet-screen" style="display: none;">
+            <div class="device-frame">
+
+                <!-- Top stats -->
+                <div class="stats-top">
+                    <div class="stat-item">
+                        <span>🍎</span>
+                        <span id="hungerValue">80</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>❤️</span>
+                        <span id="happinessValue">75</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>🧼</span>
+                        <span id="cleanValue">85</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>⚡</span>
+                        <span id="energyValue">90</span>
+                    </div>
+                </div>
+
+                <!-- Pet -->
+                <div class="pet-screen">
+                    <canvas id="petCanvas" width="220" height="220"></canvas>
+                </div>
+
+                <!-- Stage name -->
+                <div class="stage-name" id="stageName">?</div>
+
+                <!-- Status -->
+                <div class="pet-status">
+                    <div id="petMood" class="mood" style="color:#22c55e;">VERY HAPPY</div>
+                    <div class="age">Age: <span id="ageValue">0</span> minutes • <span id="petNameDisplay">Pixel</span></div>
+                </div>
+
+                <!-- Actions -->
+                <div class="action-row">
+                    <button onclick="feedPet()" class="action-btn">
+                        <div class="action-icon">🍎</div>
+                        <div class="action-label">Feed</div>
+                    </button>
+                    <button onclick="playWithPet()" class="action-btn">
+                        <div class="action-icon">🎮</div>
+                        <div class="action-label">Play</div>
+                    </button>
+                    <button onclick="cleanPet()" class="action-btn">
+                        <div class="action-icon">🧼</div>
+                        <div class="action-label">Clean</div>
+                    </button>
+                    <button onclick="restPet()" class="action-btn">
+                        <div class="action-icon">🛏️</div>
+                        <div class="action-label">Rest</div>
+                    </button>
+                </div>
+
+                <div class="debug-row">
+                    <button type="button" class="debug-btn" onclick="forceEvolution()">dev: force evolution</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<!-- Pico sprites at SHA 7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080 via jsDelivr (HTML served by GitHub Pages) -->
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/storage.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/evolution.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/egg.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/main.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-flick.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-charling.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-drakember.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-infernyx.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-puff.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-whisp.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-whisk.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-nimbrix.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-bud.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-sprout.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-sprig.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-verdant.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-zap.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-spark.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-bolt.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-storm.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-cephling-happy.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-cephling-sad.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-cephy-happy.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-cephy-sad.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-cephalon-happy.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-cephalon-sad.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-abyssal-ceph-happy.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/sprites-pico-abyssal-ceph-sad.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/pico-patches.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/pets.js" defer></script>
+</body>
+</html>
