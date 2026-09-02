@@ -1,1 +1,1 @@
-see-file
+/workspace/play-cdn/sprites-pico-storm-locked.js
