@@ -1,2 +1,1 @@
-window.__PICO_SPRITES = window.__PICO_SPRITES || {};
-window.__PICO_SPRITES._stormLocked = "data:image/png;base64,PLACEHOLDER_P0";
+see-file-/tmp/slices/stormc-0.js
