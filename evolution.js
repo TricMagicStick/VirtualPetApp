@@ -8,7 +8,7 @@ const EVOLUTION_RULES = [
 const STAGE_NAMES = {
     flick: ['Flick', 'Charling', 'DrakEmber', 'Infernyx'],
     puff: ['Puff', 'Whisp', 'Whisk', 'Nimbrix'],
-    bud: ['Bud', 'Sprout', 'Sprig', 'Verdant'],
+    bud: ['Sprout', 'Sprig', 'Verdant'],
     bolt: ['Zap', 'Spark', 'Storm'],
     ceph: ['Cephling', 'Cephy', 'Cephalon', 'Abyssal Ceph'],
     rime: ['Rime', 'Kryz', 'Glacorn'],
