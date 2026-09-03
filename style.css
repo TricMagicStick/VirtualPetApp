@@ -134,8 +134,16 @@ body {
 
 canvas {
     display: block;
+    image-rendering: -webkit-crisp-edges;
     image-rendering: pixelated;
     margin: 0 auto;
+}
+
+#petCanvas,
+.pet-screen canvas,
+.pet-screen img {
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
 }
 
 .pet-status {

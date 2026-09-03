@@ -34,6 +34,24 @@
     var warned = {};
     var pack = window.__PICO_SPRITES || {};
 
+    function disableImageSmoothing(ctx) {
+        if (!ctx) return;
+        ctx.imageSmoothingEnabled = false;
+        if (ctx.webkitImageSmoothingEnabled !== undefined) ctx.webkitImageSmoothingEnabled = false;
+        if (ctx.msImageSmoothingEnabled !== undefined) ctx.msImageSmoothingEnabled = false;
+        if (ctx.mozImageSmoothingEnabled !== undefined) ctx.mozImageSmoothingEnabled = false;
+    }
+
+    function applyPetPixelCss() {
+        if (!document.getElementById('pico-pixelated-css')) {
+            var style = document.createElement('style');
+            style.id = 'pico-pixelated-css';
+            style.textContent = '#petCanvas,.pet-screen canvas,.pet-screen img{image-rendering:-webkit-crisp-edges;image-rendering:pixelated}';
+            (document.head || document.documentElement).appendChild(style);
+        }
+    }
+    applyPetPixelCss();
+
     Object.keys(SPRITE_MAP).forEach(function (fnName) {
         var name = SPRITE_MAP[fnName];
         ['happy', 'sad'].forEach(function (mood) {
@@ -81,9 +99,8 @@
             }
             return;
         }
-        petCtx.imageSmoothingEnabled = false;
-        if (petCtx.webkitImageSmoothingEnabled !== undefined) petCtx.webkitImageSmoothingEnabled = false;
-        if (petCtx.mozImageSmoothingEnabled !== undefined) petCtx.mozImageSmoothingEnabled = false;
+        applyPetPixelCss();
+        disableImageSmoothing(petCtx);
         var x = Math.round((petCanvas.width - img.naturalWidth) / 2);
         var y = Math.round((petCanvas.height - img.naturalHeight) / 2 + (breathOffset || 0));
         petCtx.drawImage(img, x, y);
@@ -115,6 +132,8 @@
 
     var origDrawPet = window.drawPet;
     window.drawPet = function (mood, breathOffset, flameFlicker) {
+        applyPetPixelCss();
+        if (typeof petCtx !== 'undefined') disableImageSmoothing(petCtx);
         var hatchedType = localStorage.getItem('hatchedPetType') || 'flick';
         if (hatchedType === 'bolt') {
             petCtx.clearRect(0, 0, petCanvas.width, petCanvas.height);
