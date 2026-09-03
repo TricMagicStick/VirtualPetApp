@@ -15,9 +15,25 @@ const STAGE_NAMES = {
     ice: ['Rime', 'Kryz', 'Glacorn']
 };
 
+const TYPE_ALIASES = {
+    ice: 'rime',
+    sprout: 'bud',
+    plant: 'bud',
+    zap: 'bolt',
+    spark: 'bolt',
+    storm: 'bolt'
+};
+
+function resolvePetType() {
+    let type = (typeof getHatchedPetType === 'function')
+        ? getHatchedPetType()
+        : (localStorage.getItem('hatchedPetType') || 'flick');
+    if (TYPE_ALIASES[type]) type = TYPE_ALIASES[type];
+    return STAGE_NAMES[type] ? type : 'flick';
+}
+
 function getMaxStage() {
-    const type = (typeof getHatchedPetType === 'function') ? getHatchedPetType() : 'flick';
-    const names = STAGE_NAMES[type] || STAGE_NAMES.flick;
+    const names = STAGE_NAMES[resolvePetType()] || STAGE_NAMES.flick;
     return Math.max(0, names.length - 1);
 }
 
@@ -42,9 +58,8 @@ function canEvolve() {
 }
 
 function getStageName() {
-    const type = (typeof getHatchedPetType === 'function') ? getHatchedPetType() : 'flick';
-    const names = STAGE_NAMES[type] || STAGE_NAMES.flick;
-    return names[Math.min(currentStage, names.length - 1)] || 'Unknown';
+    const names = STAGE_NAMES[resolvePetType()] || STAGE_NAMES.flick;
+    return names[Math.min(Math.max(0, currentStage), names.length - 1)] || 'Unknown';
 }
 
 function getPetMood() {
