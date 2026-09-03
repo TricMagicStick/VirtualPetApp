@@ -10,7 +10,9 @@ const STAGE_NAMES = {
     puff: ['Puff', 'Whisp', 'Whisk', 'Nimbrix'],
     bud: ['Bud', 'Sprout', 'Sprig', 'Verdant'],
     bolt: ['Zap', 'Spark', 'Storm'],
-    ceph: ['Cephling', 'Cephy', 'Cephalon', 'Abyssal Ceph']
+    ceph: ['Cephling', 'Cephy', 'Cephalon', 'Abyssal Ceph'],
+    rime: ['Rime', 'Kryz', 'Glacorn'],
+    ice: ['Rime', 'Kryz', 'Glacorn']
 };
 
 function getMaxStage() {
