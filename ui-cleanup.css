@@ -1,0 +1,53 @@
+/* ui-cleanup.css — v4.66 loads AFTER style.css.
+   Calms the stacked stitch frames, gives the action buttons real plates,
+   and demotes the dev control. No sprite art, no base64 tiles here. */
+
+/* One frame, not three: drop the inner chain box and doubled corner blooms. */
+.device-frame::before { content: none; }
+.device-frame::after { content: none; }
+.header::after { content: none; }
+
+/* Tighter chrome so the pet well gets the space. */
+.device-frame { padding: 12px; }
+.pet-screen { padding: 6px; }
+
+/* Real stitched plates: the patch frames the whole button instead of
+   floating as a 32px square behind the label. */
+.reset-btn,
+.action-btn {
+  background-color: var(--panel);
+  background-size: 100% 100%;
+  min-height: 48px;
+  box-shadow: none;
+}
+.action-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 8px;
+  align-items: stretch;
+}
+.action-btn {
+  padding: 6px 2px;
+  min-height: 52px;
+  max-width: none;
+  background-size: 100% 100%;
+  gap: 1px;
+}
+.action-btn:active,
+.reset-btn:active { transform: translateY(1px); filter: brightness(1.15); box-shadow: none; }
+.action-icon { font-size: 20px; line-height: 1; }
+.action-label { font-size: 10px; letter-spacing: 0.2px; }
+
+/* Dev force-evolution should not compete with Feed/Play/Clean/Rest. */
+.debug-row { margin-top: 4px; }
+.debug-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 1px dotted var(--thread-dim);
+  padding: 2px 4px;
+  min-height: 0;
+  font-size: 9px;
+  opacity: 0.6;
+}
+.debug-btn:hover { color: var(--thread); opacity: 1; }

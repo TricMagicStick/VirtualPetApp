@@ -6,11 +6,12 @@ const EVOLUTION_RULES = [
 ];
 
 const STAGE_NAMES = {
-    flick: ['Flick', 'Charling', 'DrakEmber', 'Infernyx'],
-    puff: ['Puff', 'Whisp', 'Whisk', 'Nimbrix'],
+    flick: ['Flick', 'DrakEmber', 'Infernyx'],
+    puff: ['Whisp', 'Whisk', 'Nimbrix'],
+    air: ['Whisp', 'Whisk', 'Nimbrix'],
     bud: ['Sprout', 'Sprig', 'Verdant'],
     bolt: ['Zap', 'Spark', 'Storm'],
-    ceph: ['Cephling', 'Cephy', 'Cephalon', 'Abyssal Ceph'],
+    ceph: ['Cephy', 'Cephling', 'Abyssal'],
     rime: ['Rime', 'Kryz', 'Glacorn'],
     ice: ['Rime', 'Kryz', 'Glacorn']
 };
@@ -21,7 +22,11 @@ const TYPE_ALIASES = {
     plant: 'bud',
     zap: 'bolt',
     spark: 'bolt',
-    storm: 'bolt'
+    storm: 'bolt',
+    air: 'puff',
+    whisp: 'puff',
+    cephy: 'ceph',
+    cephling: 'ceph'
 };
 
 function resolvePetType() {
