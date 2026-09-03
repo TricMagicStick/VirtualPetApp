@@ -21,8 +21,13 @@
         drawCephling: 'cephling',
         drawCephy: 'cephy',
         drawCephalon: 'cephalon',
-        drawAbyssalCeph: 'abyssal-ceph'
+        drawAbyssalCeph: 'abyssal-ceph',
+        drawRime: 'rime',
+        drawKryz: 'kryz',
+        drawGlacorn: 'glacorn'
     };
+
+    var ICE_HAPPY_ONLY = { rime: true, kryz: true, glacorn: true };
 
     var cache = {};
     var warned = {};
@@ -34,6 +39,7 @@
             var key = name + '-' + mood;
             if (cache[key]) return;
             var url = pack[key];
+            if (!url && ICE_HAPPY_ONLY[name]) url = pack[name + '-happy'];
             if (!url) {
                 if (!warned[key]) {
                     warned[key] = true;
@@ -55,8 +61,9 @@
 
     function blit(name, mood, breathOffset) {
         if (typeof petCtx === 'undefined' || !petCtx || typeof petCanvas === 'undefined' || !petCanvas) return;
-        var key = name + '-' + (mood === 'sad' ? 'sad' : 'happy');
-        var img = cache[key];
+        var wantSad = mood === 'sad';
+        var key = name + '-' + ((wantSad && !ICE_HAPPY_ONLY[name]) ? 'sad' : 'happy');
+        var img = cache[key] || (ICE_HAPPY_ONLY[name] ? cache[name + '-happy'] : null);
         if (!img) {
             if (!warned[key]) {
                 warned[key] = true;
@@ -99,6 +106,9 @@
     window.drawCephy = function (mood, breathOffset, flameFlicker) { blit('cephy', mood, breathOffset); };
     window.drawCephalon = function (mood, breathOffset, flameFlicker) { blit('cephalon', mood, breathOffset); };
     window.drawAbyssalCeph = function (mood, breathOffset, flameFlicker) { blit('abyssal-ceph', mood, breathOffset); };
+    window.drawRime = function (mood, breathOffset, flameFlicker) { blit('rime', mood, breathOffset); };
+    window.drawKryz = function (mood, breathOffset, flameFlicker) { blit('kryz', mood, breathOffset); };
+    window.drawGlacorn = function (mood, breathOffset, flameFlicker) { blit('glacorn', mood, breathOffset); };
 
     var origDrawPet = window.drawPet;
     window.drawPet = function (mood, breathOffset, flameFlicker) {
@@ -108,6 +118,13 @@
             if (currentStage <= 0) drawZap(mood, breathOffset, flameFlicker);
             else if (currentStage === 1) drawSpark(mood, breathOffset, flameFlicker);
             else drawStorm(mood, breathOffset, flameFlicker);
+            return;
+        }
+        if (hatchedType === 'rime' || hatchedType === 'ice') {
+            petCtx.clearRect(0, 0, petCanvas.width, petCanvas.height);
+            if (currentStage <= 0) drawRime(mood, breathOffset, flameFlicker);
+            else if (currentStage === 1) drawKryz(mood, breathOffset, flameFlicker);
+            else drawGlacorn(mood, breathOffset, flameFlicker);
             return;
         }
         if (origDrawPet) origDrawPet(mood, breathOffset, flameFlicker);
@@ -137,5 +154,5 @@
         };
     }
 
-    console.log('[pets.js] Pico PNG overrides ready; electric line Zap → Spark → Storm');
+    console.log('[pets.js] Pico PNG overrides ready; ice line Rime → Kryz → Glacorn');
 })();
