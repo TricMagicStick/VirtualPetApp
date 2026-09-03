@@ -30,6 +30,20 @@
     var ICE_HAPPY_ONLY = { rime: true, kryz: true, glacorn: true };
     var PLANT_HAPPY_ONLY = { sprout: true, sprig: true, verdant: true, bud: true };
 
+    // One hatched family only; index is currentStage capped at that line's last form.
+    var DRAW_LINES = {
+        flick: ['drawFlick', 'drawCharling', 'drawDrakEmber', 'drawInfernyx'],
+        puff: ['drawPuff', 'drawWhisp', 'drawWhisk', 'drawNimbrix'],
+        bud: ['drawSprout', 'drawSprig', 'drawVerdant'],
+        sprout: ['drawSprout', 'drawSprig', 'drawVerdant'],
+        bolt: ['drawZap', 'drawSpark', 'drawStorm'],
+        ceph: ['drawCephling', 'drawCephy', 'drawCephalon', 'drawAbyssalCeph'],
+        rime: ['drawRime', 'drawKryz', 'drawGlacorn'],
+        ice: ['drawRime', 'drawKryz', 'drawGlacorn']
+    };
+    var TYPE_ALIASES = { ice: 'rime', sprout: 'bud', plant: 'bud', zap: 'bolt', spark: 'bolt', storm: 'bolt' };
+    var ALLOWED_TYPES = ['flick', 'puff', 'bud', 'bolt', 'ceph', 'rime'];
+
     var cache = {};
     var warned = {};
     var pack = window.__PICO_SPRITES || {};
@@ -130,47 +144,69 @@
     window.drawKryz = function (mood, breathOffset, flameFlicker) { blit('kryz', mood, breathOffset); };
     window.drawGlacorn = function (mood, breathOffset, flameFlicker) { blit('glacorn', mood, breathOffset); };
 
-    var origDrawPet = window.drawPet;
-    window.drawPet = function (mood, breathOffset, flameFlicker) {
+    function resolveHatchedType() {
+        var t = (typeof getHatchedPetType === 'function') ? getHatchedPetType() : localStorage.getItem('hatchedPetType');
+        t = t || 'flick';
+        if (TYPE_ALIASES[t]) t = TYPE_ALIASES[t];
+        if (ALLOWED_TYPES.indexOf(t) < 0) t = 'flick';
+        return t;
+    }
+
+    function drawLineStage(mood, breathOffset, flameFlicker) {
         applyPetPixelCss();
         if (typeof petCtx !== 'undefined') disableImageSmoothing(petCtx);
-        var hatchedType = localStorage.getItem('hatchedPetType') || 'flick';
-        if (hatchedType === 'bolt') {
-            petCtx.clearRect(0, 0, petCanvas.width, petCanvas.height);
-            if (currentStage <= 0) drawZap(mood, breathOffset, flameFlicker);
-            else if (currentStage === 1) drawSpark(mood, breathOffset, flameFlicker);
-            else drawStorm(mood, breathOffset, flameFlicker);
-            return;
-        }
-        if (hatchedType === 'rime' || hatchedType === 'ice') {
-            petCtx.clearRect(0, 0, petCanvas.width, petCanvas.height);
-            if (currentStage <= 0) drawRime(mood, breathOffset, flameFlicker);
-            else if (currentStage === 1) drawKryz(mood, breathOffset, flameFlicker);
-            else drawGlacorn(mood, breathOffset, flameFlicker);
-            return;
-        }
-        if (hatchedType === 'bud' || hatchedType === 'sprout') {
-            petCtx.clearRect(0, 0, petCanvas.width, petCanvas.height);
-            if (currentStage <= 0) drawSprout(mood, breathOffset, flameFlicker);
-            else if (currentStage === 1) drawSprig(mood, breathOffset, flameFlicker);
-            else drawVerdant(mood, breathOffset, flameFlicker);
-            return;
-        }
-        if (origDrawPet) origDrawPet(mood, breathOffset, flameFlicker);
+        if (typeof petCtx === 'undefined' || !petCtx || typeof petCanvas === 'undefined' || !petCanvas) return;
+        var hatchedType = resolveHatchedType();
+        var line = DRAW_LINES[hatchedType] || DRAW_LINES.flick;
+        var stage = (typeof currentStage === 'number' && isFinite(currentStage)) ? currentStage : 0;
+        if (stage < 0) stage = 0;
+        if (stage >= line.length) stage = line.length - 1;
+        petCtx.clearRect(0, 0, petCanvas.width, petCanvas.height);
+        var fn = window[line[stage]];
+        if (typeof fn === 'function') fn(mood, breathOffset, flameFlicker);
+    }
+
+    window.drawPet = function (mood, breathOffset, flameFlicker) {
+        drawLineStage(mood, breathOffset, flameFlicker);
     };
 
     var origSetHatched = window.setHatchedPetType;
     window.setHatchedPetType = function (t) {
-        var types = ['flick', 'puff', 'bud', 'bolt', 'ceph', 'rime'];
-        t = types[Math.floor(Math.random() * types.length)];
+        if (TYPE_ALIASES[t]) t = TYPE_ALIASES[t];
+        if (ALLOWED_TYPES.indexOf(t) < 0) t = 'flick';
+        // Persist the chosen hatch; never re-roll. Re-write after orig in case it drops rime.
         if (origSetHatched) origSetHatched(t);
-        else localStorage.setItem('hatchedPetType', t);
+        localStorage.setItem('hatchedPetType', t);
     };
+
+    // Pinned egg.js hatches 5 types; include ice once per hatch without changing later saves.
+    var origHatchAnimation = window.hatchAnimation;
+    if (typeof origHatchAnimation === 'function') {
+        window.hatchAnimation = function () {
+            var innerSet = window.setHatchedPetType;
+            var locked = null;
+            window.setHatchedPetType = function (t) {
+                if (locked == null) {
+                    if (TYPE_ALIASES[t]) t = TYPE_ALIASES[t];
+                    if (ALLOWED_TYPES.indexOf(t) < 0) t = 'flick';
+                    locked = t;
+                    // Pinned egg.js has no ice; fold rime in at equal 1/6 odds, then lock.
+                    if (Math.random() < 1 / 6) locked = 'rime';
+                }
+                innerSet(locked);
+            };
+            try {
+                return origHatchAnimation.apply(this, arguments);
+            } finally {
+                window.setHatchedPetType = innerSet;
+            }
+        };
+    }
 
     var origUpdatePetVisual = window.updatePetVisual;
     window.updatePetVisual = function () {
         if (origUpdatePetVisual) origUpdatePetVisual();
-        var adult = (typeof isAdultStage === 'function') ? isAdultStage() : currentStage >= 3;
+        var adult = (typeof isAdultStage === 'function') ? isAdultStage() : (typeof getMaxStage === 'function' ? currentStage >= getMaxStage() : currentStage >= 3);
         var stageEl = document.getElementById('stageName');
         if (stageEl && typeof getStageName === 'function') {
             stageEl.textContent = adult ? getStageName() + ' \u00b7 Adult' : getStageName();
@@ -183,13 +219,34 @@
     if (origApplyDecay) {
         window.applyDecay = function (statMinutes, ageMinutes) {
             var saved = currentStage;
-            if (typeof isAdultStage === 'function' && isAdultStage() && currentStage < 3) {
-                currentStage = 3;
+            if (typeof isAdultStage === 'function' && isAdultStage() && typeof getMaxStage === 'function' && currentStage < getMaxStage()) {
+                currentStage = getMaxStage();
             }
             origApplyDecay(statMinutes, ageMinutes);
             currentStage = saved;
         };
     }
 
-    console.log('[pets.js] Pico PNG overrides ready; ice Rime → Kryz → Glacorn; plant Sprout → Sprig → Verdant');
+    var origEvolve = window.evolvePet;
+    window.evolvePet = function () {
+        var max = (typeof getMaxStage === 'function') ? getMaxStage() : 3;
+        if (typeof currentStage !== 'undefined' && currentStage >= max) return;
+        if (origEvolve) origEvolve();
+        if (typeof currentStage !== 'undefined' && currentStage > max) currentStage = max;
+        drawLineStage((typeof getPetMood === 'function') ? getPetMood().draw : 'happy', 0, 0);
+    };
+
+    var origForce = window.forceEvolution;
+    window.forceEvolution = function () {
+        var max = (typeof getMaxStage === 'function') ? getMaxStage() : 3;
+        if (typeof currentStage !== 'undefined' && currentStage >= max) {
+            if (typeof flashStatus === 'function') flashStatus('Already adult', '#94a3b8');
+            return;
+        }
+        if (origForce) origForce();
+        if (typeof currentStage !== 'undefined' && currentStage > max) currentStage = max;
+        drawLineStage((typeof getPetMood === 'function') ? getPetMood().draw : 'happy', 0, 0);
+    };
+
+    console.log('[pets.js] Pico PNG overrides ready; ice Rime \u2192 Kryz \u2192 Glacorn; plant Sprout \u2192 Sprig \u2192 Verdant; hatch locked to one line');
 })();
