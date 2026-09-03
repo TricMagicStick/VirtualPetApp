@@ -32,12 +32,12 @@
 
     // One hatched family only; index is currentStage capped at that line's last form.
     var DRAW_LINES = {
-        flick: ['drawFlick', 'drawCharling', 'drawDrakEmber', 'drawInfernyx'],
-        puff: ['drawPuff', 'drawWhisp', 'drawWhisk', 'drawNimbrix'],
+        flick: ['drawFlick', 'drawDrakEmber', 'drawInfernyx'],
+        puff: ['drawWhisp', 'drawWhisk', 'drawNimbrix'],
         bud: ['drawSprout', 'drawSprig', 'drawVerdant'],
         sprout: ['drawSprout', 'drawSprig', 'drawVerdant'],
         bolt: ['drawZap', 'drawSpark', 'drawStorm'],
-        ceph: ['drawCephling', 'drawCephy', 'drawCephalon', 'drawAbyssalCeph'],
+        ceph: ['drawCephy', 'drawCephling', 'drawAbyssalCeph'],
         rime: ['drawRime', 'drawKryz', 'drawGlacorn'],
         ice: ['drawRime', 'drawKryz', 'drawGlacorn']
     };
@@ -115,9 +115,18 @@
         }
         applyPetPixelCss();
         disableImageSmoothing(petCtx);
-        var x = Math.round((petCanvas.width - img.naturalWidth) / 2);
-        var y = Math.round((petCanvas.height - img.naturalHeight) / 2 + (breathOffset || 0));
-        petCtx.drawImage(img, x, y);
+        // Integer nearest-neighbor upscale so a 48x48 sprite fills the well
+        // instead of sitting 1:1 as a postage stamp. Never a fractional stretch.
+        var sw = img.naturalWidth;
+        var sh = img.naturalHeight;
+        var target = Math.min(petCanvas.width, petCanvas.height) * 0.92;
+        var k = Math.floor(target / Math.max(sw, sh));
+        if (!isFinite(k) || k < 1) k = 1;
+        var dw = sw * k;
+        var dh = sh * k;
+        var x = Math.round((petCanvas.width - dw) / 2);
+        var y = Math.round((petCanvas.height - dh) / 2 + (breathOffset || 0));
+        petCtx.drawImage(img, 0, 0, sw, sh, x, y, dw, dh);
     }
 
     window.drawFlick = function (mood, breathOffset, flameFlicker) { blit('flick', mood, breathOffset); };
@@ -248,5 +257,5 @@
         drawLineStage((typeof getPetMood === 'function') ? getPetMood().draw : 'happy', 0, 0);
     };
 
-    console.log('[pets.js] Pico PNG overrides ready; ice Rime \u2192 Kryz \u2192 Glacorn; plant Sprout \u2192 Sprig \u2192 Verdant; hatch locked to one line');
+    console.log('[pets.js] Pico PNG overrides ready; 3 stages per line; integer nearest-neighbor upscale; hatch locked to one line');
 })();
