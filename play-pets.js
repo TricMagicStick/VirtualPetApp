@@ -28,6 +28,7 @@
     };
 
     var ICE_HAPPY_ONLY = { rime: true, kryz: true, glacorn: true };
+    var PLANT_HAPPY_ONLY = { sprout: true, sprig: true, verdant: true, bud: true };
 
     var cache = {};
     var warned = {};
@@ -39,7 +40,8 @@
             var key = name + '-' + mood;
             if (cache[key]) return;
             var url = pack[key];
-            if (!url && ICE_HAPPY_ONLY[name]) url = pack[name + '-happy'];
+            if (!url && (ICE_HAPPY_ONLY[name] || PLANT_HAPPY_ONLY[name])) url = pack[name + '-happy'];
+            if (!url && name === 'bud') url = pack['sprout-happy'];
             if (!url) {
                 if (!warned[key]) {
                     warned[key] = true;
@@ -62,8 +64,9 @@
     function blit(name, mood, breathOffset) {
         if (typeof petCtx === 'undefined' || !petCtx || typeof petCanvas === 'undefined' || !petCanvas) return;
         var wantSad = mood === 'sad';
-        var key = name + '-' + ((wantSad && !ICE_HAPPY_ONLY[name]) ? 'sad' : 'happy');
-        var img = cache[key] || (ICE_HAPPY_ONLY[name] ? cache[name + '-happy'] : null);
+        var happyOnly = ICE_HAPPY_ONLY[name] || PLANT_HAPPY_ONLY[name];
+        var key = name + '-' + ((wantSad && !happyOnly) ? 'sad' : 'happy');
+        var img = cache[key] || (happyOnly ? cache[name + '-happy'] : null) || (name === 'bud' ? cache['sprout-happy'] : null);
         if (!img) {
             if (!warned[key]) {
                 warned[key] = true;
@@ -94,7 +97,7 @@
     window.drawWhisp = function (mood, breathOffset, flameFlicker) { blit('whisp', mood, breathOffset); };
     window.drawWhisk = function (mood, breathOffset, flameFlicker) { blit('whisk', mood, breathOffset); };
     window.drawNimbrix = function (mood, breathOffset, flameFlicker) { blit('nimbrix', mood, breathOffset); };
-    window.drawBud = function (mood, breathOffset, flameFlicker) { blit('bud', mood, breathOffset); };
+    window.drawBud = function (mood, breathOffset, flameFlicker) { blit('sprout', mood, breathOffset); };
     window.drawSprout = function (mood, breathOffset, flameFlicker) { blit('sprout', mood, breathOffset); };
     window.drawSprig = function (mood, breathOffset, flameFlicker) { blit('sprig', mood, breathOffset); };
     window.drawVerdant = function (mood, breathOffset, flameFlicker) { blit('verdant', mood, breathOffset); };
@@ -127,7 +130,22 @@
             else drawGlacorn(mood, breathOffset, flameFlicker);
             return;
         }
+        if (hatchedType === 'bud' || hatchedType === 'sprout') {
+            petCtx.clearRect(0, 0, petCanvas.width, petCanvas.height);
+            if (currentStage <= 0) drawSprout(mood, breathOffset, flameFlicker);
+            else if (currentStage === 1) drawSprig(mood, breathOffset, flameFlicker);
+            else drawVerdant(mood, breathOffset, flameFlicker);
+            return;
+        }
         if (origDrawPet) origDrawPet(mood, breathOffset, flameFlicker);
+    };
+
+    var origSetHatched = window.setHatchedPetType;
+    window.setHatchedPetType = function (t) {
+        var types = ['flick', 'puff', 'bud', 'bolt', 'ceph', 'rime'];
+        t = types[Math.floor(Math.random() * types.length)];
+        if (origSetHatched) origSetHatched(t);
+        else localStorage.setItem('hatchedPetType', t);
     };
 
     var origUpdatePetVisual = window.updatePetVisual;
@@ -154,5 +172,5 @@
         };
     }
 
-    console.log('[pets.js] Pico PNG overrides ready; ice line Rime → Kryz → Glacorn');
+    console.log('[pets.js] Pico PNG overrides ready; ice Rime → Kryz → Glacorn; plant Sprout → Sprig → Verdant');
 })();
