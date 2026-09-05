@@ -1,133 +1,156 @@
-/* device-shell.css — v4.68 Digivice / Tamagotchi plastic handheld.
-   Loads AFTER style.css + ui-cleanup.css. No base64 tile rewrites. */
+/* device-shell.css — v4.69 Digivice / Tamagotchi PLASTIC handheld.
+   Loads AFTER style.css + ui-cleanup.css. Kills embroidery border-image. */
 
 :root {
-  --shell: #2a3142;
-  --shell-hi: #3a4256;
-  --shell-lo: #161b26;
-  --lcd: #070a10;
-  --lcd-bezel: #121722;
-  --pad: #2e3648;
-  --pad-hi: rgba(232, 220, 200, 0.32);
-  --pad-lo: rgba(0, 0, 0, 0.45);
+  --shell: #2f3748;
+  --shell-hi: #45506a;
+  --shell-mid: #252b3a;
+  --shell-lo: #12161f;
+  --lcd: #05070c;
+  --lcd-glass: #0a0e16;
+  --lcd-bezel: #1a2030;
+  --pad: #3a4358;
+  --pad-hi: rgba(255, 255, 255, 0.18);
+  --pad-lo: rgba(0, 0, 0, 0.55);
+  --accent: #c9a06a;
 }
 
-/* Chunky plastic body — reads as a toy, not a web card. */
-.device-frame {
-  background-color: var(--shell) !important;
+/* Kill cloth/embroidery chrome from style.css */
+html, body {
+  background-size: 24px 24px !important;
   background-image: none !important;
-  padding: 16px 14px 18px !important;
-  border-radius: 22px;
-  /* Keep embroidery border-image from style.css; add plastic depth on top. */
-  box-shadow:
-    0 1px 0 rgba(232, 220, 200, 0.22),
-    0 2px 0 var(--shell-lo),
-    0 16px 36px rgba(0, 0, 0, 0.6),
-    inset 0 2px 0 rgba(232, 220, 200, 0.14),
-    inset 0 -4px 0 rgba(0, 0, 0, 0.4) !important;
+  background-color: #0e121a !important;
 }
 
-/* Soften embroidery overlay so plastic shell wins. */
+.header::after,
 .device-frame::before,
-.device-frame::after {
+.device-frame::after,
+.pet-screen::before,
+.pet-screen::after,
+.title::after {
   content: none !important;
+  background: none !important;
+  border-image: none !important;
 }
 
-/* Inset LCD / pet well — Digivice screen. */
+/* Solid plastic shell — no border-image stitches */
+.device-frame {
+  background: linear-gradient(165deg, var(--shell-hi) 0%, var(--shell) 38%, var(--shell-mid) 100%) !important;
+  border: 0 !important;
+  border-image: none !important;
+  border-image-source: none !important;
+  border-radius: 28px !important;
+  padding: 18px 16px 20px !important;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.16),
+    0 2px 0 var(--shell-lo),
+    0 18px 40px rgba(0, 0, 0, 0.65),
+    inset 0 3px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -6px 0 rgba(0, 0, 0, 0.45),
+    inset 4px 0 0 rgba(255, 255, 255, 0.04),
+    inset -4px 0 0 rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Deep recessed LCD / pet well */
 .pet-screen {
   background: var(--lcd) !important;
   background-image: none !important;
-  border-radius: 8px !important;
-  padding: 10px !important;
-  min-height: 232px !important;
-  margin-bottom: 12px !important;
+  border-radius: 10px !important;
+  padding: 12px !important;
+  min-height: 236px !important;
+  margin-bottom: 14px !important;
+  border: 0 !important;
   box-shadow:
-    0 0 0 3px var(--lcd-bezel),
-    0 0 0 5px var(--shell-lo),
-    inset 0 4px 0 #04060a,
-    inset 0 -2px 0 rgba(232, 220, 200, 0.14),
-    inset 4px 0 0 rgba(0, 0, 0, 0.5),
-    inset -4px 0 0 rgba(0, 0, 0, 0.5) !important;
-}
-
-.pet-screen::before {
-  opacity: 0.35 !important;
-  inset: 3px !important;
+    0 0 0 4px var(--lcd-bezel),
+    0 0 0 7px var(--shell-lo),
+    0 0 0 8px rgba(255, 255, 255, 0.06),
+    inset 0 6px 10px rgba(0, 0, 0, 0.75),
+    inset 0 -2px 0 rgba(255, 255, 255, 0.06),
+    inset 5px 0 8px rgba(0, 0, 0, 0.45),
+    inset -5px 0 8px rgba(0, 0, 0, 0.45) !important;
 }
 
 .pet-screen.is-adult {
   box-shadow:
-    0 0 0 3px var(--lcd-bezel),
-    0 0 0 5px var(--shell-lo),
-    inset 0 4px 0 #04060a,
-    inset 0 -2px 0 rgba(232, 220, 200, 0.14),
-    inset 4px 0 0 rgba(0, 0, 0, 0.5),
-    inset -4px 0 0 rgba(0, 0, 0, 0.5),
-    0 0 20px rgba(201, 160, 106, 0.3) !important;
+    0 0 0 4px var(--lcd-bezel),
+    0 0 0 7px var(--shell-lo),
+    0 0 0 8px rgba(255, 255, 255, 0.06),
+    inset 0 6px 10px rgba(0, 0, 0, 0.75),
+    inset 0 -2px 0 rgba(255, 255, 255, 0.06),
+    inset 5px 0 8px rgba(0, 0, 0, 0.45),
+    inset -5px 0 8px rgba(0, 0, 0, 0.45),
+    0 0 22px rgba(201, 160, 106, 0.35) !important;
 }
 
-/* Tiny status LEDs under the title row (decorative). */
+/* Status LEDs — Digivice energy */
 .header {
   position: relative;
-  margin-bottom: 12px !important;
+  margin-bottom: 14px !important;
+  padding-left: 36px !important;
 }
 .header::before {
   content: "";
   position: absolute;
-  left: 8px;
-  top: 6px;
-  width: 8px;
-  height: 8px;
+  left: 6px;
+  top: 8px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
-  background: #22c55e;
+  background: radial-gradient(circle at 35% 35%, #86efac, #16a34a 70%);
   box-shadow:
-    0 0 6px rgba(34, 197, 94, 0.7),
-    18px 0 0 #f59e0b,
-    18px 0 6px rgba(245, 158, 11, 0.45);
+    0 0 8px rgba(34, 197, 94, 0.85),
+    20px 0 0 #f59e0b,
+    20px 0 8px rgba(245, 158, 11, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
   pointer-events: none;
   z-index: 2;
 }
 
-/* Stats as a secondary LCD strip. */
-.stats-top {
-  margin-bottom: 10px !important;
-  padding: 7px 10px !important;
-  border-radius: 6px !important;
-  background: rgba(7, 10, 16, 0.72) !important;
-  box-shadow:
-    inset 0 2px 0 rgba(0, 0, 0, 0.55),
-    inset 0 -1px 0 rgba(232, 220, 200, 0.1),
-    0 0 0 1px var(--shell-lo) !important;
+.title {
+  letter-spacing: 2px !important;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+  padding-bottom: 0 !important;
 }
 
-/* Physical button pads — Digivice A/B energy. */
+/* Stats as secondary LCD strip */
+.stats-top {
+  margin-bottom: 12px !important;
+  padding: 8px 10px !important;
+  border-radius: 8px !important;
+  background: var(--lcd-glass) !important;
+  box-shadow:
+    0 0 0 2px var(--lcd-bezel),
+    inset 0 3px 0 rgba(0, 0, 0, 0.65),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Raised plastic button pads */
 .action-row {
   display: grid !important;
   grid-template-columns: repeat(4, 1fr) !important;
   gap: 10px !important;
-  margin-top: 6px !important;
-  margin-bottom: 6px !important;
-  padding: 0 2px;
+  margin-top: 8px !important;
+  margin-bottom: 4px !important;
 }
 
 .reset-btn,
 .action-btn {
-  background-color: var(--pad) !important;
-  background-image: none !important;
-  border: none !important;
-  border-radius: 14px !important;
+  background: linear-gradient(180deg, #4a556e 0%, var(--pad) 55%, #2a3142 100%) !important;
+  border: 0 !important;
+  border-radius: 16px !important;
   min-width: 48px !important;
-  min-height: 52px !important;
-  color: var(--thread, #e8dcc8) !important;
+  min-height: 54px !important;
+  color: #f0e6d4 !important;
   box-shadow:
-    0 3px 0 var(--shell-lo),
+    0 4px 0 var(--shell-lo),
+    0 5px 0 rgba(0, 0, 0, 0.35),
     inset 0 2px 0 var(--pad-hi),
     inset 0 -3px 0 var(--pad-lo) !important;
 }
 
 .action-btn {
-  padding: 8px 2px 6px !important;
-  min-height: 56px !important;
+  padding: 10px 2px 8px !important;
+  min-height: 58px !important;
   max-width: none !important;
   gap: 3px !important;
   display: flex !important;
@@ -145,31 +168,25 @@
 .action-btn:active,
 .reset-btn:active {
   transform: translateY(3px) !important;
-  filter: brightness(1.06);
   box-shadow:
-    0 0 0 var(--shell-lo),
+    0 1px 0 var(--shell-lo),
     inset 0 3px 0 var(--pad-lo),
     inset 0 -1px 0 var(--pad-hi) !important;
 }
 
-.action-icon {
-  font-size: 22px !important;
-  line-height: 1 !important;
-}
+.action-icon { font-size: 22px !important; line-height: 1 !important; }
 .action-label {
   font-size: 10px !important;
   font-weight: 700 !important;
-  letter-spacing: 0.4px !important;
+  letter-spacing: 0.5px !important;
   text-transform: uppercase;
 }
 
-/* Egg shares the same plastic shell. */
 .egg-container {
-  padding: 40px 18px !important;
+  padding: 44px 20px !important;
   justify-content: center;
 }
 
-/* Keep canvas crisp and readable in the well. */
 #petCanvas,
 #eggCanvas,
 .pet-screen canvas {
@@ -177,11 +194,11 @@
   image-rendering: crisp-edges !important;
 }
 
-.debug-row { margin-top: 2px !important; opacity: 0.5; }
+.debug-row { margin-top: 2px !important; opacity: 0.45; }
 .debug-btn {
   min-height: 0 !important;
   border: none !important;
-  border-bottom: 1px dotted var(--thread-dim, #b8a88a) !important;
+  border-bottom: 1px dotted #7a7160 !important;
   font-size: 9px !important;
   background: transparent !important;
   box-shadow: none !important;
