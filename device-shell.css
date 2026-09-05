@@ -1,23 +1,26 @@
-/* device-shell.css — v4.69 Digivice / Tamagotchi PLASTIC handheld.
-   Loads AFTER style.css + ui-cleanup.css. Kills embroidery border-image. */
+/* device-shell.css — v4.70 Digivice plastic shell + green phosphor LCD.
+   Loads AFTER style.css + ui-cleanup.css. */
 
 :root {
   --shell: #2f3748;
   --shell-hi: #45506a;
   --shell-mid: #252b3a;
   --shell-lo: #12161f;
-  --lcd: #05070c;
-  --lcd-glass: #0a0e16;
-  --lcd-bezel: #1a2030;
+  --lcd: #1a4a3a;
+  --lcd-hi: #3d8a6a;
+  --lcd-mid: #246650;
+  --lcd-lo: #0f2e24;
+  --lcd-glass: #163d32;
+  --lcd-bezel: #1e3a32;
   --pad: #3a4358;
   --pad-hi: rgba(255, 255, 255, 0.18);
   --pad-lo: rgba(0, 0, 0, 0.55);
   --accent: #c9a06a;
+  --phosphor-text: #b8e0c8;
 }
 
 /* Kill cloth/embroidery chrome from style.css */
 html, body {
-  background-size: 24px 24px !important;
   background-image: none !important;
   background-color: #0e121a !important;
 }
@@ -25,7 +28,6 @@ html, body {
 .header::after,
 .device-frame::before,
 .device-frame::after,
-.pet-screen::before,
 .pet-screen::after,
 .title::after {
   content: none !important;
@@ -33,7 +35,7 @@ html, body {
   border-image: none !important;
 }
 
-/* Solid plastic shell — no border-image stitches */
+/* Solid plastic shell */
 .device-frame {
   background: linear-gradient(165deg, var(--shell-hi) 0%, var(--shell) 38%, var(--shell-mid) 100%) !important;
   border: 0 !important;
@@ -51,10 +53,11 @@ html, body {
     inset -4px 0 0 rgba(0, 0, 0, 0.25) !important;
 }
 
-/* Deep recessed LCD / pet well */
+/* Digivice green/teal phosphor LCD — not flat black */
 .pet-screen {
-  background: var(--lcd) !important;
-  background-image: none !important;
+  position: relative !important;
+  background:
+    radial-gradient(ellipse 75% 70% at 50% 42%, var(--lcd-hi) 0%, var(--lcd-mid) 42%, var(--lcd) 72%, var(--lcd-lo) 100%) !important;
   border-radius: 10px !important;
   padding: 12px !important;
   min-height: 236px !important;
@@ -64,10 +67,35 @@ html, body {
     0 0 0 4px var(--lcd-bezel),
     0 0 0 7px var(--shell-lo),
     0 0 0 8px rgba(255, 255, 255, 0.06),
-    inset 0 6px 10px rgba(0, 0, 0, 0.75),
-    inset 0 -2px 0 rgba(255, 255, 255, 0.06),
-    inset 5px 0 8px rgba(0, 0, 0, 0.45),
-    inset -5px 0 8px rgba(0, 0, 0, 0.45) !important;
+    inset 0 3px 6px rgba(0, 0, 0, 0.35),
+    inset 0 -1px 0 rgba(180, 255, 210, 0.12),
+    inset 4px 0 6px rgba(0, 0, 0, 0.2),
+    inset -4px 0 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Soft scan + vignette; pointer-events none so pets stay tappable */
+.pet-screen::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+  opacity: 1 !important;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 3px,
+      rgba(0, 20, 12, 0.07) 3px,
+      rgba(0, 20, 12, 0.07) 4px
+    ),
+    radial-gradient(ellipse at 50% 45%, transparent 48%, rgba(6, 28, 20, 0.4) 100%) !important;
+}
+
+.pet-screen > * {
+  position: relative;
+  z-index: 1;
 }
 
 .pet-screen.is-adult {
@@ -75,14 +103,45 @@ html, body {
     0 0 0 4px var(--lcd-bezel),
     0 0 0 7px var(--shell-lo),
     0 0 0 8px rgba(255, 255, 255, 0.06),
-    inset 0 6px 10px rgba(0, 0, 0, 0.75),
-    inset 0 -2px 0 rgba(255, 255, 255, 0.06),
-    inset 5px 0 8px rgba(0, 0, 0, 0.45),
-    inset -5px 0 8px rgba(0, 0, 0, 0.45),
-    0 0 22px rgba(201, 160, 106, 0.35) !important;
+    inset 0 3px 6px rgba(0, 0, 0, 0.35),
+    inset 0 -1px 0 rgba(180, 255, 210, 0.12),
+    inset 4px 0 6px rgba(0, 0, 0, 0.2),
+    inset -4px 0 6px rgba(0, 0, 0, 0.2),
+    0 0 22px rgba(80, 200, 140, 0.28) !important;
 }
 
-/* Status LEDs — Digivice energy */
+/* Egg screen: same phosphor well behind the canvas (no HTML change) */
+.egg-container {
+  position: relative !important;
+  padding: 44px 20px !important;
+  justify-content: center;
+}
+.egg-container::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 18px;
+  right: 18px;
+  top: 52px;
+  bottom: 28px;
+  border-radius: 10px;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 75% 70% at 50% 42%, var(--lcd-hi) 0%, var(--lcd-mid) 42%, var(--lcd) 72%, var(--lcd-lo) 100%);
+  box-shadow:
+    0 0 0 3px var(--lcd-bezel),
+    inset 0 3px 6px rgba(0, 0, 0, 0.3),
+    inset 0 -1px 0 rgba(180, 255, 210, 0.1);
+}
+.egg-container > * {
+  position: relative;
+  z-index: 1;
+}
+.egg-instruction {
+  color: var(--phosphor-text) !important;
+}
+
+/* Status LEDs */
 .header {
   position: relative;
   margin-bottom: 14px !important;
@@ -112,7 +171,7 @@ html, body {
   padding-bottom: 0 !important;
 }
 
-/* Stats as secondary LCD strip */
+/* Stats strip — muted phosphor glass */
 .stats-top {
   margin-bottom: 12px !important;
   padding: 8px 10px !important;
@@ -120,11 +179,11 @@ html, body {
   background: var(--lcd-glass) !important;
   box-shadow:
     0 0 0 2px var(--lcd-bezel),
-    inset 0 3px 0 rgba(0, 0, 0, 0.65),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.06) !important;
+    inset 0 2px 0 rgba(0, 0, 0, 0.35),
+    inset 0 -1px 0 rgba(180, 255, 210, 0.08) !important;
 }
 
-/* Raised plastic button pads */
+/* Raised plastic pads */
 .action-row {
   display: grid !important;
   grid-template-columns: repeat(4, 1fr) !important;
@@ -180,11 +239,6 @@ html, body {
   font-weight: 700 !important;
   letter-spacing: 0.5px !important;
   text-transform: uppercase;
-}
-
-.egg-container {
-  padding: 44px 20px !important;
-  justify-content: center;
 }
 
 #petCanvas,
