@@ -1,5 +1,5 @@
-/* device-shell.css — v4.73 Digivice material pass: thicker plastic, deep bezel, gloss pads.
-   Loads AFTER style.css + ui-cleanup.css. Phosphor LCD kept. */
+/* device-shell.css — v4.74 layout + material: readable hierarchy, phone type, gloss Digivice.
+   Loads AFTER style.css + ui-cleanup.css. */
 
 :root {
   --shell: #2c3444;
@@ -266,4 +266,158 @@ html, body {
   font-size: 9px !important;
   background: transparent !important;
   box-shadow: none !important;
+}
+
+
+/* === v4.74 layout / readability (keep material chrome) === */
+.app {
+  max-width: 420px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: max(12px, env(safe-area-inset-left)) !important;
+  padding-right: max(12px, env(safe-area-inset-right)) !important;
+  padding-bottom: max(16px, env(safe-area-inset-bottom)) !important;
+}
+
+.header {
+  align-items: center !important;
+  margin-bottom: 10px !important;
+}
+
+.title {
+  font-size: 1.05rem !important;
+  font-weight: 800 !important;
+}
+
+.version {
+  font-size: 11px !important;
+  opacity: 0.55 !important;
+  margin-left: 6px !important;
+}
+
+/* Secondary strip — stats readable but not competing with pet */
+.stats-top {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 6px !important;
+  margin-bottom: 10px !important;
+  padding: 10px 8px !important;
+}
+
+.stat-item {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 2px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: var(--phosphor-text) !important;
+  line-height: 1.15 !important;
+  min-width: 0 !important;
+}
+
+.stat-item span:first-child {
+  font-size: 16px !important;
+  line-height: 1 !important;
+}
+
+.stat-item span:last-child {
+  font-size: 14px !important;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.2px;
+}
+
+/* Primary: LCD pet well */
+.pet-screen,
+.lcd-well {
+  margin-bottom: 10px !important;
+  min-height: 248px !important;
+}
+
+#petCanvas,
+#eggCanvas {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display: block !important;
+}
+
+/* Primary status under screen */
+.stage-name {
+  text-align: center !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+  color: #e8dcc8 !important;
+  margin: 2px 0 4px !important;
+}
+
+.pet-status {
+  text-align: center !important;
+  margin-bottom: 12px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+.pet-status .mood,
+#petMood {
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  line-height: 1.2 !important;
+}
+
+.pet-status .age,
+.age {
+  font-size: 12px !important;
+  opacity: 0.62 !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.2px !important;
+  color: #c4b8a4 !important;
+}
+
+/* Obvious action pads */
+.action-row {
+  gap: 12px !important;
+  margin-top: 6px !important;
+  margin-bottom: 8px !important;
+}
+
+.action-btn {
+  min-height: 64px !important;
+  padding: 12px 4px 10px !important;
+  gap: 5px !important;
+}
+
+.action-icon {
+  font-size: 26px !important;
+}
+
+.action-label {
+  font-size: 11px !important;
+  letter-spacing: 0.7px !important;
+}
+
+/* Dev controls stay quiet */
+.debug-row {
+  margin-top: 6px !important;
+  opacity: 0.35 !important;
+  text-align: center !important;
+}
+
+.debug-btn {
+  font-size: 10px !important;
+  padding: 4px 8px !important;
+  color: #8a8070 !important;
+}
+
+.egg-instruction {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  max-width: 16rem;
+  line-height: 1.35;
 }
