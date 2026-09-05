@@ -1,28 +1,28 @@
-/* device-shell.css — v4.72 Digivice plastic shell + green phosphor LCD; egg in same chrome.
-   Loads AFTER style.css + ui-cleanup.css. */
+/* device-shell.css — v4.73 Digivice material pass: thicker plastic, deep bezel, gloss pads.
+   Loads AFTER style.css + ui-cleanup.css. Phosphor LCD kept. */
 
 :root {
-  --shell: #2f3748;
-  --shell-hi: #45506a;
-  --shell-mid: #252b3a;
-  --shell-lo: #12161f;
+  --shell: #2c3444;
+  --shell-hi: #4a5670;
+  --shell-mid: #222833;
+  --shell-lo: #0c0f16;
   --lcd: #1a4a3a;
   --lcd-hi: #3d8a6a;
   --lcd-mid: #246650;
   --lcd-lo: #0f2e24;
   --lcd-glass: #163d32;
-  --lcd-bezel: #1e3a32;
+  --lcd-bezel: #152820;
   --pad: #3a4358;
-  --pad-hi: rgba(255, 255, 255, 0.18);
-  --pad-lo: rgba(0, 0, 0, 0.55);
+  --pad-top: #5a6784;
+  --pad-hi: rgba(255, 255, 255, 0.28);
+  --pad-lo: rgba(0, 0, 0, 0.6);
   --accent: #c9a06a;
   --phosphor-text: #b8e0c8;
 }
 
-/* Kill cloth/embroidery chrome from style.css */
 html, body {
   background-image: none !important;
-  background-color: #0e121a !important;
+  background-color: #0a0d14 !important;
 }
 
 .header::after,
@@ -35,115 +35,51 @@ html, body {
   border-image: none !important;
 }
 
-/* Solid plastic shell */
 .device-frame {
-  background: linear-gradient(165deg, var(--shell-hi) 0%, var(--shell) 38%, var(--shell-mid) 100%) !important;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.14) 0%, transparent 28%),
+    linear-gradient(165deg, var(--shell-hi) 0%, var(--shell) 36%, var(--shell-mid) 78%, var(--shell-lo) 100%) !important;
   border: 0 !important;
   border-image: none !important;
   border-image-source: none !important;
-  border-radius: 28px !important;
-  padding: 18px 16px 20px !important;
+  border-radius: 30px !important;
+  padding: 20px 18px 22px !important;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.16),
-    0 2px 0 var(--shell-lo),
-    0 18px 40px rgba(0, 0, 0, 0.65),
-    inset 0 3px 0 rgba(255, 255, 255, 0.12),
-    inset 0 -6px 0 rgba(0, 0, 0, 0.45),
-    inset 4px 0 0 rgba(255, 255, 255, 0.04),
-    inset -4px 0 0 rgba(0, 0, 0, 0.25) !important;
+    0 1px 0 rgba(255, 255, 255, 0.22),
+    0 3px 0 var(--shell-lo),
+    0 10px 0 rgba(0, 0, 0, 0.35),
+    0 22px 48px rgba(0, 0, 0, 0.72),
+    inset 0 4px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -8px 0 rgba(0, 0, 0, 0.5),
+    inset 5px 0 0 rgba(255, 255, 255, 0.06),
+    inset -6px 0 0 rgba(0, 0, 0, 0.32),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04) !important;
 }
 
-/* Digivice green/teal phosphor LCD — not flat black */
-.pet-screen {
-  position: relative !important;
-  background:
-    radial-gradient(ellipse 75% 70% at 50% 42%, var(--lcd-hi) 0%, var(--lcd-mid) 42%, var(--lcd) 72%, var(--lcd-lo) 100%) !important;
-  border-radius: 10px !important;
-  padding: 12px !important;
-  min-height: 236px !important;
-  margin-bottom: 14px !important;
-  border: 0 !important;
-  box-shadow:
-    0 0 0 4px var(--lcd-bezel),
-    0 0 0 7px var(--shell-lo),
-    0 0 0 8px rgba(255, 255, 255, 0.06),
-    inset 0 3px 6px rgba(0, 0, 0, 0.35),
-    inset 0 -1px 0 rgba(180, 255, 210, 0.12),
-    inset 4px 0 6px rgba(0, 0, 0, 0.2),
-    inset -4px 0 6px rgba(0, 0, 0, 0.2) !important;
-}
-
-/* Soft scan + vignette; pointer-events none so pets stay tappable */
-.pet-screen::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  border-radius: inherit !important;
-  pointer-events: none !important;
-  z-index: 2 !important;
-  opacity: 1 !important;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      transparent 0,
-      transparent 3px,
-      rgba(0, 20, 12, 0.07) 3px,
-      rgba(0, 20, 12, 0.07) 4px
-    ),
-    radial-gradient(ellipse at 50% 45%, transparent 48%, rgba(6, 28, 20, 0.4) 100%) !important;
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent 0,
-      transparent 3px,
-      rgba(0, 20, 12, 0.07) 3px,
-      rgba(0, 20, 12, 0.07) 4px
-    ),
-    radial-gradient(ellipse at 50% 45%, transparent 48%, rgba(6, 28, 20, 0.4) 100%) !important;
-}
-
-.pet-screen > * {
-  position: relative;
-  z-index: 1;
-}
-
-.pet-screen.is-adult {
-  box-shadow:
-    0 0 0 4px var(--lcd-bezel),
-    0 0 0 7px var(--shell-lo),
-    0 0 0 8px rgba(255, 255, 255, 0.06),
-    inset 0 3px 6px rgba(0, 0, 0, 0.35),
-    inset 0 -1px 0 rgba(180, 255, 210, 0.12),
-    inset 4px 0 6px rgba(0, 0, 0, 0.2),
-    inset -4px 0 6px rgba(0, 0, 0, 0.2),
-    0 0 22px rgba(80, 200, 140, 0.28) !important;
-}
-
-/* Shared LCD well: pets use .pet-screen; egg uses .lcd-well (avoid querySelector('.pet-screen') clash) */
+.pet-screen,
 .lcd-well {
   position: relative !important;
   background:
     radial-gradient(ellipse 75% 70% at 50% 42%, var(--lcd-hi) 0%, var(--lcd-mid) 42%, var(--lcd) 72%, var(--lcd-lo) 100%) !important;
-  border-radius: 10px !important;
-  padding: 12px !important;
+  border-radius: 12px !important;
+  padding: 14px !important;
   min-height: 236px !important;
   margin-bottom: 14px !important;
   border: 0 !important;
   box-shadow:
-    0 0 0 4px var(--lcd-bezel),
-    0 0 0 7px var(--shell-lo),
-    0 0 0 8px rgba(255, 255, 255, 0.06),
-    inset 0 3px 6px rgba(0, 0, 0, 0.35),
-    inset 0 -1px 0 rgba(180, 255, 210, 0.12),
-    inset 4px 0 6px rgba(0, 0, 0, 0.2),
-    inset -4px 0 6px rgba(0, 0, 0, 0.2) !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 10px !important;
+    0 0 0 3px #1a222e,
+    0 0 0 6px var(--shell-lo),
+    0 0 0 8px rgba(255, 255, 255, 0.07),
+    0 0 0 11px #151b26,
+    0 4px 10px rgba(0, 0, 0, 0.45),
+    inset 0 4px 8px rgba(0, 0, 0, 0.45),
+    inset 0 -2px 0 rgba(180, 255, 210, 0.14),
+    inset 5px 0 8px rgba(0, 0, 0, 0.28),
+    inset -5px 0 8px rgba(0, 0, 0, 0.28) !important;
+  overflow: hidden !important;
 }
 
+.pet-screen::before,
 .lcd-well::before {
   content: "" !important;
   position: absolute !important;
@@ -157,24 +93,43 @@ html, body {
       0deg,
       transparent 0,
       transparent 3px,
-      rgba(0, 20, 12, 0.07) 3px,
-      rgba(0, 20, 12, 0.07) 4px
+      rgba(0, 20, 12, 0.08) 3px,
+      rgba(0, 20, 12, 0.08) 4px
     ),
-    radial-gradient(ellipse at 50% 45%, transparent 48%, rgba(6, 28, 20, 0.4) 100%) !important;
+    radial-gradient(ellipse at 50% 40%, transparent 42%, rgba(6, 28, 20, 0.45) 100%),
+    linear-gradient(180deg, rgba(180, 255, 220, 0.07) 0%, transparent 18%, transparent 82%, rgba(0, 0, 0, 0.18) 100%) !important;
 }
 
+.pet-screen > *,
 .lcd-well > * {
   position: relative;
   z-index: 1;
 }
 
-/* Egg screen sits in the same plastic shell as pets */
-#egg-screen {
-  width: 100%;
+.pet-screen.is-adult {
+  box-shadow:
+    0 0 0 3px #1a222e,
+    0 0 0 6px var(--shell-lo),
+    0 0 0 8px rgba(255, 255, 255, 0.07),
+    0 0 0 11px #151b26,
+    0 4px 10px rgba(0, 0, 0, 0.45),
+    inset 0 4px 8px rgba(0, 0, 0, 0.45),
+    inset 0 -2px 0 rgba(180, 255, 210, 0.14),
+    inset 5px 0 8px rgba(0, 0, 0, 0.28),
+    inset -5px 0 8px rgba(0, 0, 0, 0.28),
+    0 0 26px rgba(80, 200, 140, 0.32) !important;
 }
-#egg-screen .device-frame {
-  /* match pet device padding */
+
+.lcd-well {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
 }
+
+#egg-screen { width: 100%; }
+
 .egg-instruction {
   color: var(--phosphor-text) !important;
   text-align: center;
@@ -183,42 +138,39 @@ html, body {
   margin: 0 !important;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
 }
-#eggCanvas {
-  display: block;
-  margin: 0 auto;
-}
+#eggCanvas { display: block; margin: 0 auto; }
 
-/* Status LEDs */
 .header {
   position: relative;
   margin-bottom: 14px !important;
-  padding-left: 36px !important;
+  padding-left: 40px !important;
 }
 .header::before {
   content: "";
   position: absolute;
-  left: 6px;
-  top: 8px;
-  width: 9px;
-  height: 9px;
+  left: 8px;
+  top: 10px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #86efac, #16a34a 70%);
+  background: radial-gradient(circle at 35% 30%, #bbf7d0, #16a34a 65%, #14532d 100%);
   box-shadow:
-    0 0 8px rgba(34, 197, 94, 0.85),
-    20px 0 0 #f59e0b,
-    20px 0 8px rgba(245, 158, 11, 0.65),
-    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    0 0 10px rgba(34, 197, 94, 0.9),
+    22px 0 0 #fbbf24,
+    22px 0 10px rgba(245, 158, 11, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -2px 2px rgba(0, 0, 0, 0.35),
+    0 1px 0 rgba(0, 0, 0, 0.4);
   pointer-events: none;
   z-index: 2;
 }
 
 .title {
   letter-spacing: 2px !important;
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.55);
   padding-bottom: 0 !important;
 }
 
-/* Stats strip — muted phosphor glass */
 .stats-top {
   margin-bottom: 12px !important;
   padding: 8px 10px !important;
@@ -226,37 +178,43 @@ html, body {
   background: var(--lcd-glass) !important;
   box-shadow:
     0 0 0 2px var(--lcd-bezel),
-    inset 0 2px 0 rgba(0, 0, 0, 0.35),
-    inset 0 -1px 0 rgba(180, 255, 210, 0.08) !important;
+    0 0 0 3px rgba(255,255,255,0.04),
+    inset 0 2px 0 rgba(0, 0, 0, 0.4),
+    inset 0 -1px 0 rgba(180, 255, 210, 0.1) !important;
 }
 
-/* Raised plastic pads */
 .action-row {
   display: grid !important;
   grid-template-columns: repeat(4, 1fr) !important;
   gap: 10px !important;
-  margin-top: 8px !important;
+  margin-top: 10px !important;
   margin-bottom: 4px !important;
 }
 
 .reset-btn,
 .action-btn {
-  background: linear-gradient(180deg, #4a556e 0%, var(--pad) 55%, #2a3142 100%) !important;
+  background:
+    linear-gradient(180deg, var(--pad-hi) 0%, transparent 38%),
+    linear-gradient(180deg, var(--pad-top) 0%, var(--pad) 48%, #252c3c 100%) !important;
   border: 0 !important;
   border-radius: 16px !important;
   min-width: 48px !important;
   min-height: 54px !important;
-  color: #f0e6d4 !important;
+  color: #f5ebe0 !important;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
   box-shadow:
-    0 4px 0 var(--shell-lo),
-    0 5px 0 rgba(0, 0, 0, 0.35),
-    inset 0 2px 0 var(--pad-hi),
-    inset 0 -3px 0 var(--pad-lo) !important;
+    0 5px 0 var(--shell-lo),
+    0 7px 0 rgba(0, 0, 0, 0.4),
+    0 10px 14px rgba(0, 0, 0, 0.35),
+    inset 0 2px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.45),
+    inset 2px 0 0 rgba(255, 255, 255, 0.08),
+    inset -2px 0 0 rgba(0, 0, 0, 0.2) !important;
 }
 
 .action-btn {
   padding: 10px 2px 8px !important;
-  min-height: 58px !important;
+  min-height: 60px !important;
   max-width: none !important;
   gap: 3px !important;
   display: flex !important;
@@ -273,14 +231,18 @@ html, body {
 
 .action-btn:active,
 .reset-btn:active {
-  transform: translateY(3px) !important;
+  transform: translateY(4px) !important;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.12) 0%, transparent 40%),
+    linear-gradient(180deg, #323a4c 0%, var(--pad) 55%, #2a3142 100%) !important;
   box-shadow:
     0 1px 0 var(--shell-lo),
-    inset 0 3px 0 var(--pad-lo),
-    inset 0 -1px 0 var(--pad-hi) !important;
+    0 2px 4px rgba(0, 0, 0, 0.35),
+    inset 0 4px 6px rgba(0, 0, 0, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08) !important;
 }
 
-.action-icon { font-size: 22px !important; line-height: 1 !important; }
+.action-icon { font-size: 22px !important; line-height: 1 !important; filter: drop-shadow(0 1px 0 rgba(0,0,0,0.35)); }
 .action-label {
   font-size: 10px !important;
   font-weight: 700 !important;
@@ -290,7 +252,8 @@ html, body {
 
 #petCanvas,
 #eggCanvas,
-.pet-screen canvas {
+.pet-screen canvas,
+.lcd-well canvas {
   image-rendering: pixelated !important;
   image-rendering: crisp-edges !important;
 }
