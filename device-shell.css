@@ -1,1 +1,442 @@
-PLACEHOLDER_LOAD_FROM_FILE
+/* device-shell.css — v4.75 Hatch pad + layout/material Digivice.
+   Loads AFTER style.css + ui-cleanup.css. */
+
+:root {
+  --shell: #2c3444;
+  --shell-hi: #4a5670;
+  --shell-mid: #222833;
+  --shell-lo: #0c0f16;
+  --lcd: #1a4a3a;
+  --lcd-hi: #3d8a6a;
+  --lcd-mid: #246650;
+  --lcd-lo: #0f2e24;
+  --lcd-glass: #163d32;
+  --lcd-bezel: #152820;
+  --pad: #3a4358;
+  --pad-top: #5a6784;
+  --pad-hi: rgba(255, 255, 255, 0.28);
+  --pad-lo: rgba(0, 0, 0, 0.6);
+  --accent: #c9a06a;
+  --phosphor-text: #b8e0c8;
+}
+
+html, body {
+  background-image: none !important;
+  background-color: #0a0d14 !important;
+}
+
+.header::after,
+.device-frame::before,
+.device-frame::after,
+.pet-screen::after,
+.title::after {
+  content: none !important;
+  background: none !important;
+  border-image: none !important;
+}
+
+.device-frame {
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.14) 0%, transparent 28%),
+    linear-gradient(165deg, var(--shell-hi) 0%, var(--shell) 36%, var(--shell-mid) 78%, var(--shell-lo) 100%) !important;
+  border: 0 !important;
+  border-image: none !important;
+  border-image-source: none !important;
+  border-radius: 30px !important;
+  padding: 20px 18px 22px !important;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.22),
+    0 3px 0 var(--shell-lo),
+    0 10px 0 rgba(0, 0, 0, 0.35),
+    0 22px 48px rgba(0, 0, 0, 0.72),
+    inset 0 4px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -8px 0 rgba(0, 0, 0, 0.5),
+    inset 5px 0 0 rgba(255, 255, 255, 0.06),
+    inset -6px 0 0 rgba(0, 0, 0, 0.32),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04) !important;
+}
+
+.pet-screen,
+.lcd-well {
+  position: relative !important;
+  background:
+    radial-gradient(ellipse 75% 70% at 50% 42%, var(--lcd-hi) 0%, var(--lcd-mid) 42%, var(--lcd) 72%, var(--lcd-lo) 100%) !important;
+  border-radius: 12px !important;
+  padding: 14px !important;
+  min-height: 236px !important;
+  margin-bottom: 14px !important;
+  border: 0 !important;
+  box-shadow:
+    0 0 0 3px #1a222e,
+    0 0 0 6px var(--shell-lo),
+    0 0 0 8px rgba(255, 255, 255, 0.07),
+    0 0 0 11px #151b26,
+    0 4px 10px rgba(0, 0, 0, 0.45),
+    inset 0 4px 8px rgba(0, 0, 0, 0.45),
+    inset 0 -2px 0 rgba(180, 255, 210, 0.14),
+    inset 5px 0 8px rgba(0, 0, 0, 0.28),
+    inset -5px 0 8px rgba(0, 0, 0, 0.28) !important;
+  overflow: hidden !important;
+}
+
+.pet-screen::before,
+.lcd-well::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+  opacity: 1 !important;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 3px,
+      rgba(0, 20, 12, 0.08) 3px,
+      rgba(0, 20, 12, 0.08) 4px
+    ),
+    radial-gradient(ellipse at 50% 40%, transparent 42%, rgba(6, 28, 20, 0.45) 100%),
+    linear-gradient(180deg, rgba(180, 255, 220, 0.07) 0%, transparent 18%, transparent 82%, rgba(0, 0, 0, 0.18) 100%) !important;
+}
+
+.pet-screen > *,
+.lcd-well > * {
+  position: relative;
+  z-index: 1;
+}
+
+.pet-screen.is-adult {
+  box-shadow:
+    0 0 0 3px #1a222e,
+    0 0 0 6px var(--shell-lo),
+    0 0 0 8px rgba(255, 255, 255, 0.07),
+    0 0 0 11px #151b26,
+    0 4px 10px rgba(0, 0, 0, 0.45),
+    inset 0 4px 8px rgba(0, 0, 0, 0.45),
+    inset 0 -2px 0 rgba(180, 255, 210, 0.14),
+    inset 5px 0 8px rgba(0, 0, 0, 0.28),
+    inset -5px 0 8px rgba(0, 0, 0, 0.28),
+    0 0 26px rgba(80, 200, 140, 0.32) !important;
+}
+
+.lcd-well {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+}
+
+#egg-screen { width: 100%; }
+
+.egg-instruction {
+  color: var(--phosphor-text) !important;
+  text-align: center;
+  font-size: 13px !important;
+  letter-spacing: 0.3px;
+  margin: 0 !important;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+}
+#eggCanvas { display: block; margin: 0 auto; }
+
+.header {
+  position: relative;
+  margin-bottom: 14px !important;
+  padding-left: 40px !important;
+}
+.header::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 10px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #bbf7d0, #16a34a 65%, #14532d 100%);
+  box-shadow:
+    0 0 10px rgba(34, 197, 94, 0.9),
+    22px 0 0 #fbbf24,
+    22px 0 10px rgba(245, 158, 11, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -2px 2px rgba(0, 0, 0, 0.35),
+    0 1px 0 rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.title {
+  letter-spacing: 2px !important;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.55);
+  padding-bottom: 0 !important;
+}
+
+.stats-top {
+  margin-bottom: 12px !important;
+  padding: 8px 10px !important;
+  border-radius: 8px !important;
+  background: var(--lcd-glass) !important;
+  box-shadow:
+    0 0 0 2px var(--lcd-bezel),
+    0 0 0 3px rgba(255,255,255,0.04),
+    inset 0 2px 0 rgba(0, 0, 0, 0.4),
+    inset 0 -1px 0 rgba(180, 255, 210, 0.1) !important;
+}
+
+.action-row {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 10px !important;
+  margin-top: 10px !important;
+  margin-bottom: 4px !important;
+}
+
+.reset-btn,
+.action-btn {
+  background:
+    linear-gradient(180deg, var(--pad-hi) 0%, transparent 38%),
+    linear-gradient(180deg, var(--pad-top) 0%, var(--pad) 48%, #252c3c 100%) !important;
+  border: 0 !important;
+  border-radius: 16px !important;
+  min-width: 48px !important;
+  min-height: 54px !important;
+  color: #f5ebe0 !important;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
+  box-shadow:
+    0 5px 0 var(--shell-lo),
+    0 7px 0 rgba(0, 0, 0, 0.4),
+    0 10px 14px rgba(0, 0, 0, 0.35),
+    inset 0 2px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.45),
+    inset 2px 0 0 rgba(255, 255, 255, 0.08),
+    inset -2px 0 0 rgba(0, 0, 0, 0.2) !important;
+}
+
+.action-btn {
+  padding: 10px 2px 8px !important;
+  min-height: 60px !important;
+  max-width: none !important;
+  gap: 3px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.reset-btn {
+  border-radius: 12px !important;
+  min-height: 44px !important;
+  padding: 6px 10px !important;
+}
+
+.action-btn:active,
+.reset-btn:active {
+  transform: translateY(4px) !important;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.12) 0%, transparent 40%),
+    linear-gradient(180deg, #323a4c 0%, var(--pad) 55%, #2a3142 100%) !important;
+  box-shadow:
+    0 1px 0 var(--shell-lo),
+    0 2px 4px rgba(0, 0, 0, 0.35),
+    inset 0 4px 6px rgba(0, 0, 0, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+.action-icon { font-size: 22px !important; line-height: 1 !important; filter: drop-shadow(0 1px 0 rgba(0,0,0,0.35)); }
+.action-label {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase;
+}
+
+#petCanvas,
+#eggCanvas,
+.pet-screen canvas,
+.lcd-well canvas {
+  image-rendering: pixelated !important;
+  image-rendering: crisp-edges !important;
+}
+
+.debug-row { margin-top: 2px !important; opacity: 0.45; }
+.debug-btn {
+  min-height: 0 !important;
+  border: none !important;
+  border-bottom: 1px dotted #7a7160 !important;
+  font-size: 9px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+
+/* === v4.74 layout / readability (keep material chrome) === */
+.app {
+  max-width: 420px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: max(12px, env(safe-area-inset-left)) !important;
+  padding-right: max(12px, env(safe-area-inset-right)) !important;
+  padding-bottom: max(16px, env(safe-area-inset-bottom)) !important;
+}
+
+.header {
+  align-items: center !important;
+  margin-bottom: 10px !important;
+}
+
+.title {
+  font-size: 1.05rem !important;
+  font-weight: 800 !important;
+}
+
+.version {
+  font-size: 11px !important;
+  opacity: 0.55 !important;
+  margin-left: 6px !important;
+}
+
+/* Secondary strip — stats readable but not competing with pet */
+.stats-top {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 6px !important;
+  margin-bottom: 10px !important;
+  padding: 10px 8px !important;
+}
+
+.stat-item {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 2px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: var(--phosphor-text) !important;
+  line-height: 1.15 !important;
+  min-width: 0 !important;
+}
+
+.stat-item span:first-child {
+  font-size: 16px !important;
+  line-height: 1 !important;
+}
+
+.stat-item span:last-child {
+  font-size: 14px !important;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.2px;
+}
+
+/* Primary: LCD pet well */
+.pet-screen,
+.lcd-well {
+  margin-bottom: 10px !important;
+  min-height: 248px !important;
+}
+
+#petCanvas,
+#eggCanvas {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display: block !important;
+}
+
+/* Primary status under screen */
+.stage-name {
+  text-align: center !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+  color: #e8dcc8 !important;
+  margin: 2px 0 4px !important;
+}
+
+.pet-status {
+  text-align: center !important;
+  margin-bottom: 12px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+.pet-status .mood,
+#petMood {
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  line-height: 1.2 !important;
+}
+
+.pet-status .age,
+.age {
+  font-size: 12px !important;
+  opacity: 0.62 !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.2px !important;
+  color: #c4b8a4 !important;
+}
+
+/* Obvious action pads */
+.action-row {
+  gap: 12px !important;
+  margin-top: 6px !important;
+  margin-bottom: 8px !important;
+}
+
+.action-btn {
+  min-height: 64px !important;
+  padding: 12px 4px 10px !important;
+  gap: 5px !important;
+}
+
+.action-icon {
+  font-size: 26px !important;
+}
+
+.action-label {
+  font-size: 11px !important;
+  letter-spacing: 0.7px !important;
+}
+
+/* Dev controls stay quiet */
+.debug-row {
+  margin-top: 6px !important;
+  opacity: 0.35 !important;
+  text-align: center !important;
+}
+
+.debug-btn {
+  font-size: 10px !important;
+  padding: 4px 8px !important;
+  color: #8a8070 !important;
+}
+
+.egg-instruction {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  max-width: 16rem;
+  line-height: 1.35;
+}
+
+
+/* Egg hatch action pad — same gloss language as pet pads */
+.egg-actions {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  max-width: 160px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-top: 4px !important;
+  gap: 0 !important;
+}
+.hatch-btn {
+  min-height: 64px !important;
+}
+.hatch-btn .action-label {
+  font-size: 12px !important;
+  letter-spacing: 1px !important;
+}
