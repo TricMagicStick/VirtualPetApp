@@ -1,0 +1,58 @@
+name: Decode embroidery PNG tiles
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ui/embroidery/**/*.png.b64'
+      - '.github/workflows/decode-embroidery-pngs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  decode:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode base64 sidecars to PNGs
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          import base64, pathlib
+          root = pathlib.Path("ui/embroidery")
+          changed = []
+          for b64path in sorted(root.glob("*.png.b64")):
+              name = b64path.name
+              assert name.endswith(".png.b64"), name
+              out = root / name[:-4]  # foo.png.b64 -> foo.png
+              data = base64.b64decode(b64path.read_text().strip())
+              if not data.startswith(b"\x89PNG\r\n\x1a\n"):
+                  raise SystemExit(f"bad PNG magic for {out}")
+              if out.exists() and out.read_bytes() == data:
+                  print(f"unchanged {out}")
+                  continue
+              out.write_bytes(data)
+              changed.append(str(out))
+              print(f"wrote {out} ({len(data)} bytes)")
+          print(f"changed={len(changed)}")
+          pathlib.Path("/tmp/embroidery-changed.txt").write_text("\n".join(changed))
+          PY
+      - name: Commit decoded PNGs
+        run: |
+          set -euo pipefail
+          if [ ! -s /tmp/embroidery-changed.txt ]; then
+            echo "No PNG changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          while IFS= read -r f; do
+            [ -n "$f" ] && git add "$f"
+          done < /tmp/embroidery-changed.txt
+          if git diff --cached --quiet; then
+            echo "Nothing staged"
+            exit 0
+          fi
+          git commit -m "Add Digivice embroidery PNG tiles under ui/embroidery for Chassis CSS"
+          git push
