@@ -1,1 +1,28 @@
-PLACEHOLDER_HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Virtual Pet</title>
+<script>
+(async function () {
+  var url = 'https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@9e2d5d409b326998365a268fff3001f8cac1c031/play-pico-sprites.html';
+  var html = await fetch(url).then(function (r) { return r.text(); });
+  html = html.replace(
+    "https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@7cb2543d08d68d57b5e8fa15bf4e8454e0a5d080/egg.js",
+    "egg.js?v=lantern1"
+  );
+  html = html.replace(
+    "<script src='sprites-pico-house48.js?v=house48d' defer></script> <script src='evolution.js?v=3stage66' defer></script> <script src='play-pets.js?v=noblack71' defer></script>",
+    "<script src='sprites-pico-house48-hex-wick-p0.js?v=lantern1' defer></script> <script src='sprites-pico-house48-hex-lampkin-p0.js?v=lantern1' defer></script> <script src='sprites-pico-house48-hex-festoon-p0.js?v=lantern1' defer></script> <script src='sprites-pico-house48.js?v=lantern1' defer></script> <script src='evolution.js?v=lantern1' defer></script> <script src='play-pets.js?v=lantern1' defer></script>"
+  );
+  document.open();
+  document.write(html);
+  document.close();
+})().catch(function (e) {
+  document.body.textContent = 'Tip restore failed: ' + e;
+});
+</script>
+</head>
+<body>Loading tip…</body>
+</html>
