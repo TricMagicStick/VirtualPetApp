@@ -1,4 +1,3 @@
-
 (function () {
   function hexToDataUri(hex) {
     if (!hex) return null;
@@ -8,7 +7,7 @@
     for (var j = 0; j < bytes.length; j++) bin += String.fromCharCode(bytes[j]);
     return 'data:image/png;base64,' + btoa(bin);
   }
-  var names = ['whisp', 'whisk', 'nimbrix', 'rime', 'kryz', 'glacorn', 'sprout', 'sprig', 'verdant', 'flick', 'drakember', 'infernyx', 'cephy', 'cephling', 'abyssal', 'zap', 'spark', 'storm'];
+  var names = ['whisp', 'whisk', 'nimbrix', 'rime', 'kryz', 'glacorn', 'sprout', 'sprig', 'verdant', 'flick', 'drakember', 'infernyx', 'cephy', 'cephling', 'abyssal', 'zap', 'spark', 'storm', 'wick', 'lampkin', 'festoon'];
   window.__PICO_SPRITES = window.__PICO_SPRITES || {};
   names.forEach(function (n) {
     var hex = window['__PICO_HEX_' + n + '_happy'];

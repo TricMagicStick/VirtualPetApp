@@ -13,7 +13,8 @@ const STAGE_NAMES = {
     bolt: ['Zap', 'Spark', 'Storm'],
     ceph: ['Cephy', 'Cephling', 'Abyssal'],
     rime: ['Rime', 'Kryz', 'Glacorn'],
-    ice: ['Rime', 'Kryz', 'Glacorn']
+    ice: ['Rime', 'Kryz', 'Glacorn'],
+    lantern: ['Wick', 'Lampkin', 'Festoon']
 };
 
 const TYPE_ALIASES = {
@@ -26,7 +27,10 @@ const TYPE_ALIASES = {
     air: 'puff',
     whisp: 'puff',
     cephy: 'ceph',
-    cephling: 'ceph'
+    cephling: 'ceph',
+    wick: 'lantern',
+    lampkin: 'lantern',
+    festoon: 'lantern'
 };
 
 function resolvePetType() {
