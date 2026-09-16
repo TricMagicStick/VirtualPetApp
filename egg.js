@@ -100,9 +100,13 @@ function hatchAnimation() {
                 currentStage = 0;
                 lastEvolutionAge = 0;
 
-                const rand = Math.random();
-                let randomPet = (rand < 0.2) ? 'flick' : (rand < 0.4) ? 'puff' : (rand < 0.6) ? 'bud' : (rand < 0.8) ? 'bolt' : 'ceph';
-                localStorage.setItem('hatchedPetType', randomPet);
+                const hatchPool = ['flick', 'puff', 'bud', 'bolt', 'ceph', 'rime', 'lantern'];
+                let randomPet = hatchPool[Math.floor(Math.random() * hatchPool.length)];
+                if (typeof setHatchedPetType === 'function') {
+                    setHatchedPetType(randomPet);
+                } else {
+                    localStorage.setItem('hatchedPetType', randomPet);
+                }
 
                 const eggScreen = document.getElementById('egg-screen');
                 const petScreen = document.getElementById('pet-screen');
