@@ -1,0 +1,59 @@
+/* device-shell-deck.css — v4.80 egg/pet same Digivice silhouette (deck reserved) */
+/* Loads AFTER device-shell.css + device-shell-b.css */
+
+#egg-screen .device-frame,
+#pet-screen .device-frame {
+  display: flex !important;
+  flex-direction: column !important;
+  box-sizing: border-box !important;
+}
+
+/* Kill egg-only 1-col / narrow Hatch deck */
+#egg-screen .egg-actions {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  max-width: none !important;
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-top: 6px !important;
+  gap: 12px !important;
+}
+
+#egg-screen .hatch-btn,
+#egg-screen .egg-pad-inert {
+  min-height: 64px !important;
+  min-width: 44px !important;
+}
+
+#egg-screen .egg-pad-inert {
+  pointer-events: none !important;
+  opacity: 0.22 !important;
+  visibility: visible !important;
+}
+
+/* Spacers match pet stats/status footprint without looking like live UI */
+#egg-screen .egg-chrome-spacer {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+#egg-screen .stats-top.egg-chrome-spacer {
+  visibility: hidden !important;
+}
+
+/* Same LCD well sizing egg vs pet */
+#egg-screen .lcd-well,
+#pet-screen .pet-screen.lcd-well,
+#pet-screen .lcd-well {
+  min-height: 248px !important;
+  margin-bottom: 10px !important;
+}
+
+@media (max-width: 480px) {
+  #egg-screen .hatch-btn,
+  #egg-screen .egg-pad-inert,
+  #pet-screen .action-btn {
+    min-height: 68px !important;
+  }
+}
