@@ -72,6 +72,13 @@ function drawEggBase(shakeX = 0) {
     eggCtx.fill();
 }
 
+function initEgg() {
+    drawEggBase(0);
+    eggCanvas.onclick = () => {
+        if (!eggAnimating) hatchAnimation();
+    };
+}
+
 function hatchAnimation() {
     if (eggAnimating) return;
     eggAnimating = true;
