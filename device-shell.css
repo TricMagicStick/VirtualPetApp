@@ -1,4 +1,2 @@
-/* Digivice device-shell.css — exact R3 from fc9a9330 (parts; not PLACEHOLDER). */
-@import url("device-shell-part0.css?v=ui81");
-@import url("device-shell-part1.css?v=ui81");
-@import url("device-shell-part2.css?v=ui81");
+/* Digivice device-shell.css — exact R3 from fc9a9330 blob 7eed13ca (not PLACEHOLDER). */
+@import url("https://cdn.jsdelivr.net/gh/TricMagicStick/VirtualPetApp@fc9a933098a86d9c349bff14e219e5fb93a6b2af/device-shell.css");
