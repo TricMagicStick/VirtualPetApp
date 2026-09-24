@@ -15,7 +15,8 @@ const STAGE_NAMES = {
     rime: ['Rime', 'Kryz', 'Glacorn'],
     ice: ['Rime', 'Kryz', 'Glacorn'],
     lantern: ['Wick', 'Lampkin', 'Festoon'],
-    bird: ['Peep', 'Ruffle', 'Galebeak']
+    bird: ['Peep', 'Ruffle', 'Galebeak'],
+    ink: ['Blot', 'Quill', 'Codex']
 };
 
 const TYPE_ALIASES = {
@@ -35,7 +36,10 @@ const TYPE_ALIASES = {
     peep: 'bird',
     ruffle: 'bird',
     galebeak: 'bird',
-    bombshell: 'bird'
+    bombshell: 'bird',
+    blot: 'ink',
+    quill: 'ink',
+    codex: 'ink'
 };
 
 function resolvePetType() {
