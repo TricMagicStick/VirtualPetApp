@@ -36,7 +36,7 @@ const TYPE_ALIASES = {
     peep: 'bird',
     ruffle: 'bird',
     galebeak: 'bird',
-    bombshell: 'bird',
+    bombshell: 'bird', // legacy save alias -> bird line (adult is always Galebeak)
     blot: 'ink',
     quill: 'ink',
     codex: 'ink'
@@ -63,18 +63,6 @@ function getAverageCare() {
     return (pet.hunger + pet.happiness + pet.cleanliness + pet.energy) / 4;
 }
 
-function chooseBirdAdult() {
-    const avg = getAverageCare();
-    if (avg >= 60 && pet.happiness >= 55 && pet.energy >= 55) return 'galebeak';
-    return 'bombshell';
-}
-
-function getBirdAdult() {
-    const a = localStorage.getItem('birdAdult');
-    if (a === 'bombshell' || a === 'galebeak') return a;
-    return null;
-}
-
 function canEvolve() {
     const maxStage = getMaxStage();
     if (currentStage >= maxStage) return false;
@@ -91,11 +79,6 @@ function getStageName() {
     const type = resolvePetType();
     const names = STAGE_NAMES[type] || STAGE_NAMES.flick;
     const stage = Math.min(Math.max(0, currentStage), names.length - 1);
-    if (type === 'bird' && stage >= 2) {
-        const adult = getBirdAdult();
-        if (adult === 'bombshell') return 'Bombshell';
-        return 'Galebeak';
-    }
     return names[stage] || 'Unknown';
 }
 
@@ -124,16 +107,11 @@ function applyAdultBonus() {
 function evolvePet() {
     if (currentStage >= getMaxStage()) return;
 
-    const type = resolvePetType();
-    const leavingStage = currentStage;
-
     currentStage++;
     lastEvolutionAge = Math.floor(pet.age);
 
-    // Bird care-split: final evolve from Ruffle (stage 1) picks adult
-    if (type === 'bird' && leavingStage === 1) {
-        localStorage.setItem('birdAdult', chooseBirdAdult());
-    }
+    // Bird is a straight line (Peep -> Ruffle -> Galebeak); drop any legacy care-split key
+    localStorage.removeItem('birdAdult');
 
     if (currentStage >= getMaxStage()) applyAdultBonus();
 
