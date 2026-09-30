@@ -16,7 +16,8 @@ const STAGE_NAMES = {
     ice: ['Rime', 'Kryz', 'Glacorn'],
     lantern: ['Wick', 'Lampkin', 'Festoon'],
     bird: ['Peep', 'Ruffle', 'Galebeak'],
-    ink: ['Blot', 'Quill', 'Codex']
+    ink: ['Blot', 'Quill', 'Codex'],
+    clockwork: ['Tinket', 'Clicket', 'Mantock']
 };
 
 const TYPE_ALIASES = {
@@ -39,7 +40,10 @@ const TYPE_ALIASES = {
     bombshell: 'bird', // legacy save alias -> bird line (adult is always Galebeak)
     blot: 'ink',
     quill: 'ink',
-    codex: 'ink'
+    codex: 'ink',
+    tinket: 'clockwork',
+    clicket: 'clockwork',
+    mantock: 'clockwork'
 };
 
 function resolvePetType() {

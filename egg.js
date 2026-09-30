@@ -106,7 +106,7 @@ function hatchAnimation() {
                 currentStage = 0;
                 lastEvolutionAge = 0;
 
-                const hatchPool = ['flick', 'puff', 'bud', 'bolt', 'ceph', 'rime', 'lantern', 'bird', 'ink'];
+                const hatchPool = ['flick', 'puff', 'bud', 'bolt', 'ceph', 'rime', 'lantern', 'bird', 'ink', 'clockwork'];
                 let randomPet = hatchPool[Math.floor(Math.random() * hatchPool.length)];
                 if (typeof setHatchedPetType === 'function') {
                     setHatchedPetType(randomPet);
