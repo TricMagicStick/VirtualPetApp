@@ -77,3 +77,9 @@
   schedule();
 })();
 
+/* Fix 6: the legacy vector drawLightningBolt (pinned main.js@7cb2543 lines 63-80) used
+ * petCtx.rotate(). It is dead on this page (PNG blits replace every draw*), so replace
+ * it with a no-op to guarantee no runtime rotation can ever reach the sprite canvas. */
+window.addEventListener('DOMContentLoaded', function () {
+  try { window.drawLightningBolt = function () {}; } catch (e) {}
+});
