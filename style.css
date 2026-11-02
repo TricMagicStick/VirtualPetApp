@@ -109,13 +109,7 @@ body {
 .pet-screen::after { content: none; }
 canvas { display: block; image-rendering: -webkit-crisp-edges; image-rendering: pixelated; margin: 0 auto; position: relative; z-index: 1; }
 #petCanvas, .pet-screen canvas, .pet-screen img { image-rendering: -webkit-crisp-edges; image-rendering: pixelated; }
-#petCanvas, .pet-screen canvas, #eggCanvas {
-  width: min(100%, 100%);
-  height: auto;
-  aspect-ratio: 1 / 1;
-  max-height: 100%;
-  object-fit: contain;
-}
+/* canvas CSS size is set by pixel-fit.js in whole device px */
 .pet-status { text-align: center; margin-bottom: 12px; width: 100%; position: relative; z-index: 1; flex: 0 0 auto; }
 .mood { font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
 .age { font-size: 12px; color: var(--thread-dim); margin-top: 2px; }

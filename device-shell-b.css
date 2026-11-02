@@ -110,10 +110,9 @@
 .lcd-well canvas {
   position: relative !important;
   z-index: 1 !important;
-  width: min(200px, 100%) !important;
-  max-width: 200px !important;
-  height: auto !important;
-  aspect-ratio: 1 / 1 !important;
+  /* size set in whole device px by pixel-fit.js (no 200px cap, no object-fit) */
+  max-width: none !important;
+  flex: 0 0 auto !important;
   margin-left: auto !important;
   margin-right: auto !important;
   display: block !important;
