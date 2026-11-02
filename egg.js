@@ -1,14 +1,28 @@
-// egg.js - v4.50 Procedural Egg Hatching System
+// egg.js - v4.81 Pixel egg hatching (was v4.50 procedural)
 let activeCracks = [];
 let eggShake = 0;
+// v4.81 pixel-perfect egg: 48x48 PNG (TEMPORARY art by Chassis until Sable's egg lands),
+// drawn 1:1 into the 56px backing set by pixel-fit.js; cracks are 1px on the same grid.
+const EGG48_SRC = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAABp0lEQVR4nO2ZwW3CMBSG/5SOEKlL9JhDJTaIStkBFmACDkzAArADbZUNkHrIsUPUUi7cC+mhelUUTGK/ZydRnU9Cigxx/t//syNsYGREROSj0zSJy3pblhdenuW0UxL+/vF59d3z0yMAf0bEpElcXr6/Wj+6dCSIR6Np1HUodcJyPgXgJo07aQeAuXhidzi6eCwAoYE0iUtb8cTucNROdlvYBiTiCRcmWAZ04qPJA0uA1MQ990aiKpyuy7OSdmuMdQIuSqfOertnpyCaxLfKhltOHKwM+Bh9gpuCk/dAnxgb8Dn6BCeFcBLQcWu5HPQyOjSMDDTVf3lWfyNeveZiOw+cJdBl2VQJo4SGzGigb0YDfWNkIMuLiPZ1fLNZLax2K8JIYMgYG+iijGzLBwgpAcBvCpzRB/5BAqzNVcnfS6VOV23L+ZS90RtmAsBvCuvtXiyAW/sEO4EsL6LNasG9HYBcPODwgMMmDTLu4oDDxXnVDADSJH4Fmo1UhL9Umt8kD7c1MGv7ARnRURPehLEpUwOtwj3RaiS4ZbSrJJyXUBNSU6JJPNI3PziEzpwozzGFAAAAAElFTkSuQmCC';
+const eggImg48 = new Image();
+eggImg48.onload = () => { try { if (eggCtx && !eggAnimating && !hasHatched) drawEggBase(0); } catch (e) {} };
+eggImg48.src = EGG48_SRC;
+let crackPixels = [];
+const EGG_GRID = 0.28; // old 200px crack coords -> 56px grid
 
 function spawnSeedCracks() {
     activeCracks = [];
+    crackPixels = [];
     activeCracks.push({ x: 82, y: 68, angle: -0.55, remainingLength: 42, thickness: 1.9, depth: 0 });
     activeCracks.push({ x: 118, y: 72, angle: 0.65, remainingLength: 38, thickness: 1.7, depth: 0 });
     if (Math.random() > 0.4) {
         activeCracks.push({ x: 98, y: 88, angle: 2.1, remainingLength: 28, thickness: 1.5, depth: 0 });
     }
+}
+
+function drawCrackPixels(shakeX) {
+    eggCtx.fillStyle = '#4a3414';
+    for (const p of crackPixels) eggCtx.fillRect(p[0] + shakeX, p[1], 1, 1);
 }
 
 function growCracks() {
@@ -21,13 +35,8 @@ function growCracks() {
         const nx = c.x + Math.cos(c.angle) * grow;
         const ny = c.y + Math.sin(c.angle) * grow;
 
-        eggCtx.strokeStyle = '#854d0e';
-        eggCtx.lineWidth = c.thickness;
-        eggCtx.lineCap = 'round';
-        eggCtx.beginPath();
-        eggCtx.moveTo(c.x, c.y);
-        eggCtx.lineTo(nx, ny);
-        eggCtx.stroke();
+        const px = Math.round(nx * EGG_GRID), py = Math.round(ny * EGG_GRID);
+        if (!crackPixels.some(p => p[0] === px && p[1] === py)) crackPixels.push([px, py]);
 
         c.x = nx; c.y = ny;
         c.remainingLength -= grow;
@@ -44,32 +53,17 @@ function growCracks() {
         }
     }
     activeCracks.push(...newCracks);
+    drawCrackPixels(Math.round(eggShake));
 }
 
 function drawEggBase(shakeX = 0) {
+    shakeX = Math.round(shakeX);
+    eggCtx.imageSmoothingEnabled = false;
     eggCtx.clearRect(0, 0, eggCanvas.width, eggCanvas.height);
-    const cx = 100 + shakeX;
-    const cy = 100;
-
-    eggCtx.fillStyle = 'rgba(0,0,0,0.3)';
-    eggCtx.beginPath();
-    eggCtx.ellipse(cx, cy + 55, 55, 18, 0, 0, Math.PI * 2);
-    eggCtx.fill();
-
-    eggCtx.fillStyle = '#fefce8';
-    eggCtx.beginPath();
-    eggCtx.ellipse(cx, cy, 48, 62, 0, 0, Math.PI * 2);
-    eggCtx.fill();
-
-    eggCtx.fillStyle = '#e7e5d9';
-    eggCtx.beginPath();
-    eggCtx.ellipse(cx + 12, cy, 36, 58, 0, 0, Math.PI * 2);
-    eggCtx.fill();
-
-    eggCtx.fillStyle = '#fefce8';
-    eggCtx.beginPath();
-    eggCtx.ellipse(cx - 18, cy - 20, 18, 24, 0, 0, Math.PI * 2);
-    eggCtx.fill();
+    const ox = Math.round((eggCanvas.width - 48) / 2) + shakeX;
+    const oy = Math.round((eggCanvas.height - 48) / 2);
+    if (eggImg48.complete && eggImg48.naturalWidth) eggCtx.drawImage(eggImg48, ox, oy, 48, 48);
+    drawCrackPixels(shakeX);
 }
 
 function initEgg() {
@@ -91,7 +85,7 @@ function hatchAnimation() {
 
     const interval = setInterval(() => {
         ticks++;
-        eggShake = Math.sin(ticks * 1.4) * 1.6;
+        eggShake = Math.round(Math.sin(ticks * 1.4));
 
         drawEggBase(eggShake);
         growCracks();
