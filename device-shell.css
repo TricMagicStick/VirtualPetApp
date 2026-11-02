@@ -1,4 +1,5 @@
 /* device-shell.css — v4.79 full Digivice unify restore from fc9a9330 */
+@layer pixel-ui; /* pixel-ui.css important rules must beat digivice-late */
 @import url("device-shell-b.css?v=unify2") layer(digivice-late);
 @layer digivice-early {
 /* device-shell.css — v4.79 Digivice R3 phone readability.
@@ -521,9 +522,7 @@ html, body {
 
 .lcd-well .egg-instruction {
   z-index: 5 !important;
-  text-shadow:
-    0 1px 0 rgba(0, 0, 0, 0.55),
-    0 0 8px rgba(0, 40, 24, 0.65) !important;
+  text-shadow: none !important;
 }
 
 }

@@ -1,0 +1,47 @@
+/* pixel-ui.css v1 - pixel-perfect UI layer (loaded last).
+ * Font: Press Start 2P (SIL OFL 1.1, free via Google Fonts). Native 8px grid: only 8px / 16px sizes.
+ * Icons: 8x8 pixel PNGs shown at 16px (2x) or 24px (3x), no filters. */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+@layer pixel-ui {
+body, .app, .app button, .app .action-label, .app .stat-item, .app .stage-name,
+.app .mood, .app .age, .app .title, .app .version, .app .egg-instruction, .app .debug-btn, .app .reset-btn {
+  font-family: 'Press Start 2P', monospace !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.5 !important;
+  -webkit-font-smoothing: none !important;
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: never;
+  text-shadow: none !important;
+}
+.app .action-label, .app .age, .app .version, .app .egg-instruction, .app .debug-btn,
+.app .reset-btn, .app .reset-btn span, .app .stat-item { font-size: 8px !important; }
+.app .title, .app .stage-name, .app .mood { font-size: 16px !important; }
+
+.app .title { white-space: nowrap !important; }
+.app .stat-item { gap: 4px !important; align-items: center !important; }
+.app * { text-shadow: none !important; }
+
+.pi {
+  display: inline-block;
+  width: 16px; height: 16px;
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  vertical-align: middle;
+  filter: none !important;
+}
+.action-icon { filter: none !important; line-height: 0 !important; font-size: 0 !important; }
+.action-icon .pi { width: 24px; height: 24px; background-size: 24px 24px; }
+.pi-feed { background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAYUlEQVR4nHWOoRGAMAxFXyvR1SgmQKNRFZ2kwzBLR6hmAkaoxhbVXA7CU7n85N4HRSqp533uWPyFDuDa1g5wTI18BwCWejoAP0JAwlCKPHlL12KU2TzQ+OF689kPp+4E8ACaaiBcaPZcHQAAAABJRU5ErkJggg=='); }
+.pi-play { background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAVElEQVR4nI2PIQ7AIBAEh3vNSYJCI/sGnscbKtEoguQ3VJHQpMl1zIgxu2DgAFT9+opzDic7tna/Yg0ZVb/kjNs1ZFIvAAhAjBenUy/UkP9tsE7YPIdhGpnj/N8WAAAAAElFTkSuQmCC'); }
+.pi-clean { background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAQ0lEQVR4nGNggIKKEx/+M+ACMElkRRgasEkSZSrLhw/PsKoSEBBgZGBgYGBhYGBg6LjBhapb4xuczYjbBClGnPYjAwBxoSR4svKjSgAAAABJRU5ErkJggg=='); }
+.pi-rest { background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAPElEQVR4nGNkQAMfPjz7D2MLCEgxostjKGQhpBPDCAyFGhoG/9EVIQMWdF3IQEBAipGRkAl4rdDQMPgPAMpqGc2W0/bOAAAAAElFTkSuQmCC'); }
+.pi-hatch { background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAN0lEQVR4nGNkgAIvE5H/MPa2M28YGZCBl4nI/39/XsAxsmIMSXRFTAwEAOUKCDqSEVkRjI3sTQCzTzwau/7wzAAAAABJRU5ErkJggg=='); }
+.pi-happy { background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAPklEQVR4nGNgYGBgeBbV8/9ZVM9/dDYDAwMDIzIHG2DCJ8nAwMDAJLWshBGXpNSyEkYmGAObJIYOdAdSBwAAscsYaRNKjHEAAAAASUVORK5CYII='); }
+.pi-hunger { background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAYUlEQVR4nHWOoRGAMAxFXyvR1SgmQKNRFZ2kwzBLR6hmAkaoxhbVXA7CU7n85N4HRSqp533uWPyFDuDa1g5wTI18BwCWejoAP0JAwlCKPHlL12KU2TzQ+OF689kPp+4E8ACaaiBcaPZcHQAAAABJRU5ErkJggg=='); }
+.pi-energy { background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAKklEQVR4nGNgQAO/Ltn8/3XJ5j+6OPmSjDBJdAk2vSOM1LGCOEmsElAAACTGK11g6vYrAAAAAElFTkSuQmCC'); }
+.pi-cleanstat { background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAQ0lEQVR4nGNggIKKEx/+M+ACMElkRRgasEkSZSrLhw/PsKoSEBBgZGBgYGBhYGBg6LjBhapb4xuczYjbBClGnPYjAwBxoSR4svKjSgAAAABJRU5ErkJggg=='); }
+}
